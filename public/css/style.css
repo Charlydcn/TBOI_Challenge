@@ -1,0 +1,40 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+    background-image: url('../img/misc/background.png');
+}
+
+body {
+    font-family: 'Upheaval TT (BRK)', Arial, Helvetica, sans-serif;
+}
+
+nav {
+    width: 80%;
+    margin: auto;
+    padding: 1rem 2rem;
+    background-image: url('../img/misc/navbar.png');
+
+}
+
+nav #desktop {
+    display: flex;
+    list-style: none;
+    color: unset;
+    justify-content: space-between;
+}
+
+nav #desktop a {
+    text-decoration: none;
+    color:unset;
+}
+
+#nav-left,
+#nav-right {
+    display: flex;
+    flex-direction: row;
+    gap:2rem;
+}
