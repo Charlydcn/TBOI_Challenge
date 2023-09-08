@@ -2,22 +2,39 @@
 
 {% block title %}Register{% endblock %}
 
+{% block stylesheets %}
+{% endblock %}
+
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
 
-    <h1>Register</h1>
 
-    {{ form_errors(registrationForm) }}
+{{ form_start(registrationForm) }}
+        
+        
+        <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <div>
+            {{ form_label(registrationForm.email) }}
+            <div class="error">{{ form_errors(registrationForm.email) }}</div>
+            {{ form_widget(registrationForm.email) }}
+        </div>
 
-        <button type="submit" class="btn">Register</button>
+        <div>
+            {{ form_label(registrationForm.username) }}
+            <div class="error">{{ form_errors(registrationForm.username) }}</div>
+            {{ form_widget(registrationForm.username) }}
+        </div>
+
+        <div>
+            <div class="error">{{ form_errors(registrationForm.password) }}</div>
+            {{ form_widget(registrationForm.password) }}
+        </div>
+
+        <button type="submit">Register</button>
+
+        <p>Already registered ?<a href="{{path('app_login')}}">Sign in</a></p>
+
+        
     {{ form_end(registrationForm) }}
+
 {% endblock %}
