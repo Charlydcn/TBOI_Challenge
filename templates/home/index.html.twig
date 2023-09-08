@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/home/index.css')}}">
+{% endblock stylesheets %}
+
+{% block body %}
+
+    <form action="{{ path('app_randomize') }}" method="POST">
+
+        {# characters #}
+        <div>
+            <h1>Characters</h1>
+            <div>
+                {% for character in characters %}
+
+                    <div>
+                        <label>
+                            {{ character.name }}
+                            <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}">
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# bosses #}
+        <div>
+            <h1>Bosses</h1>
+            <div>
+                {% for boss in bosses %}
+                    <div>
+                        <label>
+                            {{ boss.name }}
+                            <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}">
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# restrictions #}
+        <div>
+            <h1>Restrictions</h1>
+            <div>
+                {% for restriction in restrictions %}
+                    <div>
+                        <label>
+                            {{ restriction.name }}
+                            <input type="checkbox" name="r_{{restriction.name}}" value="{{ restriction.id }}">
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <input type="submit" name="submit">
+    </form>
+
+
+    <div>
+        {% if character != null %}
+            <figure>
+                <img src="{{ asset('/img/characters/' ~ character.img) }}" alt="{{ character.name }}'s image">
+                <figcaption>{{ character.name }}</figcaption>
+            </figure>    
+        {% endif %}
+    
+        {% if boss != null %}
+            <figure>
+                <img src="{{ asset('/img/bosses/' ~ boss.img) }}" alt="{{ boss.name }}'s image">
+                <figcaption>{{ boss.name }}</figcaption>
+            </figure>    
+        {% endif %}
+
+        {% if userRestrictions != null %}
+            {% for restriction in userRestrictions %}
+                {{ restriction }}
+            {% endfor %}   
+        {% endif %}
+    </div>
+
+{% endblock %}
