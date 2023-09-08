@@ -8,51 +8,63 @@
 
 {% block body %}
 
+    <div>
+        {% if character is defined %}
+            {{ character }}
+        {% endif %}
+
+        {% if boss is defined %}
+            {{ boss }}
+        {% endif %}
+
+        {% if challRestrictions is defined and challRestrictions != null %}
+            {% for restriction in challRestrictions %}
+                {{ restriction[0] }}
+            {% endfor %}        
+        {% endif %}
+    </div>
+
     <form action="{{ path('app_randomize') }}" method="POST">
+        <img src="{{asset('/img/misc/ancient_page_new.png') }}" alt="image of a paper sheet with blood">
 
-        {# characters #}
-        <div>
-            <h1>Characters</h1>
-            <div>
-                {% for character in characters %}
-
-                    <div>
+        <div id="chara-boss-restr">
+            {# characters #}
+            <div id="characters">
+                <h1>Characters</h1>
+                <div>
+                    {% for character in characters %}
                         <label>
                             {{ character.name }}
                             <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}">
                         </label>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-
-        {# bosses #}
-        <div>
-            <h1>Bosses</h1>
-            <div>
-                {% for boss in bosses %}
-                    <div>
+    
+            {# bosses #}
+            <div id="bosses">
+                <h1>Bosses</h1>
+                <div>
+                    {% for boss in bosses %}
                         <label>
                             {{ boss.name }}
                             <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}">
                         </label>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-
-        {# restrictions #}
-        <div>
-            <h1>Restrictions</h1>
-            <div>
-                {% for restriction in restrictions %}
-                    <div>
+    
+            {# restrictions #}
+            <div id="restrictions" class="hidden">
+                <h1>Restrictions</h1>
+                <div>
+                    {% for restriction in restrictions %}
                         <label>
                             {{ restriction.name }}
                             <input type="checkbox" name="r_{{restriction.name}}" value="{{ restriction.id }}">
                         </label>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
