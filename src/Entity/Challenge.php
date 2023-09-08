@@ -16,12 +16,6 @@ class Challenge
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25)]
-    private ?string $character = null;
-
-    #[ORM\Column(length: 25)]
-    private ?string $boss = null;
-
     #[ORM\Column(nullable: true)]
     private ?int $streak = null;
 
