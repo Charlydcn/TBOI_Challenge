@@ -59,27 +59,4 @@
         <input type="submit" name="submit">
     </form>
 
-
-    <div>
-        {% if character != null %}
-            <figure>
-                <img src="{{ asset('/img/characters/' ~ character.img) }}" alt="{{ character.name }}'s image">
-                <figcaption>{{ character.name }}</figcaption>
-            </figure>    
-        {% endif %}
-    
-        {% if boss != null %}
-            <figure>
-                <img src="{{ asset('/img/bosses/' ~ boss.img) }}" alt="{{ boss.name }}'s image">
-                <figcaption>{{ boss.name }}</figcaption>
-            </figure>    
-        {% endif %}
-
-        {% if userRestrictions != null %}
-            {% for restriction in userRestrictions %}
-                {{ restriction }}
-            {% endfor %}   
-        {% endif %}
-    </div>
-
 {% endblock %}
