@@ -47,7 +47,7 @@ class Challenge
     #[ORM\ManyToMany(targetEntity: Boss::class, inversedBy: 'challenges')]
     private Collection $bosses;
 
-    #[ORM\ManyToMany(targetEntity: character::class, inversedBy: 'challenges')]
+    #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'challenges')]
     private Collection $characters;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -290,7 +290,7 @@ class Challenge
         return $this->characters;
     }
 
-    public function addCharacter(character $character): static
+    public function addCharacter(Character $character): static
     {
         if (!$this->characters->contains($character)) {
             $this->characters->add($character);
@@ -299,7 +299,7 @@ class Challenge
         return $this;
     }
 
-    public function removeCharacter(character $character): static
+    public function removeCharacter(Character $character): static
     {
         $this->characters->removeElement($character);
 
