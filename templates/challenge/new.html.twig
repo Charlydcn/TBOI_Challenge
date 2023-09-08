@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Challenge creation{% endblock %}
+
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block body %}
+
+    <form action="{{ path('app_randomize') }}" method="POST">
+
+        {# characters #}
+        <div>
+            <h1>Characters</h1>
+            <div>
+                {% for character in characters %}
+
+                    <div>
+                        <label>
+                            {{ character.name }}
+                            <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}">
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# bosses #}
+        <div>
+            <h1>Bosses</h1>
+            <div>
+                {% for boss in bosses %}
+                    <div>
+                        <label>
+                            {{ boss.name }}
+                            <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}">
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {# restrictions #}
+        <div>
+            <h1>Restrictions</h1>
+            <div>
+                {% for restriction in restrictions %}
+                    <div>
+                        <label>
+                            {{ restriction.name }}
+                            <input type="checkbox" name="r_{{restriction.name}}" value="{{ restriction.id }}">
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <input type="submit" name="submit">
+    </form>
+
+    {# form si j'utilise le form type #}
+    {# <form method="POST">
+        {{ form_start(form, {'action': path('app_randomize'), 'method': 'POST'}) }}
+
+        <h1>Characters</h1>
+        <div>
+            {% for character in characters %}
+                {{ form_row(form.character['ch_' ~ character.name]) }}
+            {% endfor %}
+        </div>
+
+        <h1>Bosses</h1>
+        <div>
+            {% for boss in bosses %}
+                {{ form_row(form['b_' ~ boss.name]) }}
+            {% endfor %}
+        </div>
+
+        <h1>Restrictions</h1>
+        <div>
+            {% for restriction in restrictions %}
+                {{ form_row(form['r_' ~ restriction.name]) }}
+            {% endfor %}
+        </div>
+
+        {{ form_row(form.submit) }}
+        {{ form_end(form) }}
+    </form> #}
+
+{% endblock %}
