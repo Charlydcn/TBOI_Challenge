@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ChallengeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ChallengeRepository::class)]
@@ -43,12 +44,23 @@ class Challenge
     #[ORM\ManyToMany(targetEntity: Restriction::class, mappedBy: 'challenges')]
     private Collection $restrictions;
 
+    #[ORM\ManyToMany(targetEntity: Boss::class, inversedBy: 'challenges')]
+    private Collection $bosses;
+
+    #[ORM\ManyToMany(targetEntity: character::class, inversedBy: 'challenges')]
+    private Collection $characters;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $creationDate = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likes = new ArrayCollection();
         $this->players = new ArrayCollection();
         $this->versuses = new ArrayCollection();
-        $this->likes = new ArrayCollection();
+        $this->bosses = new ArrayCollection();
+        $this->characters = new ArrayCollection();
         $this->restrictions = new ArrayCollection();
     }
 
@@ -244,5 +256,84 @@ class Challenge
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Boss>
+     */
+    public function getBosses(): Collection
+    {
+        return $this->bosses;
+    }
+
+    public function addBoss(Boss $boss): static
+    {
+        if (!$this->bosses->contains($boss)) {
+            $this->bosses->add($boss);
+        }
+
+        return $this;
+    }
+
+    public function removeBoss(Boss $boss): static
+    {
+        $this->bosses->removeElement($boss);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, character>
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(character $character): static
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters->add($character);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(character $character): static
+    {
+        $this->characters->removeElement($character);
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): static
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        $r = "";
+
+        foreach($this->characters as $character) {
+            $r += " " + $character;
+        }
+
+        foreach($this->bosses as $boss) {
+            $r += " " + $boss;
+        }
+
+        foreach($this->restrictions as $restriction) {
+            $r += " " + $restriction;
+        }
+
+        return $r;
     }
 }

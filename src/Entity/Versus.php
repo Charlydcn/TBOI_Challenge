@@ -98,4 +98,15 @@ class Versus
 
         return $this;
     }
+
+    public function __toString()
+    {
+        $r = $this->challenge;
+
+        foreach($this->players as $player) {
+            $r += " " + $player;
+        }
+
+        return $r;
+    }
 }

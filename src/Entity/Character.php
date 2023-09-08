@@ -2,27 +2,28 @@
 
 namespace App\Entity;
 
-use App\Repository\RestrictionRepository;
+use App\Repository\CharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RestrictionRepository::class)]
-class Restriction
+#[ORM\Entity(repositoryClass: CharacterRepository::class)]
+#[ORM\Table(name: '`character`')]
+class Character
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 25)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Challenge::class, inversedBy: 'restrictions')]
-    private Collection $challenges;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $img = null;
+
+    #[ORM\ManyToMany(targetEntity: Challenge::class, mappedBy: 'characters')]
+    private Collection $challenges;
 
     public function __construct()
     {
@@ -46,6 +47,18 @@ class Restriction
         return $this;
     }
 
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(string $img): static
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Challenge>
      */
@@ -58,6 +71,7 @@ class Restriction
     {
         if (!$this->challenges->contains($challenge)) {
             $this->challenges->add($challenge);
+            $challenge->addCharacter($this);
         }
 
         return $this;
@@ -65,19 +79,9 @@ class Restriction
 
     public function removeChallenge(Challenge $challenge): static
     {
-        $this->challenges->removeElement($challenge);
-
-        return $this;
-    }
-
-    public function getImg(): ?string
-    {
-        return $this->img;
-    }
-
-    public function setImg(?string $img): static
-    {
-        $this->img = $img;
+        if ($this->challenges->removeElement($challenge)) {
+            $challenge->removeCharacter($this);
+        }
 
         return $this;
     }

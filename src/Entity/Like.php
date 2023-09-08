@@ -50,4 +50,9 @@ class Like
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->creator + " " + $this->challenge;
+    }
 }
