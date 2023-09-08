@@ -23,6 +23,39 @@ class ChallengeController extends AbstractController
         ]);
     }
 
+    // #[Route('/challenge/new', name: 'new_challenge')]
+    // // #[Route('/challenge/{id}/edit', name: 'edit_challenge')]
+    // public function new(Challenge $challenge = null, Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     // if (!$challenge) {
+    //         $challenge = new Challenge();
+    //     // }
+        
+    //     // On créer le formulaire à partir du formType (challengeType)
+    //     $form = $this->createForm(ChallengeType::class, $challenge);
+
+    //     //  On 'handle' la requête
+    //     $form->handleRequest($request);
+
+    //     // Si le formulaire est soumis et valide,
+    //     if ($form->isSubmitted() && $form->isValid()) {
+
+    //         // on récupère les données
+    //         $challenge = $form->getData();
+    //         // persist = prepare PDO
+    //         $entityManager->persist($challenge);
+    //         // flush = execute PDO
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_challenge');
+    //     }
+        
+    //     return $this->render('challenge/new.html.twig', [
+    //         'addChallengeForm' => $form,
+    //         // 'edit' => $challenge->getId()
+    //     ]);
+    // }
+
     #[Route('/randomize', name: 'app_randomize')]
     public function randomize(
         Request $request,
@@ -92,28 +125,38 @@ class ChallengeController extends AbstractController
             $boss = $bossRepository->findOneBy(['id' => $bossId]);
 
             // restrictions
-            $restrictions = [];
+            $challRestrictions = [];
 
+            // if $restrictionsIds isn't empty and max 3 restrictions :
             if(!empty($restrictionsIds) && count($restrictionsIds) <= 3) {
+                // foreach id in $restrictionsIds
                 foreach($restrictionsIds as $restrictionId) {
+                    // we get the object associated
                     $restriction = $restrictionRepository->findBy(['id' => $restrictionId]);
-                    array_push($restrictions, $restriction);
+                    // and push it into $challRestrictions array to have a array full of objects
+                    array_push($challRestrictions, $restriction);
                 }
-            } else {
-                
             }
 
         } else {
+            // set everything to null if the form was empty because we still return the 3 variables, so they need to be set
+            // to avoid errors
             $character = null;
             $boss = null;
-            $restrictions = null;
+            $challRestrictions = null;
         }
 
+        $characters = $characterRepository->findAll();
+        $bosses = $bossRepository->findAll();
+        $restrictions = $restrictionRepository->findAll();
 
-        return $this->render('challenge/index.html.twig', [
+        return $this->render('home/index.html.twig', [
+            'characters' => $characters,
+            'bosses' => $bosses,
+            'restrictions' => $restrictions,
             'character' => $character,
             'boss' => $boss,
-            'restrictions' => $restrictions,
+            'challRestrictions' => $challRestrictions,
         ]);
     }
 
