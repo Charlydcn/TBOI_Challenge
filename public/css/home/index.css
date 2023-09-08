@@ -1,0 +1,46 @@
+form {
+    max-width: 70%;
+    position: relative;
+    margin:auto,
+}
+
+form img:only-of-type {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    margin: auto;
+    max-height: 100%;
+}
+
+#chara-boss-restr {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:2rem;
+    justify-content: center;
+}
+
+#characters div, 
+#bosses div,
+#restrictions div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+#characters,
+#bosses,
+#restrictions {
+    min-width: 22.22%;
+    padding: .5rem 2rem;
+}
+
+#characters div {
+    max-height: 50%;
+}
+
+.hidden {
+    display:none;
+}
