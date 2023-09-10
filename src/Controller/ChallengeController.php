@@ -23,39 +23,6 @@ class ChallengeController extends AbstractController
         ]);
     }
 
-    // #[Route('/challenge/new', name: 'new_challenge')]
-    // // #[Route('/challenge/{id}/edit', name: 'edit_challenge')]
-    // public function new(Challenge $challenge = null, Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     // if (!$challenge) {
-    //         $challenge = new Challenge();
-    //     // }
-        
-    //     // On créer le formulaire à partir du formType (challengeType)
-    //     $form = $this->createForm(ChallengeType::class, $challenge);
-
-    //     //  On 'handle' la requête
-    //     $form->handleRequest($request);
-
-    //     // Si le formulaire est soumis et valide,
-    //     if ($form->isSubmitted() && $form->isValid()) {
-
-    //         // on récupère les données
-    //         $challenge = $form->getData();
-    //         // persist = prepare PDO
-    //         $entityManager->persist($challenge);
-    //         // flush = execute PDO
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_challenge');
-    //     }
-        
-    //     return $this->render('challenge/new.html.twig', [
-    //         'addChallengeForm' => $form,
-    //         // 'edit' => $challenge->getId()
-    //     ]);
-    // }
-
     #[Route('/randomize', name: 'app_randomize')]
     public function randomize(
         Request $request,
@@ -72,6 +39,12 @@ class ChallengeController extends AbstractController
         $bossesIds = [];
         $restrictionsIds = [];
 
+        // list of all entites ****************************************************************
+        $characters = $characterRepository->findAll();
+        $bosses = $bossRepository->findAll();
+        $restrictions = $restrictionRepository->findAll();
+        // ************************************************************************************ 
+
         if(count($formData) > 1) {
             foreach($formData as $key => $value) {
 
@@ -79,7 +52,6 @@ class ChallengeController extends AbstractController
                 // character (if string $key starts by 'ch_' (position === 0) it's a character)
                 if (strpos($key, 'ch_') === 0) {
                     if($this->isValidInt($value) === true) {
-                        // correct id
                         // add id to characters array
                         array_push($charactersIds, $value);
                     } else {
@@ -92,7 +64,6 @@ class ChallengeController extends AbstractController
                 // boss (if string $key starts by 'b_' (position === 0) it's a boss)
                 if (strpos($key, 'b_') === 0) {
                     if($this->isValidInt($value) === true) {
-                        // correct id
                         // add id to bosses array
                         array_push($bossesIds, $value);
                     } else {
@@ -105,7 +76,6 @@ class ChallengeController extends AbstractController
                 // restriction (if string $key starts by 'r_' (position === 0) it's a restriction)
                 if (strpos($key, 'r_') === 0) {
                     if($this->isValidInt($value) === true) {
-                        // correct id
                         // add id to restrictions array
                         array_push($restrictionsIds, $value);
                     } else {
@@ -115,14 +85,33 @@ class ChallengeController extends AbstractController
                 // ---------------------------------------------------------------------------------
 
             }
-            
-            // character
-            $characterId = $charactersIds[array_rand($charactersIds)];    
-            $character = $characterRepository->findOneBy(['id' => $characterId]);
 
-            // boss
-            $bossId = $bossesIds[array_rand($bossesIds)];
-            $boss = $bossRepository->findOneBy(['id' => $bossId]);
+            // ---------------------------------------------------------------------------------
+            // character/boss generation with array_rand through user's selection or rand through all existing entities if no selection
+            // ---------------------------------------------------------------------------------
+
+            // if no character is selected, then random through all characters
+            if(empty($charactersIds)) {
+                // $characters = $characterRepository->findAll();
+                $characterId = rand(0, count($characters));
+                $character = $characterRepository->findOneBy(['id' => $characterId]);
+            } else {
+                $characterId = $charactersIds[array_rand($charactersIds)];    
+                $character = $characterRepository->findOneBy(['id' => $characterId]);
+            }
+
+            // if no boss is selected, then random through all characters
+            if(empty($bossesIds)) {
+                // $bosses = $bossRepository->findAll();
+                $bossId = rand(0, count($bosses));
+                $boss = $characterRepository->findOneBy(['id' => $bossId]);
+            } else {
+                $bossId = $bossesIds[array_rand($bossesIds)];    
+                $boss = $bossRepository->findOneBy(['id' => $bossId]);
+            }
+            
+            // ---------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------
 
             // restrictions
             $challRestrictions = [];
@@ -145,10 +134,6 @@ class ChallengeController extends AbstractController
             $boss = null;
             $challRestrictions = null;
         }
-
-        $characters = $characterRepository->findAll();
-        $bosses = $bossRepository->findAll();
-        $restrictions = $restrictionRepository->findAll();
 
         return $this->render('home/index.html.twig', [
             'characters' => $characters,
