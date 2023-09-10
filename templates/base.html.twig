@@ -16,22 +16,26 @@
     </head>
     <body>
         <nav>
+            <img src="{{ asset('/img/misc/navbar.png')}}" alt="Navigation bar's image">
             <ul id="desktop">
+
                 <div id="nav-left">
                     <li>
-                        <a href="{{ path('app_home') }}">Home</a>
+                        <a href="{{ path('app_home') }}">Browse</a>
                     </li>
     
                     <li>
-                        <a href="{{ path('app_randomize') }}">Randomize</a>
+                        <a href="{{ path('app_randomize') }}">Create</a>
                     </li>
                 </div>
+
+                <a href="{{ path('app_home') }}">TBOI Challenge</a>
 
                 <div id="nav-right">
                     {% if app.user %}
                         {# if a user is logged in #}
+                        <li><a href="">Profile</a></li>
                         <li><a href="{{ path('app_logout') }}">Log off</a></li>
-                        <li><a>Connecté en que <span>{{ app.user }}</span></a></li>
                     {% else %}
                         {# if no one is logged in #}
                         <li><a href="{{ path('app_login') }}">Log in</a></li>
