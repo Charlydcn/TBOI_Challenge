@@ -1,15 +1,15 @@
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-    background-image: url('../img/misc/background.png');
+    background-image: url("../img/misc/background.png");
 }
 
 body {
-    font-family: 'Upheaval TT (BRK)', Arial, Helvetica, sans-serif;
+    font-family: "Upheaval TT (BRK)", Arial, Helvetica, sans-serif;
 }
 
 nav {
@@ -20,11 +20,18 @@ nav {
     align-items: center;
     flex-direction: column;
     position: relative;
-    justify-content: center; 
+    justify-content: center;
 }
 
 nav a {
-    text-shadow: 4px 3px 1.5px rgba(0,0,0,0.26);
+    text-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
+}
+
+/* prevent elements with this class to be selected by user (with cursor) */
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 #desktop {
@@ -34,32 +41,32 @@ nav a {
     justify-content: space-around;
     width: 100%;
     align-items: center;
-    padding:0 3rem;
+    padding: 0 3rem;
 }
 
 #nav-left + a {
-    font-size: 28px;
+    font-size: 2rem;
 }
 
 nav > img {
     position: absolute;
-    width:100%;
-    z-index:-1;
+    width: 100%;
+    z-index: -1;
 }
 
 #desktop a {
     text-decoration: none;
-    color:unset;
+    color: unset;
 }
 
 #nav-left,
 #nav-right {
     display: flex;
     flex-direction: row;
-    gap:2rem;
+    gap: 3rem;
 }
 
 #nav-left li,
 #nav-right li {
-    font-size: 18px;
+    font-size: 1.4rem;
 }
