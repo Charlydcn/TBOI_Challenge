@@ -11,11 +11,13 @@
     
     <div>
         {% if character is defined %}
-            {{ character }}
+            <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="">
+            {{ character.name }}
         {% endif %}
         <br>
         {% if boss is defined %}
-            {{ boss }}
+            <img src="{{ asset('/img/bosses/' ~ boss.img)}}" alt="">
+            {{ boss.name }}
         {% endif %}
         <br>
         {% if challRestrictions is defined and challRestrictions != null %}
@@ -33,18 +35,20 @@
                 <div id="characters">
                     <h1>Characters</h1>
                     <div class="btns">
-                        <a class="checkall-ch">All</a>
-                        <a>All non-tainted</a>
-                        <a>All tainted</a>
-                        <a>None</a>
+                        <a class="prevent-select checkall-ch">All</a>
+                        <a class="prevent-select none-ch">None</a>
+                        <a class="prevent-select">All tainted</a>
+                        <a class="prevent-select">All non-tainted</a>
                     </div>
                     <div class="list">
                         {% for character in characters %}
-                            <label class="prevent-select check-btn">
+                            <label class="prevent-select">
                                 <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}" class="checkbox-ch">
                                 {# <img src="{{ asset('/img/characters/' ~ character.name ~ '_head.png') }}" alt=""> #}
-                                <img src="{{ asset('/img/characters/isaac_head.png') }}" alt="{{ character.name }}'s head">
-                                {{ character.name }}
+                                <div class="check-btn">
+                                    <img src="{{ asset('/img/characters/isaac_head.png') }}" alt="{{ character.name }}'s head">
+                                    {{ character.name }}
+                                </div>
                             </label>
                         {% endfor %}
                     </div>
@@ -54,15 +58,17 @@
                 <div id="bosses">
                     <h1>Bosses</h1>
                     <div class="btns">
-                        <a class="checkall-boss">All</a>
+                        <a class="prevent-select checkall-boss">All</a>
                         <a>None</a>
                     </div>
                     <div class="list">
                         {% for boss in bosses %}
-                            <label class="prevent-select check-btn">
+                            <label class="prevent-select">
                                 <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}" class="checkbox-boss">
-                                <img src="{{ asset('/img/completion_marks/satan.png') }}" alt="{{ boss.name }}'s completion mark">
-                                {{ boss.name }}
+                                <div class="check-btn">
+                                    <img src="{{ asset('/img/completion_marks/satan.png') }}" alt="{{ boss.name }}'s completion mark">
+                                    {{ boss.name }}
+                                </div>
                             </label>
                         {% endfor %}
                     </div>
@@ -91,45 +97,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-
-        /* CA FONCTIONNE MAIS CA DECLENCHE L'EVENT DE CLICK DEUX FOIS, RESOUDRE CA */
-
-        $('.check-btn').click(function(event) {
-            var checkbox = $(this).closest('input')
-
-            var check = !$(checkbox).prop('checked')
-
-            checkbox.prop('checked', check)
-
-            $(this).toggleClass('checked');
-            $(this).find('img').toggleClass('checked');
-        })
-
-        /* characters 'check all' button */
-        $('.checkall-ch').click(function(event) {
-            /* get the contrary of the current 'checked' attribute of the input (if its checked, check = false, so that we uncheck it) */
-            var check = !$('.checkbox-ch').prop('checked');
-
-            $('.checkbox-ch').prop('checked', check)
-
-            $(this).toggleClass('checked');
-            $(this).find('img').toggleClass('checked');
-
-        })
-
-        
-
-        /* bosses 'check all' button */
-        $('.checkall-boss').click(function(event) {
-            /* get the contrary of the current 'checked' attribute of the input (if its checked, check = false, so that we uncheck it) */
-            var check = !$('.checkbox-boss').prop('checked');
-
-            $('.checkbox-boss').prop('checked', check)
-        })
-
-        
-        
-
-    </script>
+    <script src="{{ asset('/js/checkboxes.js')}}"></script>
 {% endblock javascripts %}
