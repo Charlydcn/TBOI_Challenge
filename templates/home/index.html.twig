@@ -8,15 +8,16 @@
 
 {% block body %}
 
+    
     <div>
         {% if character is defined %}
             {{ character }}
         {% endif %}
-
+        <br>
         {% if boss is defined %}
             {{ boss }}
         {% endif %}
-
+        <br>
         {% if challRestrictions is defined and challRestrictions != null %}
             {% for restriction in challRestrictions %}
                 {{ restriction[0] }}
@@ -24,51 +25,111 @@
         {% endif %}
     </div>
 
-    <form action="{{ path('app_randomize') }}" method="POST">
+    <div id="form">
         <img src="{{asset('/img/misc/ancient_page_new.png') }}" alt="image of a paper sheet with blood">
-
-        <div id="chara-boss-restr">
-            {# characters #}
-            <div id="characters">
-                <h1>Characters</h1>
-                <div>
-                    {% for character in characters %}
-                        <label>
-                            {{ character.name }}
-                            <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}">
-                        </label>
-                    {% endfor %}
+        <form action="{{ path('app_randomize') }}" method="POST">        
+            <div id="step1">
+                {# characters #}
+                <div id="characters">
+                    <h1>Characters</h1>
+                    <div class="btns">
+                        <a class="checkall-ch">All</a>
+                        <a>All non-tainted</a>
+                        <a>All tainted</a>
+                        <a>None</a>
+                    </div>
+                    <div class="list">
+                        {% for character in characters %}
+                            <label class="prevent-select check-btn">
+                                <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}" class="checkbox-ch">
+                                {# <img src="{{ asset('/img/characters/' ~ character.name ~ '_head.png') }}" alt=""> #}
+                                <img src="{{ asset('/img/characters/isaac_head.png') }}" alt="{{ character.name }}'s head">
+                                {{ character.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+        
+                {# bosses #}
+                <div id="bosses">
+                    <h1>Bosses</h1>
+                    <div class="btns">
+                        <a class="checkall-boss">All</a>
+                        <a>None</a>
+                    </div>
+                    <div class="list">
+                        {% for boss in bosses %}
+                            <label class="prevent-select check-btn">
+                                <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}" class="checkbox-boss">
+                                <img src="{{ asset('/img/completion_marks/satan.png') }}" alt="{{ boss.name }}'s completion mark">
+                                {{ boss.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
     
-            {# bosses #}
-            <div id="bosses">
-                <h1>Bosses</h1>
-                <div>
-                    {% for boss in bosses %}
-                        <label>
-                            {{ boss.name }}
-                            <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}">
-                        </label>
-                    {% endfor %}
+            <div id="step2" class="hidden">
+                {# restrictions #}
+                <div id="restrictions">
+                    <h1>Restrictions</h1>
+                    <div>
+                        {% for restriction in restrictions %}
+                            <label>
+                                <input type="checkbox" name="r_{{restriction.name}}" value="{{ restriction.id }}">
+                                {{ restriction.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
     
-            {# restrictions #}
-            <div id="restrictions" class="hidden">
-                <h1>Restrictions</h1>
-                <div>
-                    {% for restriction in restrictions %}
-                        <label>
-                            {{ restriction.name }}
-                            <input type="checkbox" name="r_{{restriction.name}}" value="{{ restriction.id }}">
-                        </label>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <input type="submit" name="submit">
-    </form>
+            <input type="submit" name="submit">
+        </form>
+    </div>
 
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        /* CA FONCTIONNE MAIS CA DECLENCHE L'EVENT DE CLICK DEUX FOIS, RESOUDRE CA */
+
+        $('.check-btn').click(function(event) {
+            var checkbox = $(this).closest('input')
+
+            var check = !$(checkbox).prop('checked')
+
+            checkbox.prop('checked', check)
+
+            $(this).toggleClass('checked');
+            $(this).find('img').toggleClass('checked');
+        })
+
+        /* characters 'check all' button */
+        $('.checkall-ch').click(function(event) {
+            /* get the contrary of the current 'checked' attribute of the input (if its checked, check = false, so that we uncheck it) */
+            var check = !$('.checkbox-ch').prop('checked');
+
+            $('.checkbox-ch').prop('checked', check)
+
+            $(this).toggleClass('checked');
+            $(this).find('img').toggleClass('checked');
+
+        })
+
+        
+
+        /* bosses 'check all' button */
+        $('.checkall-boss').click(function(event) {
+            /* get the contrary of the current 'checked' attribute of the input (if its checked, check = false, so that we uncheck it) */
+            var check = !$('.checkbox-boss').prop('checked');
+
+            $('.checkbox-boss').prop('checked', check)
+        })
+
+        
+        
+
+    </script>
+{% endblock javascripts %}
