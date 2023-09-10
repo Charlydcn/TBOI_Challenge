@@ -92,20 +92,20 @@ class ChallengeController extends AbstractController
 
             // if no character is selected, then random through all characters
             if(empty($charactersIds)) {
-                // $characters = $characterRepository->findAll();
-                $characterId = rand(0, count($characters));
+                $characterId = rand(1, count($characters));
                 $character = $characterRepository->findOneBy(['id' => $characterId]);
             } else {
+                // else, random through all ids given by user selection
                 $characterId = $charactersIds[array_rand($charactersIds)];    
                 $character = $characterRepository->findOneBy(['id' => $characterId]);
             }
 
             // if no boss is selected, then random through all characters
             if(empty($bossesIds)) {
-                // $bosses = $bossRepository->findAll();
-                $bossId = rand(0, count($bosses));
-                $boss = $characterRepository->findOneBy(['id' => $bossId]);
+                $bossId = rand(1, count($bosses));
+                $boss = $bossRepository->findOneBy(['id' => $bossId]);
             } else {
+                // else, random through all ids given by user selection
                 $bossId = $bossesIds[array_rand($bossesIds)];    
                 $boss = $bossRepository->findOneBy(['id' => $bossId]);
             }
@@ -128,10 +128,13 @@ class ChallengeController extends AbstractController
             }
 
         } else {
-            // set everything to null if the form was empty because we still return the 3 variables, so they need to be set
-            // to avoid errors
-            $character = null;
-            $boss = null;
+            // if no selection at all, randomize everything and give a random character/boss
+            $characterId = rand(1, count($characters));
+            $character = $characterRepository->findOneBy(['id' => $characterId]);
+
+            $bossId = rand(1, count($bosses));
+            $boss = $bossRepository->findOneBy(['id' => $bossId]);
+            
             $challRestrictions = null;
         }
 
