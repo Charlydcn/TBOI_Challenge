@@ -1,46 +1,109 @@
-form {
-    max-width: 70%;
+#form {
     position: relative;
-    margin:auto,
-}
-
-form img:only-of-type {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: -1;
+    width: 60%;
     margin: auto;
-    max-height: 100%;
 }
 
-#chara-boss-restr {
+form {
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap:2rem;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
-#characters div, 
-#bosses div,
-#restrictions div {
+#form > img {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+#step1 {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row;
     flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+    padding: 2rem 3rem;
 }
 
 #characters,
-#bosses,
-#restrictions {
-    min-width: 22.22%;
-    padding: .5rem 2rem;
+#bosses {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-#characters div {
-    max-height: 50%;
+#characters {
+    width: 66.66%;
+}
+
+#bosses {
+    width: 33.33%;
+}
+
+.btns {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+}
+
+.btns a {
+    color: unset;
+    text-decoration: none;
+    font-size: 1.3rem;
+    height: min-content;
+    cursor:pointer;
+}
+
+#characters .list {
+    height: 49%;
+}
+
+#characters .list,
+#bosses .list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.checked,
+.list img .checked {
+    color:#822424;
+    filter:unset;
+}
+
+.list label {
+    font-size: 1.1em;
+}
+
+.check-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+}
+
+label img {
+    height:90%;
+    filter:saturate(0);
+}
+
+.list img,
+.list label {
+    cursor:pointer;
+}
+
+.list input {
+    opacity: 0;
+    position: absolute;
+    z-index:-1;
 }
 
 .hidden {
-    display:none;
+    display: none;
 }
