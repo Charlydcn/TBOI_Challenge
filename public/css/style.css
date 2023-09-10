@@ -13,21 +13,41 @@ body {
 }
 
 nav {
-    width: 80%;
+    width: 75%;
     margin: auto;
-    padding: 1rem 2rem;
-    background-image: url('../img/misc/navbar.png');
-
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    justify-content: center; 
 }
 
-nav #desktop {
+nav a {
+    text-shadow: 4px 3px 1.5px rgba(0,0,0,0.26);
+}
+
+#desktop {
     display: flex;
     list-style: none;
     color: unset;
-    justify-content: space-between;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+    padding:0 3rem;
 }
 
-nav #desktop a {
+#nav-left + a {
+    font-size: 28px;
+}
+
+nav > img {
+    position: absolute;
+    width:100%;
+    z-index:-1;
+}
+
+#desktop a {
     text-decoration: none;
     color:unset;
 }
@@ -37,4 +57,9 @@ nav #desktop a {
     display: flex;
     flex-direction: row;
     gap:2rem;
+}
+
+#nav-left li,
+#nav-right li {
+    font-size: 18px;
 }
