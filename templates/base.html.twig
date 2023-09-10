@@ -11,8 +11,6 @@
         {% block stylesheets %}
         {% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
     </head>
     <body>
         <nav>
@@ -46,6 +44,11 @@
             
         </nav>
         {% block body %}        
+        {% endblock %}
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="{{ asset('/js/script.js')}}"></script>
+        {% block javascripts %}
         {% endblock %}
     </body>
 </html>
