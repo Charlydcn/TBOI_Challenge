@@ -2,24 +2,45 @@
     position: relative;
     width: 80%;
     margin: auto;
+    z-index: 2;
+    max-height: 100%;
 }
 
-form {
+#step1 {
+    position: relative;
+    height: 650px;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    display: flex;
-    margin: auto;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
 }
 
 #form > img {
     position: absolute;
     z-index: -1;
+    height: 100%;
     width: 100%;
 }
 
-/* step1 = character + boss selection */
+#close-btn,
+#next-btn,
+#options {
+    cursor: pointer;
+}
+
+#close-btn {
+    position: absolute;
+    font-size: 48px;
+    top: 1%;
+    right: 3%;
+}
+
 #step1 {
     display: flex;
     flex-direction: row;
@@ -29,37 +50,26 @@ form {
     padding: 2rem 3rem;
 }
 
-#characters,
-#bosses {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
 #characters {
     width: 66.66%;
+    max-height: 100%;
 }
 
-#boss-and-nextbtn {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 33.33%;
-}
-
-#boss-and-nextbtn #bosses + a {
+#next-btn {
     text-decoration: none;
     color: unset;
     font-size: 2.5rem;
+    position: absolute;
+    bottom: 7.5%;
+    right: 5%;
 }
-
 /* btns = 'ALL/NONE/ALL TAINTED/ALL NON TAINTED etc.' presets for checkboxes */
 .btns {
     width: 100%;
     display: flex;
     gap: 2rem;
     margin-bottom: 1.5rem;
-    margin-top: .7rem;
+    margin-top: 0.7rem;
 }
 
 .btns a {
@@ -67,11 +77,11 @@ form {
     text-decoration: none;
     font-size: 1.3rem;
     height: min-content;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 #characters .list {
-    height: 47%;
+    max-height: 83%;
 }
 
 #characters .list,
@@ -83,9 +93,13 @@ form {
     gap: 0.5rem;
 }
 
+#characters .list {
+    gap: 0.2rem;
+}
+
 .checked {
-    color:#822424;
-    filter:unset;
+    color: #822424;
+    filter: unset;
 }
 
 .list label {
@@ -96,23 +110,23 @@ form {
     position: relative;
     display: flex;
     align-items: center;
-    gap: .8rem;
+    gap: 0.8rem;
 }
 
 label img {
-    height:90%;
-    filter:saturate(0);
+    height: 90%;
+    filter: saturate(0);
 }
 
 .list img,
 .list label {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .list input {
     opacity: 0;
     position: absolute;
-    z-index:-1;
+    z-index: -1;
 }
 
 .hidden {
