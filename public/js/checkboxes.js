@@ -22,20 +22,20 @@ $('.checkall-ch').click(function(event) {
         var checkBtnDiv = $(this).closest('label').find('.check-btn');
         
         if (!$(this).prop('checked')) {
-            // Cochez la case à cocher
+            // check the checkbox
             $(this).prop('checked', true);
 
-            // Ajoutez la classe "checked" à la div et à l'image
+            // add class to elements
             checkBtnDiv.addClass('checked');
             checkBtnDiv.find('img').addClass('checked');
         }
     });
 
-    // Empêchez le comportement par défaut du clic
+    // preventDefault() to not trigger the default click eventListener (if no preventDefault, click triggers function twice)
     event.preventDefault();
 });
 
-/* Désélectionner toutes les cases à cocher */
+/* characters 'check none' button */
 $('.none-ch').click(function(event) {
     var checkboxes = $('.checkbox-ch');
 
@@ -52,7 +52,44 @@ $('.none-ch').click(function(event) {
         }
     });
 
+    // preventDefault() to not trigger the default click eventListener (if no preventDefault, click triggers function twice)
+    event.preventDefault();
+});
+
+/* bosses 'check all' button */
+$('.checkall-boss').click(function(event) {
+    var checkboxes = $('.checkbox-boss');
+
+    checkboxes.each(function() {
+        var checkBtnDiv = $(this).closest('label').find('.check-btn');
+        
+        if (!$(this).prop('checked')) {
+            $(this).prop('checked', true);
+
+            checkBtnDiv.addClass('checked');
+            checkBtnDiv.find('img').addClass('checked');
+        }
+    });
+
     // Empêchez le comportement par défaut du clic
+    event.preventDefault();
+});
+
+/* bosses 'check none' button */
+$('.none-boss').click(function(event) {
+    var checkboxes = $('.checkbox-boss');
+
+    checkboxes.each(function() {
+        var checkBtnDiv = $(this).closest('label').find('.check-btn');
+
+        if ($(this).prop('checked')) {
+            $(this).prop('checked', false);
+
+            checkBtnDiv.removeClass('checked');
+            checkBtnDiv.find('img').removeClass('checked');
+        }
+    });
+
     event.preventDefault();
 });
 
