@@ -6,9 +6,7 @@
     <link rel="stylesheet" href="{{ asset('/css/home/index.css')}}">
 {% endblock stylesheets %}
 
-{% block body %}
-
-    
+{% block body %}    
     <div>
         {% if character is defined %}
             <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="">
@@ -27,9 +25,12 @@
         {% endif %}
     </div>
 
-    <div id="form">
-        <img src="{{asset('/img/misc/ancient_page_new.png') }}" alt="image of a paper sheet with blood">
-        <form action="{{ path('app_randomize') }}" method="POST">        
+    <a class="prevent-select" id="options">Options</a>
+
+    <div id="form" class="hidden">
+        <img src="{{ asset('/img/misc/ancient_page_new.png') }}" alt="image of a paper sheet with blood">
+        <form action="{{ path('app_randomize') }}" method="POST">
+            <a class="prevent-select" id="close-btn">X</a>      
             <div id="step1">
                 {# characters #}
                 <div id="characters">
@@ -55,27 +56,26 @@
                 </div>
         
                 {# bosses #}
-                <div id="boss-and-nextbtn">
-                    <div id="bosses">
-                        <h1>Bosses</h1>
-                        <div class="btns">
-                            <a class="prevent-select checkall-boss">All</a>
-                            <a class="prevent-select none-boss">None</a>
-                        </div>
-                        <div class="list">
-                            {% for boss in bosses %}
-                                <label class="prevent-select">
-                                    <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}" class="checkbox-boss">
-                                    <div class="check-btn">
-                                        <img src="{{ asset('/img/completion_marks/satan.png') }}" alt="{{ boss.name }}'s completion mark">
-                                        {{ boss.name }}
-                                    </div>
-                                </label>
-                            {% endfor %}
-                        </div>
+                <div id="bosses">
+                    <h1>Bosses</h1>
+                    <div class="btns">
+                        <a class="prevent-select checkall-boss">All</a>
+                        <a class="prevent-select none-boss">None</a>
                     </div>
-                    <a href="">Next</a>
+                    <div class="list">
+                        {% for boss in bosses %}
+                            <label class="prevent-select">
+                                <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}" class="checkbox-boss">
+                                <div class="check-btn">
+                                    <img src="{{ asset('/img/completion_marks/satan.png') }}" alt="{{ boss.name }}'s completion mark">
+                                    {{ boss.name }}
+                                </div>
+                            </label>
+                        {% endfor %}
+                    </div>
                 </div>
+
+                <a id="next-btn" class="prevent-select">Next</a>
             </div>
     
             <div id="step2" class="hidden">
@@ -93,9 +93,11 @@
                 </div>
             </div>
     
-            <input type="submit" name="submit">
+            <input type="submit" name="submit" class="hidden">
         </form>
     </div>
+
+    <div id="overlay" class="hidden"></div>
 
 {% endblock %}
 
