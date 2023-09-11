@@ -55,23 +55,26 @@
                 </div>
         
                 {# bosses #}
-                <div id="bosses">
-                    <h1>Bosses</h1>
-                    <div class="btns">
-                        <a class="prevent-select checkall-boss">All</a>
-                        <a>None</a>
+                <div id="boss-and-nextbtn">
+                    <div id="bosses">
+                        <h1>Bosses</h1>
+                        <div class="btns">
+                            <a class="prevent-select checkall-boss">All</a>
+                            <a class="prevent-select none-boss">None</a>
+                        </div>
+                        <div class="list">
+                            {% for boss in bosses %}
+                                <label class="prevent-select">
+                                    <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}" class="checkbox-boss">
+                                    <div class="check-btn">
+                                        <img src="{{ asset('/img/completion_marks/satan.png') }}" alt="{{ boss.name }}'s completion mark">
+                                        {{ boss.name }}
+                                    </div>
+                                </label>
+                            {% endfor %}
+                        </div>
                     </div>
-                    <div class="list">
-                        {% for boss in bosses %}
-                            <label class="prevent-select">
-                                <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}" class="checkbox-boss">
-                                <div class="check-btn">
-                                    <img src="{{ asset('/img/completion_marks/satan.png') }}" alt="{{ boss.name }}'s completion mark">
-                                    {{ boss.name }}
-                                </div>
-                            </label>
-                        {% endfor %}
-                    </div>
+                    <a href="">Next</a>
                 </div>
             </div>
     
