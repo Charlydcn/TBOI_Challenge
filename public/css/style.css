@@ -6,6 +6,8 @@
 
 html {
     background-image: url("../img/misc/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 body {
