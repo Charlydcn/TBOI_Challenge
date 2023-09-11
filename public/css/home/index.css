@@ -1,6 +1,6 @@
 #form {
     position: relative;
-    width: 60%;
+    width: 80%;
     margin: auto;
 }
 
@@ -17,9 +17,9 @@ form {
     position: absolute;
     z-index: -1;
     width: 100%;
-    height: 100%;
 }
 
+/* step1 = character + boss selection */
 #step1 {
     display: flex;
     flex-direction: row;
@@ -40,14 +40,26 @@ form {
     width: 66.66%;
 }
 
-#bosses {
+#boss-and-nextbtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 33.33%;
 }
 
+#boss-and-nextbtn #bosses + a {
+    text-decoration: none;
+    color: unset;
+    font-size: 2.5rem;
+}
+
+/* btns = 'ALL/NONE/ALL TAINTED/ALL NON TAINTED etc.' presets for checkboxes */
 .btns {
     width: 100%;
     display: flex;
     gap: 2rem;
+    margin-bottom: 1.5rem;
+    margin-top: .7rem;
 }
 
 .btns a {
@@ -59,7 +71,7 @@ form {
 }
 
 #characters .list {
-    height: 49%;
+    height: 47%;
 }
 
 #characters .list,
@@ -71,8 +83,7 @@ form {
     gap: 0.5rem;
 }
 
-.checked,
-.list img .checked {
+.checked {
     color:#822424;
     filter:unset;
 }
