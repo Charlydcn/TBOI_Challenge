@@ -2,16 +2,13 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
-
-html {
-    background-image: url("../img/misc/background.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-body {
     font-family: "Upheaval TT (BRK)", Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-image: url("../img/misc/background.png");
+    background-repeat: no-repeat;
+    min-height: 125vh;
 }
 
 nav {
@@ -40,10 +37,23 @@ nav a {
     display: flex;
     list-style: none;
     color: unset;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     align-items: center;
-    padding: 0 3rem;
+}
+
+#desktop a {
+    transition: .3s;
+    text-decoration: none;
+    color: unset;
+    text-decoration: none;
+    color: unset;
+    width: 40%;
+    text-align: center;
+}
+
+#desktop a:hover {
+    text-shadow: none;
 }
 
 #nav-left + a {
@@ -52,21 +62,18 @@ nav a {
 
 nav > img {
     position: absolute;
-    width: 100%;
+    width: 125%;
     z-index: -1;
-}
-
-#desktop a {
-    text-decoration: none;
-    color: unset;
 }
 
 #nav-left,
 #nav-right {
     display: flex;
     flex-direction: row;
-    gap: 3rem;
+    width: 30%;
+    justify-content: space-around;
 }
+
 
 #nav-left li,
 #nav-right li {
