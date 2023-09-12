@@ -22,7 +22,7 @@ nav {
     justify-content: center;
 }
 
-nav a {
+.text-shadow {
     text-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
 }
 
@@ -43,7 +43,6 @@ nav a {
 }
 
 #desktop a {
-    transition: .3s;
     text-decoration: none;
     color: unset;
     text-decoration: none;
@@ -52,9 +51,40 @@ nav a {
     text-align: center;
 }
 
-#desktop a:hover {
+.text-shadow a,
+.text-shadow {
+    transition: .3s;
+}
+
+.text-shadow a:hover,
+.text-shadow:hover {
     text-shadow: none;
 }
+
+/* underline hover animation */
+.underline-hover {
+	position: relative;
+}
+
+.underline-hover::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	transform: scaleX(0);
+	height: 1.5px;
+	bottom: 0;
+	left: 0;
+    z-index:-1;
+	background-color: currentColor;
+	transition: transform 0.3s;
+    transform-origin: bottom right;
+}
+
+.underline-hover:hover::after {
+	transform: scaleX(1);
+	transform-origin: bottom left;
+}
+
 
 #nav-left + a {
     font-size: 2rem;
@@ -62,7 +92,7 @@ nav a {
 
 nav > img {
     position: absolute;
-    width: 125%;
+    width: 112.5%;
     z-index: -1;
 }
 
