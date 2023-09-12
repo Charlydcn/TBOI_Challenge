@@ -1,14 +1,9 @@
 #form {
     position: relative;
-    width: 80%;
+    width: 66%;
     margin: auto;
     z-index: 2;
     max-height: 100%;
-}
-
-#step1 {
-    position: relative;
-    height: 650px;
 }
 
 #overlay {
@@ -19,6 +14,17 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1;
+}
+
+#step1 {
+    display: flex;
+    position: relative;
+    height: 650px;
+    flex-direction: row;
+    width: 100%;
+    padding: 2rem 3rem;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 #form > img {
@@ -37,26 +43,20 @@
 }
 
 #close-btn,
-#next-btn,
 #previous-btn {
     text-decoration: none;
     color: unset;
     font-size: 2.5rem;
 }
 
+#next-btn {
+    font-size: 3rem;
+}
+
 #close-btn {
     position: absolute;
     top: 1%;
     right: 3%;
-}
-
-#step1 {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: space-around;
-    padding: 2rem 3rem;
 }
 
 #characters {
