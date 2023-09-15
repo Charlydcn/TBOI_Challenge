@@ -83,7 +83,19 @@ class ChallengeController extends AbstractController
                     }
                 }
                 // ---------------------------------------------------------------------------------
-
+                // restriction chance
+                if (strpos($key, 'restr_chance') === 0) {
+                    // if restriction chance isn't empty string (no user input)
+                    if(!empty($value)) {
+                        if($this->isValidInt($value) === true) {
+                            // put the restriction chance in variable
+                            $restrChance = $value;
+                        } else {
+                            // incorrect id
+                        }
+                    }
+                }
+                // ---------------------------------------------------------------------------------
             }
 
             // ---------------------------------------------------------------------------------
@@ -113,17 +125,23 @@ class ChallengeController extends AbstractController
             // ---------------------------------------------------------------------------------
             // ---------------------------------------------------------------------------------
 
-            // restrictions
+            // restrictions is the only data that can be multiple
             $challRestrictions = [];
 
-            // if $restrictionsIds isn't empty and max 3 restrictions :
-            if(!empty($restrictionsIds) && count($restrictionsIds) <= 3) {
-                // foreach id in $restrictionsIds
+            // if $restrictionsIds isn't empty
+            if(!empty($restrictionsIds)) {
+                // foreach restriction selected by user
                 foreach($restrictionsIds as $restrictionId) {
-                    // we get the object associated
-                    $restriction = $restrictionRepository->findBy(['id' => $restrictionId]);
-                    // and push it into $challRestrictions array to have a array full of objects
-                    array_push($challRestrictions, $restriction);
+                    // if user entered a restriction chance in the input, custom chance, else, default value is 10%
+                    // is user entered a restriction chance of 20 for example, random between 0 and 100, if result <= 20, we push the restriction
+                    if(rand(0, 100) <= $restrChance) {
+                        if(count($restrictionsIds) < 3) {
+                            // get the object associated
+                            $restriction = $restrictionRepository->findBy(['id' => $restrictionId]);
+                            // and push it into $challRestrictions array to have a array full of objects
+                            array_push($challRestrictions, $restriction);
+                        }
+                    }
                 }
             }
 
