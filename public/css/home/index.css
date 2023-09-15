@@ -1,11 +1,13 @@
+/* <div id="form"> : <img> ~ <form> */
 #form {
     position: relative;
-    width: 66%;
+    width: 55%;
     margin: auto;
     z-index: 2;
     max-height: 100%;
 }
 
+/* background when options menu is visible */
 #overlay {
     position: fixed;
     top: 0;
@@ -16,15 +18,42 @@
     z-index: 1;
 }
 
-#step1 {
+#step1,
+#step2 {
     display: flex;
     position: relative;
     height: 650px;
     flex-direction: row;
-    width: 100%;
     padding: 2rem 3rem;
     justify-content: center;
     flex-wrap: wrap;
+    gap:2rem;
+}
+
+/* step 2 = restrictions + submit */
+#step2 {
+    flex-direction: column;
+    justify-content: unset;
+}
+
+
+/* % of chance of restriction label */
+#step2 .list label:first-of-type {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    cursor: unset;
+    margin: 1rem 0;
+}
+
+/* % of chance of restriction input */
+#step2 .list label:first-of-type input {
+    outline: none;
+    padding: 2.5px 5px;
+    background: none;
+    border: none;    
+    font-size: 2rem;
+    width:65px;
 }
 
 #form > img {
@@ -36,40 +65,49 @@
 
 #close-btn,
 #next-btn,
-#options,
-#previous-btn {
-    cursor: pointer;
+#options {
     z-index:2;
 }
 
-#close-btn,
-#previous-btn {
+#close-btn {
     text-decoration: none;
     color: unset;
     font-size: 2.5rem;
-}
-
-#next-btn {
-    font-size: 3rem;
-}
-
-#close-btn {
     position: absolute;
     top: 1%;
     right: 3%;
 }
 
+/* <div id="characters"> -> <h1> ~ <div class="btns"> ~ <div class="list"> */
 #characters {
     width: 66.66%;
     max-height: 100%;
 }
 
-#next-btn {
+#next-btn,
+input[type="submit"] {
+    font-size: 3rem;
     position: absolute;
     bottom: 7.5%;
     right: 5%;
+    background: none;
+    border:none;
+    cursor:pointer;
 }
+
 /* btns = 'ALL/NONE/ALL TAINTED/ALL NON TAINTED etc.' presets for checkboxes */
+.btns a,
+.list img,
+.list label,
+#close-btn,
+#next-btn,
+#options,
+#check-btn,
+#restrictions h1 {
+    cursor:pointer;
+}
+
+/* btns = checkbox selection buttons: "ALL", "NONE", etc. */
 .btns {
     width: 100%;
     display: flex;
@@ -83,20 +121,19 @@
     text-decoration: none;
     font-size: 1.3rem;
     height: min-content;
-    cursor: pointer;
 }
 
 #characters .list {
-    max-height: 83%;
+    max-height: 85%;
 }
 
 #characters .list,
 #bosses .list {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     flex-wrap: wrap;
     gap: 0.5rem;
+    align-content: stretch;
 }
 
 #characters .list {
@@ -110,8 +147,11 @@
 
 .list label {
     font-size: 1.1em;
+    display: flex;
+    width: fit-content;
 }
 
+/* check-btn div (img + label text) */
 .check-btn {
     position: relative;
     display: flex;
@@ -120,16 +160,18 @@
 }
 
 label img {
-    height: 90%;
+    height: 25px;
     filter: saturate(0);
 }
 
-.list img,
-.list label {
-    cursor: pointer;
+#characters .list label img {
+    width: 30px;
+    object-fit: scale-down;
+
 }
 
-.list input {
+/* checkboxes */
+.list input[type="checkbox"] {
     opacity: 0;
     position: absolute;
     z-index: -1;
