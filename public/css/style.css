@@ -5,7 +5,7 @@
     font-family: "Upheaval TT (BRK)", Arial, Helvetica, sans-serif;
 }
 
-body{
+body {
     background-image: url("../img/misc/background.png");
     background-repeat: no-repeat;
     min-height: 125vh;
@@ -26,31 +26,6 @@ nav {
     text-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
 }
 
-/* prevent elements with this class to be selected by user (with cursor) */
-.prevent-select {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
-}
-
-#desktop {
-    display: flex;
-    list-style: none;
-    color: unset;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-}
-
-#desktop a {
-    text-decoration: none;
-    color: unset;
-    text-decoration: none;
-    color: unset;
-    width: 40%;
-    text-align: center;
-}
-
 .text-shadow a,
 .text-shadow {
     transition: .3s;
@@ -59,6 +34,31 @@ nav {
 .text-shadow a:hover,
 .text-shadow:hover {
     text-shadow: none;
+}
+
+/* prevent elements with this class to be selected by user (with cursor) */
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+nav #desktop {
+    display: flex;
+    list-style: none;
+    color: unset;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+nav #desktop a {
+    text-decoration: none;
+    color: unset;
+    text-decoration: none;
+    color: unset;
+    width: 40%;
+    text-align: center;
 }
 
 /* underline hover animation */
@@ -85,7 +85,8 @@ nav {
 	transform-origin: bottom left;
 }
 
-
+/* nav-left = browse & create */
+/* nav-right = profile & log off OR log in & register */
 #nav-left + a {
     font-size: 2rem;
 }
@@ -108,4 +109,16 @@ nav > img {
 #nav-left li,
 #nav-right li {
     font-size: 1.4rem;
+}
+
+/* hide arrows from number input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }
