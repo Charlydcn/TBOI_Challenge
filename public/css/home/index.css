@@ -1,10 +1,14 @@
 /* <div id="form"> : <img> ~ <form> */
 #form {
     position: relative;
-    width: 55%;
+    width: 60%;
     margin: auto;
     z-index: 2;
     max-height: 100%;
+}
+
+#form h2 {
+    font-size: 2rem;
 }
 
 /* background when options menu is visible */
@@ -44,6 +48,9 @@
     gap: .5rem;
     cursor: unset;
     margin: 1rem 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease-in-out;
 }
 
 /* % of chance of restriction input */
@@ -78,17 +85,23 @@
     right: 3%;
 }
 
-/* <div id="characters"> -> <h1> ~ <div class="btns"> ~ <div class="list"> */
+/* <div id="characters"> -> <h2> ~ <div class="btns"> ~ <div class="list"> */
 #characters {
     width: 66.66%;
     max-height: 100%;
+}
+
+#restrictions h2 {
+    display: flex;
+    gap: 1rem;
+    width: fit-content;
 }
 
 #next-btn,
 input[type="submit"] {
     font-size: 3rem;
     position: absolute;
-    bottom: 7.5%;
+    bottom: 5%;
     right: 5%;
     background: none;
     border:none;
@@ -103,7 +116,7 @@ input[type="submit"] {
 #next-btn,
 #options,
 #check-btn,
-#restrictions h1 {
+#restrictions h2 {
     cursor:pointer;
 }
 
@@ -164,7 +177,8 @@ label img {
     filter: saturate(0);
 }
 
-#characters .list label img {
+#characters .list label img,
+#restrictions .list label img {
     width: 30px;
     object-fit: scale-down;
 
@@ -175,8 +189,4 @@ label img {
     opacity: 0;
     position: absolute;
     z-index: -1;
-}
-
-.hidden {
-    display: none !important;
 }
