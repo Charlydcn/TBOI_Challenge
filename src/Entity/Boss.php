@@ -24,6 +24,9 @@ class Boss
     #[ORM\ManyToMany(targetEntity: Challenge::class, mappedBy: 'bosses')]
     private Collection $challenges;
 
+    #[ORM\Column]
+    private ?bool $timed = null;
+
     public function __construct()
     {
         $this->challenges = new ArrayCollection();
@@ -88,5 +91,17 @@ class Boss
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function isTimed(): ?bool
+    {
+        return $this->timed;
+    }
+
+    public function setTimed(bool $timed): static
+    {
+        $this->timed = $timed;
+
+        return $this;
     }
 }
