@@ -14,82 +14,44 @@ $('.check-btn').click(function(event) {
     $(this).find('img').toggleClass('checked')
 })
 
-/* characters 'check all' button */
-$('.checkall-ch').click(function(event) {
-    var checkboxes = $('.checkbox-ch');
+// checkall buttons
+$('.prevent-select[data-action="checkall"]').click(function(event) {
+                    // checkall > '.btns' > '.list' > '.checkbox'
+    var checkboxes = $(this).parent().next().find('.checkbox')
 
-    checkboxes.each(function() {
-        var checkBtnDiv = $(this).closest('label').find('.check-btn');
-        
-        if (!$(this).prop('checked')) {
-            // check the checkbox
-            $(this).prop('checked', true);
+    $.each(checkboxes, function(value) {
+        // find div containing label img and text
+        var checkBtnDiv = $(this).next()
 
-            // add class to elements
-            checkBtnDiv.addClass('checked');
-            checkBtnDiv.find('img').addClass('checked');
-        }
-    });
+        $(this).prop('checked', true)
 
-    // preventDefault() to not trigger the default click eventListener (if no preventDefault, click triggers function twice)
+        // add class 'checked' to label text and img
+        checkBtnDiv.addClass('checked')
+        checkBtnDiv.find('img').addClass('checked')
+    })
+
+    // preventDefault to not trigger function twice (<a> tag so it triggers twice)
     event.preventDefault();
 });
 
-/* characters 'check none' button */
-$('.none-ch').click(function(event) {
-    var checkboxes = $('.checkbox-ch');
+// checknone buttons
+$('.prevent-select[data-action="checknone"]').click(function(event) {
+                    // checkall > '.btns' > '.list' > '.checkbox'
+    var checkboxes = $(this).parent().next().find('.checkbox')
 
-    checkboxes.each(function() {
-        var checkBtnDiv = $(this).closest('label').find('.check-btn');
+    $.each(checkboxes, function(value) {
+        // find div containing label img and text
+        var checkBtnDiv = $(this).next()
 
-        if ($(this).prop('checked')) {
-            // Décochez la case à cocher
-            $(this).prop('checked', false);
+        $(this).prop('checked', false)
 
-            // Supprimez la classe "checked" de la div et de l'image
-            checkBtnDiv.removeClass('checked');
-            checkBtnDiv.find('img').removeClass('checked');
-        }
-    });
+        // add class 'checked' to label text and img
+        checkBtnDiv.removeClass('checked')
+        checkBtnDiv.find('img').removeClass('checked')
+    })
 
-    // preventDefault() to not trigger the default click eventListener (if no preventDefault, click triggers function twice)
+    // preventDefault to not trigger function twice (<a> tag so it triggers twice)
     event.preventDefault();
 });
 
-/* bosses 'check all' button */
-$('.checkall-boss').click(function(event) {
-    var checkboxes = $('.checkbox-boss');
-
-    checkboxes.each(function() {
-        var checkBtnDiv = $(this).closest('label').find('.check-btn');
-        
-        if (!$(this).prop('checked')) {
-            $(this).prop('checked', true);
-
-            checkBtnDiv.addClass('checked');
-            checkBtnDiv.find('img').addClass('checked');
-        }
-    });
-
-    // Empêchez le comportement par défaut du clic
-    event.preventDefault();
-});
-
-/* bosses 'check none' button */
-$('.none-boss').click(function(event) {
-    var checkboxes = $('.checkbox-boss');
-
-    checkboxes.each(function() {
-        var checkBtnDiv = $(this).closest('label').find('.check-btn');
-
-        if ($(this).prop('checked')) {
-            $(this).prop('checked', false);
-
-            checkBtnDiv.removeClass('checked');
-            checkBtnDiv.find('img').removeClass('checked');
-        }
-    });
-
-    event.preventDefault();
-});
 
