@@ -9,6 +9,7 @@ use App\Entity\Restriction;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -24,6 +25,10 @@ class ChallengeType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
+
+                'attr' => [
+                    'checked' => false,
+                ],
 
                 'constraints' => [
                     new Length([
@@ -41,6 +46,10 @@ class ChallengeType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
 
+                'attr' => [
+                    'checked' => false,
+                ],
+
                 'constraints' => [
                     new Length([
                         'min' => 3,
@@ -57,6 +66,10 @@ class ChallengeType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
 
+                'attr' => [
+                    'checked' => false,
+                ],
+
                 'constraints' => [
                     new Length([
                         'min' => 6,
@@ -67,16 +80,39 @@ class ChallengeType extends AbstractType
                 ],
             ])
 
-            ->add('streak', IntegerType::class, [
-                'constraints' => [
-                    new Length([
-                        'min' => 1,
-                        'minMessage' => 'Restriction chance cannot be less than 1 digit',
-                        'max' => 3,
-                        'maxMessage' => 'Restriction chance cannot exceed 3 digits'
-                    ]),
+            ->add('restrChance', IntegerType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'min' => 1,
+                    'max' => 100,
+                    'onkeypress' => 'if (this.value.length > 2) return false;',
+                    'name' => 'restr_chance',
+                    'step' => 1,
+                    'value' => 10,
+                    'maxlength' => 3,
                 ],
             ])
+
+            ->add('streak', IntegerType::class, [
+                'attr' => [
+                    'min' => 0,
+                    'max' => 100,
+                    'step' => 1,
+                    'value' => 0,
+                    'maxlength' => 3,
+                ],
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 10,
+                        'maxMessage' => 'Win-streak number is too long',
+                    ]),
+                ],
+                'label_attr' => [
+                    'class' => 'prevent-select',
+                ],
+            ])
+            
             
             ->add('submit', SubmitType::class)
         ;
