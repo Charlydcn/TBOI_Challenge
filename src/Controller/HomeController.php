@@ -17,12 +17,14 @@ class HomeController extends AbstractController
     public function index(CharacterRepository $characterRepository, BossRepository $bossRepository, RestrictionRepository $restrictionRepository): Response
     {
         $characters = $characterRepository->findAll();
-        $bosses = $bossRepository->findAll();
+        $bosses = $bossRepository->findBy(['timed' => 0]);
+        $timedBosses = $bossRepository->findBy(['timed' => 1]);
         $restrictions = $restrictionRepository->findAll();
 
         return $this->render('home/index.html.twig', [
             'characters' => $characters,
             'bosses' => $bosses,
+            'timedBosses' => $timedBosses,
             'restrictions' => $restrictions,
         ]);
     }
