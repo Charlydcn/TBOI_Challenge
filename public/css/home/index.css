@@ -40,9 +40,13 @@
     justify-content: unset;
 }
 
+#restr-chance label,
+#restr-chance + div label {
+    cursor: unset;
+}
 
 /* % of chance of restriction label */
-#step2 .list label:first-of-type {
+#step2 .list #restr-chance {
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -54,13 +58,18 @@
 }
 
 /* % of chance of restriction input */
-#step2 .list label:first-of-type input {
+#step2 .list #restr-chance input {
     outline: none;
     padding: 2.5px 5px;
     background: none;
     border: none;    
     font-size: 2rem;
     width:65px;
+}
+
+/* win streak input */
+#step2 .list #restr-chance ~ div {
+    color:red;
 }
 
 #form > img {
@@ -185,8 +194,8 @@ label img {
 }
 
 /* checkboxes */
-.list input[type="checkbox"] {
+/* .list input[type="checkbox"] {
     opacity: 0;
     position: absolute;
     z-index: -1;
-}
+} */
