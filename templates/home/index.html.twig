@@ -7,47 +7,41 @@
 {% endblock stylesheets %}
 
 {% block body %}    
-    <div>
-        {% if character is defined %}
-            <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="">
-            {{ character.name }}
-        {% endif %}
-        <br>
-        {% if boss is defined %}
-            <img src="{{ asset('/img/bosses/' ~ boss.img)}}" alt="">
-            {{ boss.name }}
-        {% endif %}
-        <br>
-        {% if challRestrictions is defined and challRestrictions != null %}
-            {% for restriction in challRestrictions %}
-                {{ restriction[0] }}
-            {% endfor %}        
-        {% endif %}
-    </div>
-
     <a class="prevent-select" id="options">Options</a>
+    <a href="{{ path('show_challenge', {'id': 1}) }}">test</a>
 
     <div id="form" class="hidden">
+        {# background image #}
         <img src="{{ asset('/img/misc/ancient_page_new.png') }}" alt="image of a paper sheet with blood">
+
+        {# challenge creation form #}
         <form action="{{ path('app_randomize') }}" method="POST">
-            <a class="prevent-select" id="close-btn">X</a>      
+
+            {# exit btn #}
+            <a class="prevent-select" id="close-btn">X</a>   
+
+            {# step 1 (characters selection + boss selection) #}
             <div id="step1">
+
                 {# characters #}
                 <div id="characters">
-                    <h1>Characters</h1>
+                    <h2>Characters :</h2>
+
+                    {# btns to check all checkboxes, none checkboxes, etc. #}
                     <div class="btns">
-                        <a class="prevent-select checkall-ch">All</a>
-                        <a class="prevent-select none-ch">None</a>
+                        <a class="prevent-select checkall" data-action="checkall">All</a>
+                        <a class="prevent-select none" data-action="checknone">None</a>
                         <a class="prevent-select">All tainted</a>
                         <a class="prevent-select">All non-tainted</a>
                     </div>
+
+                    {# list of all existing characters #}
                     <div class="list">
                         {% for character in characters %}
                             <label class="prevent-select">
-                                <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}" class="checkbox-ch">
-                                {# <img src="{{ asset('/img/characters/' ~ character.name ~ '_head.png') }}" alt=""> #}
+                                <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}" class="checkbox">
                                 <div class="check-btn">
-                                    <img src="{{ asset('/img/characters/isaac_head.png') }}" alt="{{ character.name }}'s head">
+                                    <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "_": "", "&": ""}) ~ '.png') }}" alt="{{ character.name }}'s head">
                                     {{ character.name }}
                                 </div>
                             </label>
@@ -57,17 +51,21 @@
         
                 {# bosses #}
                 <div id="bosses">
-                    <h1>Bosses</h1>
+                    <h2>Bosses :</h2>
+
+                    {# btns to check all checkboxes, none checkboxes, etc. #}
                     <div class="btns">
-                        <a class="prevent-select checkall-boss">All</a>
-                        <a class="prevent-select none-boss">None</a>
+                        <a class="prevent-select checkall" data-action="checkall">All</a>
+                        <a class="prevent-select none" data-action="checknone">None</a>
                     </div>
+
+                    {# list of all existing final bosses #}
                     <div class="list">
                         {% for boss in bosses %}
                             <label class="prevent-select">
-                                <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}" class="checkbox-boss">
+                                <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}" class="checkbox">
                                 <div class="check-btn">
-                                    <img src="{{ asset('/img/completion_marks/satan.png') }}" alt="{{ boss.name }}'s completion mark">
+                                    <img src="{{ asset('/img/completion_marks/' ~ boss.name|replace({" ": "", "'": ""}) ~ '.webp') }}" alt="{{ boss.name }}'s completion mark">
                                     {{ boss.name }}
                                 </div>
                             </label>
@@ -75,33 +73,54 @@
                     </div>
                 </div>
 
+                {# next btn that display step 2 and hide step 1 #}
                 <a id="next-btn" class="prevent-select">Next</a>
             </div>
     
+            {# step 2 (restrictions + restrictions chance selection + submit) #}
             <div id="step2" class="hidden">
-                <a id="previous-btn">Go back</a>
+
                 {# restrictions #}
                 <div id="restrictions">
-                    <h1>Restrictions</h1>
-                    <div>
+                    <h2 class="prevent-select"><span>&lt;</span>Restrictions</h2>
+
+                    {# btns to check all checkboxes, none checkboxes, etc. #}
+                    <div class="btns">
+                        <a class="prevent-select checkall" data-action="checkall">All</a>
+                        <a class="prevent-select none" data-action="checknone">None</a>
+                    </div>
+                    
+                    {# list of all existing restrictions + input of restriction chance #}
+                    <div class="list">
+                        <label class="prevent-select">
+                            <input type="number" min="1" max="100" onkeypress="if (this.value.length > 2) return false;" name="restr_chance" step="1" value="10" maxlength="3">
+                            % chance of occuring
+                        </label>
+                        
                         {% for restriction in restrictions %}
-                            <label>
-                                <input type="checkbox" name="r_{{restriction.name}}" value="{{ restriction.id }}">
-                                {{ restriction.name }}
+                            <label class="prevent-select">
+                                <input type="checkbox" name="r_{{restriction.name}}" value="{{ restriction.id }}" class="checkbox">
+                                <div class="check-btn">
+                                    <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }} restriction image">
+                                    {{ restriction.name }}
+                                </div>
                             </label>
                         {% endfor %}
                     </div>
                 </div>
+                {# submit btn #}
+                <input type="submit" name="submit" class="hidden" value="Create">
             </div>
     
-            <input type="submit" name="submit" class="hidden">
         </form>
     </div>
 
+    {# overlay behind options menu (dark bg) #}
     <div id="overlay" class="hidden"></div>
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('/js/checkboxes.js')}}"></script>
+    <script src="{{ asset('/js/options.js')}}"></script>
 {% endblock javascripts %}
