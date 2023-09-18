@@ -3,7 +3,7 @@
 $('.check-btn').click(function(event) {
     // checkbox = closest 'input' element from $(this), which is the '.check-btn' that has been clicked
     var checkbox = $(this).closest('input')
-
+    
     /* we store the contrary of the property (prop.) 'checked' of the checkbox (bool) to apply it (declare true if it was false and vice versa) */
     var check = !$(checkbox).prop('checked')
     // 'prop.' = properties: 'prop.property, value'
@@ -21,7 +21,7 @@ $('.check-btn').click(function(event) {
 // --------------------------------------------------------------------------------------
 // check all checkboxes on checkall btns ------------------------------------------------
 $('.prevent-select[data-action="checkall"]').click(function(event) {
-                    // checkall > '.btns' > '.list' > '.checkbox'
+                    // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
     var checkboxes = $(this).parent().next().find('.checkbox')
 
     $.each(checkboxes, function() {
@@ -48,7 +48,7 @@ $('.prevent-select[data-action="checkall"]').click(function(event) {
 // check none checkboxes on checknone btns ----------------------------------------------
 
 $('.prevent-select[data-action="checknone"]').click(function(event) {
-                    // checkall > '.btns' > '.list' > '.checkbox'
+                    // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
     var checkboxes = $(this).parent().next().find('.checkbox')
 
     $.each(checkboxes, function() {
@@ -73,12 +73,13 @@ $('.prevent-select[data-action="checknone"]').click(function(event) {
 // --------------------------------------------------------------------------------------
 // display restrictions chance if atleast one checkbox is checked -----------------------
 
-var restrChanceLabel = $('#step2 .list label:first-of-type')
-var restrChanceCheckboxes = $('#step2 .list input[type="checkbox"]')
+var restrChanceLabel = $('#step2 #restr-chance')
+var restrictionsCheckbox = $('#step2 .checkbox')
 
-restrChanceCheckboxes.on('change', function () {
-    // check if one of the restrChanceCheckboxes is checked
-    var oneChecked = restrChanceCheckboxes.is(':checked')
+restrictionsCheckbox.on('change', function () {
+    // check if one of the restrictionsCheckbox is checked
+    var oneChecked = restrictionsCheckbox.is(':checked')
+    console.log(oneChecked)
     
     if (oneChecked) {
         restrChanceLabel.css("max-height", "150px")
