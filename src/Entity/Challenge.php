@@ -317,15 +317,15 @@ class Challenge
         $r = "";
 
         foreach($this->characters as $character) {
-            $r += " " + $character;
+            $r .= " " . $character->getName() . "<br";
         }
 
         foreach($this->bosses as $boss) {
-            $r += " " + $boss;
+            $r .= " " . $boss->getName() . "<br";
         }
 
         foreach($this->restrictions as $restriction) {
-            $r += " " + $restriction;
+            $r .= " " . $restriction->getName() . "<br";
         }
 
         return $r;
