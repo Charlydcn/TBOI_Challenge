@@ -3,88 +3,210 @@
 {% block title %}Challenge creation{% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/home/index.css')}}">
 {% endblock stylesheets %}
 
 {% block body %}
 
-    <form action="{{ path('app_randomize') }}" method="POST">
+    {% if app.user %}
+    <a class="prevent-select" id="options">Options</a>
 
-        {# characters #}
-        <div>
-            <h1>Characters</h1>
-            <div>
-                {% for character in characters %}
+        {#              class="hidden"> #}
+        <div id="form" class="hidden">
+            {# background image #}
+            <img src="{{ asset('/img/misc/ancient_page_new.png') }}" alt="image of a paper sheet with blood">
 
-                    <div>
-                        <label>
-                            {{ character.name }}
-                            <input type="checkbox" name="ch_{{character.name}}" value="{{ character.id }}">
-                        </label>
+            {# challenge creation form #}
+            {{ form_start(newChallengeForm, {'action': path('new_challenge'), 'method': 'POST'}) }}
+            {# <form action="{{ path('new_challenge') }}" method="POST"> #}
+
+                {# exit btn #}
+                <a class="prevent-select" id="close-btn">X</a>   
+
+                {# step 1 (characters selection + boss selection + next btn) #}
+                <div id="step1">
+
+                    {# characters #}
+                    <div id="characters">
+                        <h2>Characters :</h2>
+
+                        {# btns to check all checkboxes, none checkboxes, etc. #}
+                        <div class="btns">
+                            <a class="prevent-select checkall" data-action="checkall">All</a>
+                            <a class="prevent-select none" data-action="checknone">None</a>
+                            <a class="prevent-select">All tainted</a>
+                            <a class="prevent-select">All non-tainted</a>
+                        </div>
+
+                        {# list of all existing characters #}
+                        <div class="list">
+                            {# THANKS TO : https://tinyurl.com/267upyyc #}
+
+                            {# for each characterField in array newChallengeForm.characters #}
+                            {% for CharacterField in newChallengeForm.characters %}
+
+                                {# we store index in variable #}
+                                {% set index = CharacterField.vars.value %}
+
+                                {# naviguate our way through the entity #}
+                                {% set character = newChallengeForm.characters.vars.choices[index].data %}
+
+                                <label class="prevent-select">
+
+                                    {# form_widget = checkbox input #}
+                                    {{ form_widget(CharacterField, {
+                                        'attr': {
+                                            'class': 'checkbox',
+                                        }
+                                    })
+                                    }}
+
+                                    {# div.check-btn containing everything that's clickable for the checkbox (img and label text) #}
+                                    <div class="check-btn">
+                                        <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.png') }}" alt="{{ character.name }}'s head">
+                                        {{ character.name }}
+                                    </div>
+                                    
+                                </label>
+
+                            {% endfor %}
+                        </div>
                     </div>
-                {% endfor %}
-            </div>
-        </div>
+            
+                    {# bosses #}
+                    <div id="bosses">
+                        <h2>Bosses :</h2>
 
-        {# bosses #}
-        <div>
-            <h1>Bosses</h1>
-            <div>
-                {% for boss in bosses %}
-                    <div>
-                        <label>
-                            {{ boss.name }}
-                            <input type="checkbox" name="b_{{boss.name}}" value="{{ boss.id }}">
-                        </label>
+                        {# btns to check all checkboxes, none checkboxes, etc. #}
+                        <div class="btns">
+                            <a class="prevent-select checkall" data-action="checkall">All</a>
+                            <a class="prevent-select none" data-action="checknone">None</a>
+                        </div>
+
+                        {# list of all existing final bosses #}
+                        <div class="list">
+                            {% for BossField in newChallengeForm.bosses %}
+
+                                {# we store index in variable #}
+                                {% set index = BossField.vars.value %}
+
+                                {# naviguate our way through the entity #}
+                                {% set boss = newChallengeForm.bosses.vars.choices[index].data %}
+
+                                <label class="prevent-select">
+
+                                    {# form_widget = checkbox input #}
+                                    {{ form_widget(BossField, {
+                                        'attr': {
+                                            'class': 'checkbox',
+                                        }
+                                    })}}
+
+                                    {# div.check-btn containing everything that's clickable for the checkbox (img and label text) #}
+                                    <div class="check-btn">
+                                        <img src="{{ asset('/img/completion_marks/' ~ boss.name|replace({" ": "", "'": ""}) ~ '.webp') }}" alt="{{ boss.name }}'s completion mark">
+                                        {{ boss.name }}
+                                    </div>
+
+                                </label>
+
+                            {% endfor %}
+                        </div>
+
                     </div>
-                {% endfor %}
-            </div>
-        </div>
 
-        {# restrictions #}
-        <div>
-            <h1>Restrictions</h1>
-            <div>
-                {% for restriction in restrictions %}
-                    <div>
-                        <label>
-                            {{ restriction.name }}
-                            <input type="checkbox" name="r_{{restriction.name}}" value="{{ restriction.id }}">
-                        </label>
+                    {# next btn that display step 2 and hide step 1 #}
+                    <a id="next-btn" class="prevent-select">Next</a>
+                </div>
+        
+                {# step 2 (restrictions + restrictions chance selection + submit) #}
+                <div id="step2" class="hidden">
+
+                    {# restrictions #}
+                    <div id="restrictions">
+                        <h2 class="prevent-select"><span>&lt;</span>Restrictions</h2>
+
+                        {# btns to check all checkboxes, none checkboxes, etc. #}
+                        <div class="btns">
+                            <a class="prevent-select checkall" data-action="checkall">All</a>
+                            <a class="prevent-select none" data-action="checknone">None</a>
+                        </div>
+                        
+                        {# list of all existing restrictions + input of restriction chance + win streak #}
+                        <div class="list">
+
+                            {# restriction chance input #}
+                            <div id="restr-chance">
+                                {# input number #}
+                                {{ form_widget(newChallengeForm.restrChance) }}
+
+                                {# label #}
+                                {{ form_label(newChallengeForm.restrChance, '% chance of occuring', {
+                                    'label_attr': {
+                                        'class': 'prevent-select',
+                                    }
+                                }) }}
+                            </div>
+                            
+
+                            {# win streak input #}
+                            <div>
+                                {{ form_label(newChallengeForm.streak, 'Win-streak : ') }}
+                                {{ form_widget(newChallengeForm.streak, {
+                                    'attr': {
+                                        'onkeypress': 'if (this.value.length > 2) return false;',
+                                    }
+                                }) }}
+                            </div>
+
+                            {% for RestrictionField in newChallengeForm.restrictions %}
+
+                                {# we store index in variable #}
+                                {% set index = RestrictionField.vars.value %}
+
+                                {# naviguate our way through the entity #}
+                                {% set restriction = newChallengeForm.restrictions.vars.choices[index].data %}
+
+                                <label class="prevent-select">
+
+                                    {# form_widget = checkbox input #}
+                                    {{ form_widget(RestrictionField, {
+                                        'attr': {
+                                            'class': 'checkbox',
+                                        }
+                                    })}}
+
+                                    <div class="check-btn">
+                                        <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
+                                        {{ restriction.name }}
+                                    </div>
+
+                                </label>
+                                
+                            {% endfor %}
+                            
+                        </div>
                     </div>
-                {% endfor %}
-            </div>
+
+                    {# submit btn #}
+                    <input type="submit" name="submit" class="hidden" value="Create">
+                </div>
+        
+            {{ form_end(newChallengeForm) }}
         </div>
 
-        <input type="submit" name="submit">
-    </form>
+        {# overlay behind options menu (dark bg) #}
+        <div id="overlay" class="hidden"></div>
+    
+    {% else %}
+        <h1>faut être co</h1>
 
-    {# form si j'utilise le form type #}
-    {# <form method="POST">
-        {{ form_start(form, {'action': path('app_randomize'), 'method': 'POST'}) }}
+    {% endif %}
 
-        <h1>Characters</h1>
-        <div>
-            {% for character in characters %}
-                {{ form_row(form.character['ch_' ~ character.name]) }}
-            {% endfor %}
-        </div>
-
-        <h1>Bosses</h1>
-        <div>
-            {% for boss in bosses %}
-                {{ form_row(form['b_' ~ boss.name]) }}
-            {% endfor %}
-        </div>
-
-        <h1>Restrictions</h1>
-        <div>
-            {% for restriction in restrictions %}
-                {{ form_row(form['r_' ~ restriction.name]) }}
-            {% endfor %}
-        </div>
-
-        {{ form_row(form.submit) }}
-        {{ form_end(form) }}
-    </form> #}
-
+    
 {% endblock %}
+    
+{% block javascripts %}
+    <script src="{{ asset('/js/checkboxes.js')}}"></script>
+    <script src="{{ asset('/js/options.js')}}"></script>
+{% endblock javascripts %}
