@@ -23,7 +23,7 @@
                     </li>
     
                     <li class="text-shadow underline-hover">
-                        <a href="{{ path('app_randomize') }}">Create</a>
+                        <a href="{{ path('new_challenge') }}">Create</a>
                     </li>
                 </div>
 
@@ -43,12 +43,15 @@
             </ul>
             
         </nav>
-        {% block body %}        
+
+        {% block body %}
         {% endblock %}
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="{{ asset('/js/script.js')}}"></script>
+
         {% block javascripts %}
-        {% endblock %}
+        {% endblock %}  
+        
     </body>
 </html>
