@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Challenge;
 use App\Form\ChallengeType;
 use App\Repository\BossRepository;
@@ -44,22 +45,58 @@ class ChallengeController extends AbstractController
 
         //  handle request : get form's corresponding superglobal ($_POST or $_GET) to handle form request
         $form->handleRequest($request);
-
+        
         // if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // if no character selected, exit method
+            if (count($form->get('characters')->getData()) < 1) {
+                $this->addFlash(
+                    'warning',
+                    'You have to select atleast 1 character'
+                );
+                
+                return $this->redirectToRoute('new_challenge');
+            }
+
+            // if no boss selected, exit method
+            if (count($form->get('characters')->getData()) < 1) {
+
+                // add flash message of category warning
+                $this->addFlash(
+                    'warning',
+                    'You have to select atleast 1 boss'
+                );
+                
+                // and redirect
+                return $this->redirectToRoute('new_challenge');
+            }
+
+
             // restriction chance (mapped=false input) in variable
+            // !! NEEDS TO BE SENT TO THE SHOW VIEW TO RANDOMIZE WHEN CHALLENGE IS PLAYED !!
             $restrictionChance = $form->get('restrChance')->getData();
+
 
             // hydrate new challenge with form data
             $challenge = $form->getData();
+
+
+            // if winstreak checkbox isn't checked, set challenge winstreak attribute to 0 to make sure user can't
+            // submit a winstreak if winstreak checkbox isn't checked
+            if ($form->get('streakCheckbox')->getData() === false) {
+                $challenge->setStreak(0);
+            }
+
+
+            // add creationDate (current date)
+            $challenge->setCreationDate(new DateTime);
+
 
             // find current user with Security's method getUser()
             $user = $security->getUser();
             // and set current user to challenge creator (you have to be logged in to create a challenge)
             $challenge->setCreator($user);
-
-
 
 
             // persist = prepare
