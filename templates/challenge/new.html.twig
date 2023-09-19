@@ -11,17 +11,18 @@
     {% if app.user %}
     <a class="prevent-select" id="options">Options</a>
 
-        {#              class="hidden"> #}
         <div id="form" class="hidden">
             {# background image #}
-            <img src="{{ asset('/img/misc/ancient_page_new.png') }}" alt="image of a paper sheet with blood">
+            <img src="{{ asset('/img/misc/ancient_page_new.webp') }}" alt="image of a paper sheet with blood">
 
             {# challenge creation form #}
             {{ form_start(newChallengeForm, {'action': path('new_challenge'), 'method': 'POST'}) }}
             {# <form action="{{ path('new_challenge') }}" method="POST"> #}
 
                 {# exit btn #}
-                <a class="prevent-select" id="close-btn">X</a>   
+                <a class="prevent-select" id="close-btn">X</a>
+                
+                {# {{ form_errors(newChallengeForm) }} #}
 
                 {# step 1 (characters selection + boss selection + next btn) #}
                 <div id="step1">
@@ -53,7 +54,7 @@
 
                                 <label class="prevent-select">
 
-                                    {# form_widget = checkbox input #}
+                                    {# <input type="checkbox" class="checkbox"> #}
                                     {{ form_widget(CharacterField, {
                                         'attr': {
                                             'class': 'checkbox',
@@ -63,7 +64,7 @@
 
                                     {# div.check-btn containing everything that's clickable for the checkbox (img and label text) #}
                                     <div class="check-btn">
-                                        <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.png') }}" alt="{{ character.name }}'s head">
+                                        <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.webp') }}" alt="{{ character.name }}'s head">
                                         {{ character.name }}
                                     </div>
                                     
@@ -95,7 +96,7 @@
 
                                 <label class="prevent-select">
 
-                                    {# form_widget = checkbox input #}
+                                    {# <input type="checkbox" class="checkbox"> #}
                                     {{ form_widget(BossField, {
                                         'attr': {
                                             'class': 'checkbox',
@@ -152,11 +153,14 @@
                             {# win streak input #}
                             <div>
                                 {{ form_label(newChallengeForm.streak, 'Win-streak : ') }}
+                                
+                                {# <input type="checkbox" class="checkbox"> #}
                                 {{ form_widget(newChallengeForm.streak, {
                                     'attr': {
                                         'onkeypress': 'if (this.value.length > 2) return false;',
                                     }
-                                }) }}
+                                }) 
+                                }}
                             </div>
 
                             {% for RestrictionField in newChallengeForm.restrictions %}
@@ -168,8 +172,7 @@
                                 {% set restriction = newChallengeForm.restrictions.vars.choices[index].data %}
 
                                 <label class="prevent-select">
-
-                                    {# form_widget = checkbox input #}
+                                    {# <input type="checkbox" class="checkbox"> #}
                                     {{ form_widget(RestrictionField, {
                                         'attr': {
                                             'class': 'checkbox',
@@ -180,16 +183,11 @@
                                         <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
                                         {{ restriction.name }}
                                     </div>
-
                                 </label>
                                 
-                            {% endfor %}
-                            
+                            {% endfor %}                            
                         </div>
                     </div>
-
-                    {# submit btn #}
-                    <input type="submit" name="submit" class="hidden" value="Create">
                 </div>
         
             {{ form_end(newChallengeForm) }}
