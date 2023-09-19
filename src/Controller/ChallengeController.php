@@ -47,15 +47,21 @@ class ChallengeController extends AbstractController
 
         // if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
+
+            // restriction chance (mapped=false input) in variable
+            $restrictionChance = $form->get('restrChance')->getData();
+
+            // hydrate new challenge with form data
+            $challenge = $form->getData();
 
             // find current user with Security's method getUser()
             $user = $security->getUser();
             // and set current user to challenge creator (you have to be logged in to create a challenge)
             $challenge->setCreator($user);
 
-            // get all form data
-            $challenge = $form->getData();
+
+
+
             // persist = prepare
             $entityManager->persist($challenge);
             // flush = execute
@@ -71,7 +77,7 @@ class ChallengeController extends AbstractController
     }
 
     // #[Route('/new', name: 'new_challenge')]
-    // public function new(
+    // public function test(
     //     Challenge $challenge = null,
     //     Request $request,
     //     CharacterRepository $characterRepository,
