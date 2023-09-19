@@ -29,15 +29,6 @@ class ChallengeType extends AbstractType
                 'attr' => [
                     'checked' => false,
                 ],
-
-                'constraints' => [
-                    new Length([
-                        'min' => 3,
-                        'minMessage' => 'Incorrect character(s)',
-                        'max' => 25,
-                        'maxMessage' => 'Incorrect character(s)'
-                    ]),
-                ],
             ])
 
             ->add('bosses', EntityType::class, [
@@ -49,15 +40,6 @@ class ChallengeType extends AbstractType
                 'attr' => [
                     'checked' => false,
                 ],
-
-                'constraints' => [
-                    new Length([
-                        'min' => 3,
-                        'minMessage' => 'Incorrect boss(es)',
-                        'max' => 25,
-                        'maxMessage' => 'Incorrect boss(es)'
-                    ]),
-                ],
             ])
 
             ->add('restrictions', EntityType::class, [
@@ -68,15 +50,6 @@ class ChallengeType extends AbstractType
 
                 'attr' => [
                     'checked' => false,
-                ],
-
-                'constraints' => [
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Incorrect restriction(s)',
-                        'max' => 50,
-                        'maxMessage' => 'Incorrect restriction(s)'
-                    ]),
                 ],
             ])
 
@@ -101,21 +74,27 @@ class ChallengeType extends AbstractType
                     'value' => 0,
                     'maxlength' => 3,
                 ],
-                'required' => false,
+                            
+                'label_attr' => [
+                    'class' => 'prevent-select',
+                ],
+
                 'constraints' => [
                     new Length([
                         'max' => 10,
                         'maxMessage' => 'Win-streak number is too long',
                     ]),
                 ],
-                'label_attr' => [
-                    'class' => 'prevent-select',
-                ],
+
+                'required' => false,
             ])
             
             
-            ->add('submit', SubmitType::class)
-        ;
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'hidden',
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
