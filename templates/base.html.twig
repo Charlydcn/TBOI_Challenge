@@ -44,6 +44,27 @@
             
         </nav>
 
+        <div id="flash-messages">
+            {# flash message displaying #}
+            {% for message in app.flashes('success') %}
+                <div class="flash flash-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+    
+            {% for message in app.flashes('warning') %}
+                <div class="flash flash-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+    
+            {% for message in app.flashes('error') %}
+                <div class="flash flash-error">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+
         {% block body %}
         {% endblock %}
         
