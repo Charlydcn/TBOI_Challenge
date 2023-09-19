@@ -107,7 +107,7 @@
 }
 
 #next-btn,
-input[type="submit"] {
+#challenge_submit {
     font-size: 3rem;
     position: absolute;
     bottom: 5%;
