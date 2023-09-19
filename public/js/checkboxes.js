@@ -76,7 +76,7 @@ $('.prevent-select[data-action="checknone"]').click(function(event) {
 var restrChanceLabel = $('#step2 #restr-chance')
 var restrictionsCheckbox = $('#step2 .checkbox')
 
-restrictionsCheckbox.on('change', function () {
+restrictionsCheckbox.on('change', function() {
     // check if one of the restrictionsCheckbox is checked
     var oneChecked = restrictionsCheckbox.is(':checked')
     
@@ -84,6 +84,25 @@ restrictionsCheckbox.on('change', function () {
         restrChanceLabel.css("max-height", "150px")
     } else {
         restrChanceLabel.css("max-height", "0")
+    }
+})
+
+// --------------------------------------------------------------------------------------
+
+
+// --------------------------------------------------------------------------------------
+// show win-streak input number if win-streak checkbox is checked -----------------------
+
+var streakCheckbox = $('#streak label:first-of-type input')
+var streakInputNb = $('#streak label:last-of-type')
+
+streakCheckbox.on('change', function() {
+    if ((streakCheckbox.prop('checked')) === true) {
+        streakInputNb.css("opacity", "100")
+        streakInputNb.css("translate", "0")
+    } else {
+        streakInputNb.css("opacity", "0")
+        streakInputNb.css("translate", "-45px")
     }
 })
 
