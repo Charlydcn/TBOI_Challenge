@@ -44,7 +44,7 @@ class Challenge
     #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'challenges')]
     private Collection $characters;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:['default' => 'CURRENT_TIMESTAMP'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
     public function __construct()
