@@ -6,7 +6,7 @@ const nextBtn = document.querySelector('#next-btn')
 const step1 = document.querySelector('#step1')
 const step2 = document.querySelector('#step2')
 const previousBtn = step2.querySelector('#restrictions h2')
-const submit = step2.lastElementChild
+const submit = document.querySelector('#challenge_submit')
 
 // OPEN MENU (options on click : show form, step 1 and overlay)
 optionsBtn.addEventListener('click', () => {
@@ -39,6 +39,7 @@ nextBtn.addEventListener('click', () => {
 previousBtn.addEventListener('click', () => {
     step1.classList.remove('hidden')
     step2.classList.add('hidden')
+    submit.classList.add('hidden')
 })
 
 // CLOSE MENU
