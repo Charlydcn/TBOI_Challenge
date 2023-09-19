@@ -11,25 +11,22 @@
 {% block body %}
 
     <div>
-        {% if character != null %}
-            <figure>
-                <img src="{{ asset('/img/characters/' ~ character.img) }}" alt="{{ character.name }}'s image">
-                <figcaption>{{ character.name }}</figcaption>
-            </figure>    
-        {% endif %}
-
-        {% if boss != null %}
-            <figure>
-                <img src="{{ asset('/img/bosses/' ~ boss.img) }}" alt="{{ boss.name }}'s image">
-                <figcaption>{{ boss.name }}</figcaption>
-            </figure>    
-        {% endif %}
-
-        {% if restrictions != null %}
-            {% for restriction in restrictions %}
-                {{ restriction[0] }}
-            {% endfor %}   
-        {% endif %}
+        {% for character in challenge.characters %}
+            <img src="{{ asset('/img/characters/' ~ character.img) }}" alt="{{ character.name }}'s image">
+            {{ character.name }}
+        {% endfor %}
+    </div>
+    <div>
+        {% for boss in challenge.bosses %}
+            <img src="{{ asset('/img/bosses/' ~ boss.img) }}" alt="{{ boss.name }}'s image">
+            {{ boss.name }}
+        {% endfor %}
+    </div>
+    <div>
+        {% for restriction in challenge.restrictions %}
+            <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
+            {{ restriction.name }}
+        {% endfor %}
     </div>
 
 {% endblock %}
