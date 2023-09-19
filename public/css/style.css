@@ -6,12 +6,13 @@
 
 
 html,
-input {
+input,
+button {
     font-family: "Upheaval TT (BRK)", Arial, Helvetica, sans-serif;
 }
 
 body {
-    background-image: url("../img/misc/background.png");
+    background-image: url("../img/misc/background.webp");
     background-repeat: no-repeat;
     min-height: 125vh;
 }
@@ -69,6 +70,7 @@ nav #desktop a {
 /* underline hover animation */
 .underline-hover {
 	position: relative;
+    transition:1s;
 }
 
 .underline-hover::after {
@@ -82,12 +84,12 @@ nav #desktop a {
     z-index:-1;
 	background-color: currentColor;
 	transition: transform 0.3s;
-    transform-origin: bottom right;
+    transform-origin: right;
 }
 
 .underline-hover:hover::after {
 	transform: scaleX(1);
-	transform-origin: bottom left;
+	transform-origin: left;
 }
 
 /* nav-left = browse & create */
