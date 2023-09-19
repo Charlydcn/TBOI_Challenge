@@ -28,6 +28,32 @@ nav {
     justify-content: center;
 }
 
+/* flash messages */
+.flash {
+    padding: .5rem 1.5rem;
+    border-radius: 2.5px;
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    margin: 1rem auto;
+}
+
+.flash-success {
+    background-color: #8e9c93;
+    color: #2b4032;
+}
+
+.flash-warning {
+    background-color: #d7cfb5;
+    color: #725f28;
+}
+
+.flash-error {
+    background-color: #d3878a;
+    color: #721c24;
+}
+
+
 .text-shadow {
     text-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
 }
