@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ChallengeType extends AbstractType
 {
@@ -66,7 +67,13 @@ class ChallengeType extends AbstractType
                 ],
             ])
 
+            ->add('streakCheckbox', CheckboxType::class, [
+                'mapped' => false,
+                'required' => false,
+            ])
+
             ->add('streak', IntegerType::class, [
+                'mapped' => false,
                 'attr' => [
                     'min' => 0,
                     'max' => 100,
