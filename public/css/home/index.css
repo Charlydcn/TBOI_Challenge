@@ -40,6 +40,7 @@
     justify-content: unset;
 }
 
+/* unset cursor for #restr-chance label and win-streak label that is next to it */
 #restr-chance label,
 #restr-chance + div label {
     cursor: unset;
@@ -67,11 +68,41 @@
     width:65px;
 }
 
-/* win streak input */
-#step2 .list #restr-chance ~ div {
-    color:red;
+/* win-streak div (checkbox + input number) */
+#streak {
+    display: flex;
+    gap: .8rem;
+    align-items: center;
 }
 
+/* win-streak checkbox label */
+#streak label:first-of-type {
+    z-index:2;
+}
+
+/* win-streak input number label */
+#streak label:last-of-type {
+    transition: .5s;
+    opacity: 0;
+    translate: -45px;
+    z-index:1;
+}
+
+/* win-streak input number */
+#streak label:last-of-type input {
+    font-size: 2rem;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+/* win-streak img (fire-place) */
+#streak img {
+    height:35px;
+}
+
+
+/* bg image */
 #form > img {
     position: absolute;
     z-index: -1;
@@ -171,6 +202,7 @@
     font-size: 1.1em;
     display: flex;
     width: fit-content;
+    align-items: center
 }
 
 /* check-btn div (img + label text) */
@@ -194,7 +226,8 @@ label img {
 }
 
 /* checkboxes */
-.checkbox {
+.checkbox,
+#streak label:first-of-type input {
     opacity: 0;
     position: absolute;
     z-index: -1;
