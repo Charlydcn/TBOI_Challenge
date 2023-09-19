@@ -29,13 +29,23 @@ nav {
 }
 
 /* flash messages */
+#flash-messages {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    z-index: -2;
+    top:10%;
+}
+
 .flash {
     padding: .5rem 1.5rem;
     border-radius: 2.5px;
-    display: flex;
     justify-content: center;
     width: 40%;
-    margin: 1rem auto;
+    text-align: center;
 }
 
 .flash-success {
