@@ -79,7 +79,6 @@ var restrictionsCheckbox = $('#step2 .checkbox')
 restrictionsCheckbox.on('change', function () {
     // check if one of the restrictionsCheckbox is checked
     var oneChecked = restrictionsCheckbox.is(':checked')
-    console.log(oneChecked)
     
     if (oneChecked) {
         restrChanceLabel.css("max-height", "150px")
