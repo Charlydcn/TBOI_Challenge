@@ -148,20 +148,6 @@
                                     }
                                 }) }}
                             </div>
-                            
-
-                            {# win streak input #}
-                            <div>
-                                {{ form_label(newChallengeForm.streak, 'Win-streak : ') }}
-                                
-                                {# <input type="checkbox" class="checkbox"> #}
-                                {{ form_widget(newChallengeForm.streak, {
-                                    'attr': {
-                                        'onkeypress': 'if (this.value.length > 2) return false;',
-                                    }
-                                }) 
-                                }}
-                            </div>
 
                             {% for RestrictionField in newChallengeForm.restrictions %}
 
@@ -185,8 +171,34 @@
                                     </div>
                                 </label>
                                 
-                            {% endfor %}                            
+                            {% endfor %}
+                                {# win-streak checkbox + input #}
+                                <div id="streak">
+                                    {# checkbox #}
+                                    <label class="prevent-select">
+                                        {# <input type="checkbox"> #}
+                                        {{ form_widget(newChallengeForm.streakCheckbox)}}
+    
+                                        <div class="check-btn">
+                                            <img src="{{ asset('/img/misc/fire.webp') }}" alt="fire image">
+                                            Win-streak
+                                        </div>
+                                    </label>
+    
+                                    {# input #}
+                                    <label class="prevent-select">
+                                        {# <input type="number"> #}
+                                        {{ form_widget(newChallengeForm.streak, {
+                                            'attr': {
+                                                'onkeypress': 'if (this.value.length > 2) return false;',
+                                                'value': 5,
+                                            }
+                                        }) 
+                                        }}
+                                    </label>
+                                </div>
                         </div>
+                        
                     </div>
                 </div>
         
