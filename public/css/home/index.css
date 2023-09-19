@@ -194,8 +194,8 @@ label img {
 }
 
 /* checkboxes */
-/* .list input[type="checkbox"] {
+.checkbox {
     opacity: 0;
     position: absolute;
     z-index: -1;
-} */
+}
