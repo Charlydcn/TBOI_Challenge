@@ -1,6 +1,6 @@
 // Flash messages disappearance
 $(document).ready(function() {
-    var i = 1500
+    var i = 2000
     $(this).delay(1000)
     $(".flash").each(function() {
         if ($(this).text().length > 0) {
