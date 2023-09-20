@@ -73,7 +73,6 @@ class ChallengeType extends AbstractType
             ])
 
             ->add('streak', IntegerType::class, [
-                'mapped' => false,
                 'attr' => [
                     'min' => 0,
                     'max' => 100,
