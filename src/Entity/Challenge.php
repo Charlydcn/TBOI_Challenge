@@ -35,7 +35,7 @@ class Challenge
     #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: Versus::class, orphanRemoval: true)]
     private Collection $versuses;
 
-    #[ORM\ManyToMany(targetEntity: Restriction::class, mappedBy: 'challenges')]
+    #[ORM\ManyToMany(targetEntity: Restriction::class, inversedBy: 'challenges')]
     private Collection $restrictions;
 
     #[ORM\ManyToMany(targetEntity: Boss::class, inversedBy: 'challenges')]

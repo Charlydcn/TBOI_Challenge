@@ -18,7 +18,7 @@ class Restriction
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Challenge::class, inversedBy: 'restrictions')]
+    #[ORM\ManyToMany(targetEntity: Challenge::class, mappedBy: 'restrictions')]
     private Collection $challenges;
 
     #[ORM\Column(length: 255, nullable: true)]
