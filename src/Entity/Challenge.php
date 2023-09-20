@@ -47,6 +47,9 @@ class Challenge
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $restrictionsChance = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -329,5 +332,17 @@ class Challenge
         }
 
         return $r;
+    }
+
+    public function getRestrictionsChance(): ?int
+    {
+        return $this->restrictionsChance;
+    }
+
+    public function setRestrictionsChance(?int $restrictionsChance): static
+    {
+        $this->restrictionsChance = $restrictionsChance;
+
+        return $this;
     }
 }
