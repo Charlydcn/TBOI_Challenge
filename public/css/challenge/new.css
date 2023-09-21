@@ -1,0 +1,234 @@
+/* <div id="form"> : <img> ~ <form> */
+#form {
+    position: relative;
+    width: 60%;
+    margin: auto;
+    z-index: 2;
+    max-height: 100%;
+}
+
+#form h2 {
+    font-size: 2rem;
+}
+
+/* background when options menu is visible */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+#step1,
+#step2 {
+    display: flex;
+    position: relative;
+    height: 650px;
+    flex-direction: row;
+    padding: 2rem 3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap:2rem;
+}
+
+/* step 2 = restrictions + submit */
+#step2 {
+    flex-direction: column;
+    justify-content: unset;
+}
+
+/* unset cursor for #restr-chance label and win-streak label that is next to it */
+#restr-chance label,
+#restr-chance + div label {
+    cursor: unset;
+}
+
+/* % of chance of restriction label */
+#step2 .list #restr-chance {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    cursor: unset;
+    margin: 1rem 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease-in-out;
+}
+
+/* % of chance of restriction input */
+#step2 .list #restr-chance input {
+    outline: none;
+    padding: 2.5px 5px;
+    background: none;
+    border: none;    
+    font-size: 2rem;
+    width:65px;
+}
+
+/* win-streak div (checkbox + input number) */
+#streak {
+    display: flex;
+    gap: .8rem;
+    align-items: center;
+}
+
+/* win-streak checkbox label */
+#streak label:first-of-type {
+    z-index:2;
+}
+
+/* win-streak input number label */
+#streak label:last-of-type {
+    transition: .5s;
+    opacity: 0;
+    translate: -45px;
+    z-index:1;
+}
+
+/* win-streak input number */
+#streak label:last-of-type input {
+    font-size: 2rem;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+/* win-streak img (fire-place) */
+#streak img {
+    height:35px;
+}
+
+
+/* bg image */
+#form > img {
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+}
+
+#close-btn,
+#next-btn,
+#options {
+    z-index:2;
+}
+
+#close-btn {
+    text-decoration: none;
+    color: unset;
+    font-size: 2.5rem;
+    position: absolute;
+    top: 1%;
+    right: 3%;
+}
+
+/* <div id="characters"> -> <h2> ~ <div class="btns"> ~ <div class="list"> */
+#characters {
+    width: 66.66%;
+    max-height: 100%;
+}
+
+#restrictions h2 {
+    display: flex;
+    gap: 1rem;
+    width: fit-content;
+}
+
+#next-btn,
+#challenge_submit {
+    font-size: 3rem;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    background: none;
+    border:none;
+    cursor:pointer;
+}
+
+/* btns = 'ALL/NONE/ALL TAINTED/ALL NON TAINTED etc.' presets for checkboxes */
+.btns a,
+.list img,
+.list label,
+#close-btn,
+#next-btn,
+#options,
+#check-btn,
+#restrictions h2 {
+    cursor:pointer;
+}
+
+/* btns = checkbox selection buttons: "ALL", "NONE", etc. */
+.btns {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    margin-top: 0.7rem;
+}
+
+.btns a {
+    color: unset;
+    text-decoration: none;
+    font-size: 1.3rem;
+    height: min-content;
+}
+
+#characters .list {
+    max-height: 85%;
+}
+
+#characters .list,
+#bosses .list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-content: stretch;
+}
+
+#characters .list {
+    gap: 0.2rem;
+}
+
+.checked {
+    color: #822424;
+    filter: unset;
+}
+
+.list label {
+    font-size: 1.1em;
+    display: flex;
+    width: fit-content;
+    align-items: center
+}
+
+/* check-btn div (img + label text) */
+.check-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+label img {
+    height: 25px;
+    filter: saturate(0);
+}
+
+#characters .list label img,
+#restrictions .list label img {
+    width: 30px;
+    object-fit: scale-down;
+
+}
+
+/* checkboxes */
+.checkbox,
+#streak label:first-of-type input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
