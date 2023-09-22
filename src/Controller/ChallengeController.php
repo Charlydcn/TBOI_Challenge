@@ -215,6 +215,7 @@ class ChallengeController extends AbstractController
 
         
         return $this->render('challenge/play.html.twig', [
+            'playChallenge' => $playChallenge,
             'challenge' => $challenge,
             'character' => $character,
             'boss' => $boss,
@@ -222,10 +223,11 @@ class ChallengeController extends AbstractController
         ]);
     }
 
-    #[Route('/challenge/win/{id}', name: 'win_challenge')]
-    public function win(Challenge $challenge): Response
+    #[Route('/challenge/win/{id}/{playChallenge}', name: 'win_challenge')]
+    public function win(Challenge $challenge, PlayChallenge $playChallenge): Response
     {
-        dd('win');
+        dd($playChallenge); // RECUPERE BIEN L'OBJET PLAYCHALLENGE, DONC ENSUITE ON MODIFIE CET OBJET POUR DIRE QUE COMPLETED = TRUE
+        // ET ON REDIRIGE SUR CHALLENGE SHOW AVEC ID CHALLENGE YESSS
     }
 
     #[Route('/challenge/loose/{id}', name: 'loose_challenge')]
