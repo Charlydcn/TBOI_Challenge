@@ -54,8 +54,7 @@ class ChallengeType extends AbstractType
                 ],
             ])
 
-            ->add('restrChance', IntegerType::class, [
-                'mapped' => false,
+            ->add('restrictionsChance', IntegerType::class, [
                 'attr' => [
                     'min' => 1,
                     'max' => 100,
