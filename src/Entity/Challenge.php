@@ -35,13 +35,13 @@ class Challenge
     #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: Versus::class, orphanRemoval: true)]
     private Collection $versuses;
 
-    #[ORM\ManyToMany(targetEntity: Restriction::class, inversedBy: 'challenges')]
+    #[ORM\ManyToMany(targetEntity: Restriction::class, inversedBy: 'challenges', fetch: 'EAGER')]
     private Collection $restrictions;
 
-    #[ORM\ManyToMany(targetEntity: Boss::class, inversedBy: 'challenges')]
+    #[ORM\ManyToMany(targetEntity: Boss::class, inversedBy: 'challenges', fetch: 'EAGER')]
     private Collection $bosses;
 
-    #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'challenges')]
+    #[ORM\ManyToMany(targetEntity: Character::class, inversedBy: 'challenges', fetch: 'EAGER')]
     private Collection $characters;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -303,9 +303,10 @@ class Challenge
         return $this;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getCreationDate(): string
     {
-        return $this->creationDate;
+        return $this->creationDate->format('d/m/Y H:i');
+        
     }
 
     public function setCreationDate(\DateTimeInterface $creationDate): static
