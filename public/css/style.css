@@ -99,6 +99,10 @@ nav {
     cursor: pointer;
 }
 
+.href-element:active {
+    filter: invert(0.3);
+}
+
 .text-shadow {
     text-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
 }
