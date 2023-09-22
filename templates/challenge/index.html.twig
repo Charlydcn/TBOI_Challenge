@@ -3,11 +3,12 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('/css/home/index.css')}}">
 {% endblock stylesheets %}
 
 {% block body %}
 
-    
+    {% for challenge in challenges %}
+        <a href="{{ path('show_challenge', {'id': challenge.id}) }}">{{challenge.id}}</a>
+    {% endfor %}
 
 {% endblock %}
