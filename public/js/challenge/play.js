@@ -25,7 +25,7 @@ function increment() {
 
 function checkCount() {
     // if nb of user completion of the challenge match the required challenge win-streak
-    if (count == challengeStreak.textContent) {
+    if (count >= challengeStreak.textContent) {
         // if so, redirect by getting the data-href in winCounter parent div
         var url = winCounter.parentElement.getAttribute('data-href')
         window.location.href = url
