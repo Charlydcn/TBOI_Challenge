@@ -95,4 +95,16 @@ class PlayChallenge
 
         return $this;
     }
+
+    public function __toString()
+    {
+        $r = "";
+        $r .= "User : " . $this->user . "<br>";
+        $r .= "Last challenge run : " . $this->playDate->format('d-m-Y h:i:s') . "<br>";
+        $r .= "Completed : " . ($this->completed === true ? "Yes" : "No") . "<br>";
+        $r .= $this->completed === true ? "Completion Time : " . $this->completionTime->format('h:i:s') : "";
+
+        return $r;
+
+    }
 }
