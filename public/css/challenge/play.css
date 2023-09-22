@@ -8,13 +8,14 @@
 }
 
 /* bg image (page with blood) */
-#page > img {
+#page > img:first-of-type {
     min-width: 33%;
     height: 70%;
     position: absolute;
     z-index: -1;
 }
 
+/* div before #play-result div and bg img */
 #page > img ~ div {
     flex-direction: column;
     align-items: center;
@@ -22,7 +23,15 @@
     padding: 5% 0;
     height: 70%;
     min-width: 33%;
-    justify-content: space-between;
+    justify-content: space-around;
+    position: relative;
+}
+
+/* reset btn */
+#page > img ~ div > img:first-of-type {
+    position: absolute;
+    right: 7.5%;
+    top: 7.5%;
 }
 
 /* infos when hover on character/boss/restriction */
@@ -55,8 +64,32 @@
     gap: 1rem;
 }
 
-#btns a img {
-    height:50px;
+#btns {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+#btns img {
+    height:40px;
+    cursor:pointer;
+}
+
+#win-counter img,
+#win-counter p {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 10%;
+    left: 2.5%;
+}
+
+#win-counter img {
+    width: 15%;
+    filter: saturate(2);
+}
+
+#win-counter p {
+    font-size: 1.5rem;
 }
 
 
