@@ -17,6 +17,19 @@
 
     </div> #}
 
+    <div>
+        {% for player in challenge.players %}
+            {{ player|raw }}<br>
+        {% endfor %}
+    </div>
+
+    <div>
+        <img src="{{ asset('img/text/play.webp')}}"
+            class="href-element" 
+            data-href="{{ path('play_challenge', {'id': challenge.id}) }}"
+            alt="The word PLAY">
+    </div>
+
     <div id="infos">
 
         <div id="characters">
@@ -60,13 +73,6 @@
             {% if challenge.streak is defined %}
                 <p>Win-streak : {{ challenge.streak }}</p>
             {% endif %}
-        </div>
-
-        <div>
-            <img src="{{ asset('img/text/play.webp')}}"
-                class="href-element" 
-                data-href="{{ path('play_challenge', {'id': challenge.id}) }}"
-                alt="The word PLAY">
         </div>
        
     </div>
