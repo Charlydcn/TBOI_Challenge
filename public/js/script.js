@@ -11,3 +11,13 @@ $(document).ready(function() {
         }
     })
 })
+
+// href redirection on elements
+var hrefElements = document.querySelectorAll('.href-element');
+
+hrefElements.forEach(function (hrefElement) {
+    hrefElement.addEventListener('click', function () {
+        var url = this.getAttribute('data-href');
+        window.location.href = url;
+    });
+});
