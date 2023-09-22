@@ -206,7 +206,7 @@ class ChallengeController extends AbstractController
         }
 
         
-        return $this->render('challenge/show.html.twig', [
+        return $this->render('challenge/play.html.twig', [
             'challenge' => $challenge,
             'character' => $character,
             'boss' => $boss,
