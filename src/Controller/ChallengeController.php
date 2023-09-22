@@ -21,10 +21,10 @@ class ChallengeController extends AbstractController
     #[Route('/challenge', name: 'app_challenge')]
     public function index(ChallengeRepository $challengeRepository): Response
     {
-        $challenges = $challengeRepository->findBy([]);
+        $challenges = $challengeRepository->findAll();
 
         return $this->render('challenge/index.html.twig', [
-            'challenges' => 'challenges',
+            'challenges' => $challenges,
         ]);
     }
 
@@ -56,11 +56,12 @@ class ChallengeController extends AbstractController
                     'You have to select atleast 1 character'
                 );
                 
+                // redirect to challenge creation
                 return $this->redirectToRoute('new_challenge');
             }
 
             // if no boss selected, exit method
-            if (count($form->get('characters')->getData()) < 1) {
+            if (count($form->get('bosses')->getData()) < 1) {
 
                 // add flash message of category warning
                 $this->addFlash(
@@ -68,14 +69,13 @@ class ChallengeController extends AbstractController
                     'You have to select atleast 1 boss'
                 );
                 
-                // and redirect
+                // redirect to challenge creation
                 return $this->redirectToRoute('new_challenge');
             }
 
 
             // restriction chance (mapped=false input) in variable
-            // !! NEEDS TO BE SENT TO THE SHOW VIEW TO RANDOMIZE WHEN CHALLENGE IS PLAYED !!
-            $restrictionChance = $form->get('restrChance')->getData();
+            $restrictionsChance = $form->get('restrictionsChance')->getData();
 
 
             // hydrate new challenge with form data
@@ -98,13 +98,15 @@ class ChallengeController extends AbstractController
             // and set current user to challenge creator (you have to be logged in to create a challenge)
             $challenge->setCreator($user);
 
-
-            // persist = prepare
+            // persist = prepare object to be saved on database
             $entityManager->persist($challenge);
-            // flush = execute
+            // flush = execute the queries to save object
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_challenge');
+            // redirect to challenge created, passing challenge id to show the created challenge
+            return $this->redirectToRoute('show_challenge', [
+                'id' => $challenge->getId(),
+            ]);
         }
         
         return $this->render('challenge/new.html.twig', [
@@ -113,260 +115,115 @@ class ChallengeController extends AbstractController
         ]);
     }
 
-    // #[Route('/new', name: 'new_challenge')]
-    // public function test(
-    //     Challenge $challenge = null,
-    //     Request $request,
-    //     CharacterRepository $characterRepository,
-    //     BossRepository $bossRepository,
-    //     RestrictionRepository $restrictionRepository
-    //     ): Response
+
+    // private function isValidInt($value)
     // {
-    //     // get all form data sent
-    //     $formData = $request->request->all();
+    //     // check if value is a string
+    //     if (is_string($value)) {
 
-    //     // create empty array for every category
-    //     $charactersIds = [];
-    //     $bossesIds = [];
-    //     $restrictionsIds = [];
+    //         // Utiliser intval() pour convertir la chaîne en un entier
+    //         $intValue = intval($value);
 
-    //     // list of all entites ****************************************************************
-    //     $characters = $characterRepository->findAll();
-    //     $bosses = $bossRepository->findBy(['timed' => 0]);
-    //     $timedBosses = $bossRepository->findBy(['timed' => 1]);
-    //     $restrictions = $restrictionRepository->findAll();
-    //     // ************************************************************************************ 
-
-    //     // $formData contains atleast submit even if user entered no data, so if $formData array > 1, handle data
-    //     if(count($formData) > 1) {
-    //         foreach($formData as $key => $value) {
-
-    //             // ---------------------------------------------------------------------------------
-    //             // character (if string $key starts by 'ch_' (position === 0) it's a character)
-    //             if (strpos($key, 'ch_') === 0) {
-    //                 if($this->isValidInt($value) === true) {
-    //                     // add id to characters array
-    //                     array_push($charactersIds, $value);
-    //                 } else {
-    //                     // incorrect id
-    //                 }
-    //             }
-    //             // ---------------------------------------------------------------------------------
-
-    //             // ---------------------------------------------------------------------------------
-    //             // boss (if string $key starts by 'b_' (position === 0) it's a boss)
-    //             if (strpos($key, 'b_') === 0) {
-    //                 if($this->isValidInt($value) === true) {
-    //                     // add id to bosses array
-    //                     array_push($bossesIds, $value);
-    //                 } else {
-    //                     // incorrect id
-    //                 }
-    //             }
-    //             // ---------------------------------------------------------------------------------
-
-    //             // ---------------------------------------------------------------------------------
-    //             // restriction (if string $key starts by 'r_' (position === 0) it's a restriction)
-    //             if (strpos($key, 'r_') === 0) {
-    //                 if($this->isValidInt($value) === true) {
-    //                     // add id to restrictions array
-    //                     array_push($restrictionsIds, $value);
-    //                 } else {
-    //                     // incorrect id
-    //                 }
-    //             }
-    //             // ---------------------------------------------------------------------------------
-    //             // restriction chance
-    //             if (strpos($key, 'restr_chance') === 0) {
-    //                 // if restriction chance isn't empty string (no user input)
-    //                 if(!empty($value)) {
-    //                     if($this->isValidInt($value) === true) {
-    //                         // put the restriction chance in variable
-    //                         $restrChance = $value;
-    //                     } else {
-    //                         // incorrect id
-    //                     }
-    //                 }
-    //             }
-    //             // ---------------------------------------------------------------------------------
+    //         // Vérifier si la conversion a réussi et que la longueur de la chaîne est inférieure ou égale à 10
+    //         if ($intValue !== 0 && strlen($value) <= 10) {
+    //             return true;
     //         }
-
-    //         // --------------------------------------------------------------------------------------------
-    //         // CHALLENGE CREATION -------------------------------------------------------------------------
-            
-    //         $challenge = new Challenge();
-
-    //         $challenge->setCreator();
-
-    //         // --------------------------------------------------------------------------------------------
-    //         // character ----------------------------------------------------------------------------------
-
-    //         // if used selected atleast 1 character
-    //         if (!empty($charactersIds)) {
-
-    //             // for each characterId selected by user
-    //             foreach($charactersIds as $characterId) {
-    //                 // find the corresponding object 
-    //                 $character = $characterRepository->findOneBy(['id' => $characterId]);
-    //                 // and add it to newly instanciated $challenge
-    //                 $challenge->addCharacter($character);
-    //             }
-
-    //         // if user selected no boss, add all bosses to challenge
-    //         } else {
-
-    //             // $bosses = all boss with attribute 'timed' = 0 (normal bosses)
-    //             foreach($bosses as $boss) {
-    //                 // find corresponding object
-    //                 $boss = $bossRepository->findOneBy(['id' => $bossId]);
-    //                 // and add it to newly instanciated $challenge
-    //                 $challenge->addboss($boss);
-    //             }
-                
-    //         }
-
-    //         // --------------------------------------------------------------------------------------------
-    //         // boss ---------------------------------------------------------------------------------------
-
-    //         // if used selected atleast 1 boss
-    //         if (!empty($bossesIds)) {
-
-    //             // for each bossId selected by user
-    //             foreach($bossesIds as $bossId) {
-    //                 // find the corresponding object 
-    //                 $boss = $bossRepository->findOneBy(['id' => $bossId]);
-    //                 // and add it to newly instanciated $challenge
-    //                 $challenge->addboss($boss);
-    //             }
-
-    //         // if user selected no boss, add all bosses to challenge
-    //         } else {
-
-    //             // $bosses = all boss with attribute 'timed' = 0 (normal bosses)
-    //             foreach($bosses as $boss) {
-    //                 // find corresponding object
-    //                 $boss = $bossRepository->findOneBy(['id' => $bossId]);
-    //                 // and add it to newly instanciated $challenge
-    //                 $challenge->addboss($boss);
-    //             }
-
-    //         }
-
-    //         // --------------------------------------------------------------------------------------------
-    //         // restrictions -------------------------------------------------------------------------------
-
-    //         // if used selected atleast 1 restriction
-    //         if (!empty($restrictionsIds)) {
-
-    //             // for each restrictionId selected by user
-    //             foreach($restrictionsIds as $restrictionId) {
-    //                 // get the corresponding object 
-    //                 $restriction = $restrictionRepository->findOneBy(['id' => $restrictionId]);
-    //                 // and add it to newly instanciated $challenge
-    //                 $challenge->addrestriction($restriction);
-    //             }
-
-    //         } // if user selected no restriction, no restriction
-
-    //         // --------------------------------------------------------------------------------------------
-
-    //     } else {
-    //         // if no selection at all, randomize everything and give a random character/boss
-    //         $characterId = rand(1, count($characters));
-    //         $character = $characterRepository->findOneBy(['id' => $characterId]);
-
-    //         $bossId = rand(1, count($bosses));
-    //         $boss = $bossRepository->findOneBy(['id' => $bossId]);
-            
-    //         $challRestrictions = null;
     //     }
-
-    //     return $this->render('challenge/show.html.twig', [
-    //         'character' => $character,
-    //         'boss' => $boss,
-    //         'challRestrictions' => $challRestrictions,
-    //     ]);
+    //     return false;
     // }
-
-
-    private function isValidInt($value)
-    {
-        // check if value is a string
-        if (is_string($value)) {
-
-            // Utiliser intval() pour convertir la chaîne en un entier
-            $intValue = intval($value);
-
-            // Vérifier si la conversion a réussi et que la longueur de la chaîne est inférieure ou égale à 10
-            if ($intValue !== 0 && strlen($value) <= 10) {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
     #[Route('/challenge/{id}', name: 'show_challenge')]
     public function show(Challenge $challenge): Response
     {
-
-
         return $this->render('challenge/show.html.twig', [
             'challenge' => $challenge,
         ]);
     }
 
-
-    #[Route('/challenge/{id}', name: 'play_challenge')]
-    public function play(): Response
+    #[Route('/challenge/play/{id}', name: 'play_challenge')]
+    public function play(Challenge $challenge): Response
     {
-        // ---------------------------------------------------------------------------------
-            // character/boss generation with array_rand through user's selection or rand through all existing entities if no selection
-            // ---------------------------------------------------------------------------------
 
-            // if no character is selected, then random through all characters
-            if(empty($charactersIds)) {
-                $characterId = rand(1, count($characters));
-                $character = $characterRepository->findOneBy(['id' => $characterId]);
-            } else {
-                // else, random through all ids given by user selection
-                $characterId = $charactersIds[array_rand($charactersIds)];    
-                $character = $characterRepository->findOneBy(['id' => $characterId]);
-            }
+        // convert persistentCollection of characters to array of entities (can be done with 'getValues()' aswell)
+        $charactersArray = $challenge->getCharacters()->toArray();
+        // array_rand to get 1 entity randomized from new array
+        $character = $charactersArray[array_rand($charactersArray)];
 
-            // if no boss is selected, then random through all characters
-            if(empty($bossesIds)) {
-                $bossId = rand(1, count(($bosses)));
-                $boss = $bossRepository->findOneBy(['id' => $bossId]);
-            } else {
-                // else, random through all ids given by user selection
-                $bossId = $bossesIds[array_rand($bossesIds)];    
-                $boss = $bossRepository->findOneBy(['id' => $bossId]);
-            }
-            
-            // ---------------------------------------------------------------------------------
-            // ---------------------------------------------------------------------------------
 
-            // restrictions is the only data that can be multiple
-            $challRestrictions = [];
+        // convert persistentCollection of boss to array of entities (can be done with 'getValues()' aswell)
+        $bossesArray = $challenge->getBosses()->toArray();
+        // array_rand to get 1 entity randomized from new array
+        $boss = $bossesArray[array_rand($bossesArray)];
 
-            // if $restrictionsIds isn't empty
-            if(!empty($restrictionsIds)) {
-                // foreach restriction selected by user
-                $i = 0;
-                foreach($restrictionsIds as $restrictionId) {
-                    // if user entered a restriction chance in the input, custom chance, else, default value is 10%
-                    // is user entered a restriction chance of 20 for example, random between 0 and 100, if result <= 20, we push the restriction
-                    if(rand(0, 100) <= $restrChance) {
-                        if($i < 3) {
-                            // get the object associated
-                            $restriction = $restrictionRepository->findBy(['id' => $restrictionId]);
-                            // and push it into $challRestrictions array to have a array full of objects
-                            array_push($challRestrictions, $restriction);
-                        }
+
+        // convert persistentCollection of restriction to array of entities
+        $restrictionsArray = $challenge->getRestrictions()->toArray();
+
+        $restrictionsChance = $challenge->getRestrictionsChance();
+
+        // declare $restrictions as empty array to hydrate it with restrictions entities
+        $restrictions = [];
+
+        $countRestrictions = count($restrictionsArray);
+
+        // if user selected atleast 1 restiction
+        if ($countRestrictions > 0) {            
+            // if user selected between 1 and 3 restrictions
+            if ($countRestrictions >= 1 && $countRestrictions <= 3) {
+
+                // shuffle array to randomize all restrictions
+                shuffle($restrictionsArray);
+                
+                // for each restrictions
+                foreach ($restrictionsArray as $restriction) {                    
+                    // generate random number between 0 and 100 (with mt_rand() because it is faster than rand())                    
+                    $randomNb = mt_rand(0, 100);
+
+                    // if randomNb is <= than the challenge restrictions chance, push restriction in array
+                    if ($randomNb <= $restrictionsChance) {
+                        array_push($restrictions, $restriction);
                     }
-                    $i++;
+                }
+            } else {
+                // if user selected more than 3 restrictions, shuffle array 
+                shuffle($restrictionsArray);
+                
+                // slice 3 firsts restrictions of shuffled array
+                $selectedRestrictions = array_slice($restrictionsArray, 0, 3);
+
+                // for each restriction in sliced restrictions array
+                foreach ($selectedRestrictions as $restriction) {
+                    // generate random number between 0 and 100 (with mt_rand() because it is faster than rand())                    
+                    $randomChance = mt_rand(0, 100);
+
+                    // if randomNb is <= than the challenge restrictions chance, push restriction in array
+                    if ($randomChance <= $restrictionsChance) {
+                        array_push($restrictions, $restriction);
+                    }
                 }
             }
+        }
+
+        
+        return $this->render('challenge/show.html.twig', [
+            'challenge' => $challenge,
+            'character' => $character,
+            'boss' => $boss,
+            'restrictions' => $restrictions,
+        ]);
     }
+
+    #[Route('/challenge/win/{id}', name: 'win_challenge')]
+    public function win(Challenge $challenge): Response
+    {
+        dd('win');
+    }
+
+    #[Route('/challenge/loose/{id}', name: 'loose_challenge')]
+    public function loose(Challenge $challenge): Response
+    {
+        dd('loose');
+    }
+
 }
