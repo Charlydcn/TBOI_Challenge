@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\Challenge;
 use App\Form\ChallengeType;
+use App\Entity\PlayChallenge;
 use App\Repository\BossRepository;
 use App\Repository\ChallengeRepository;
 use App\Repository\CharacterRepository;
@@ -116,23 +117,6 @@ class ChallengeController extends AbstractController
     }
 
 
-    // private function isValidInt($value)
-    // {
-    //     // check if value is a string
-    //     if (is_string($value)) {
-
-    //         // Utiliser intval() pour convertir la chaîne en un entier
-    //         $intValue = intval($value);
-
-    //         // Vérifier si la conversion a réussi et que la longueur de la chaîne est inférieure ou égale à 10
-    //         if ($intValue !== 0 && strlen($value) <= 10) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
-
     #[Route('/challenge/{id}', name: 'show_challenge')]
     public function show(Challenge $challenge): Response
     {
@@ -140,10 +124,34 @@ class ChallengeController extends AbstractController
             'challenge' => $challenge,
         ]);
     }
+    
 
     #[Route('/challenge/play/{id}', name: 'play_challenge')]
-    public function play(Challenge $challenge): Response
+    public function play(
+        Challenge $challenge,
+        PlayChallenge $playChallenge = null,
+        Security $security,
+        EntityManagerInterface $entityManager): Response
     {
+        // find current user with Security's method getUser()
+        $user = $security->getUser();
+
+        // create a PlayChallenge object to add it to challenge players
+        $playChallenge = new PlayChallenge();
+
+        $playChallenge->setChallenge($challenge);
+        $playChallenge->setUser($user);
+        $playChallenge->setCompleted(false);
+        $playChallenge->setPlayDate(new DateTime);        
+
+        // and add current user to challenge players
+        $challenge->addPlayer($playChallenge);
+
+        // persist new PlayChallenge object in database
+        $entityManager->persist($playChallenge);
+        // flush changes
+        $entityManager->flush();
+
 
         // convert persistentCollection of characters to array of entities (can be done with 'getValues()' aswell)
         $charactersArray = $challenge->getCharacters()->toArray();
