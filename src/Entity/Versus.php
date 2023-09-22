@@ -17,20 +17,20 @@ class Versus
 
     #[ORM\Column(nullable: true)]
     private ?int $timeLimit = null;
+
     #[ORM\ManyToOne(inversedBy: 'versuses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Challenge $challenge = null;
-
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'versusesPlayed')]
-    private Collection $players;
 
     #[ORM\ManyToOne(inversedBy: 'versusesCreated')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
+    #[ORM\OneToMany(mappedBy: 'versus', targetEntity: VersusPlayer::class, orphanRemoval: true)]
+    private Collection $players;
+
     public function __construct()
     {
-        $this->player = new ArrayCollection();
         $this->players = new ArrayCollection();
     }
 
@@ -63,30 +63,6 @@ class Versus
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getPlayers(): Collection
-    {
-        return $this->players;
-    }
-
-    public function addPlayer(User $player): static
-    {
-        if (!$this->players->contains($player)) {
-            $this->players->add($player);
-        }
-
-        return $this;
-    }
-
-    public function removePlayer(User $player): static
-    {
-        $this->players->removeElement($player);
-
-        return $this;
-    }
-
     public function getCreator(): ?User
     {
         return $this->creator;
@@ -108,5 +84,35 @@ class Versus
         }
 
         return $r;
+    }
+
+    /**
+     * @return Collection<int, VersusPlayer>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
+    public function addPlayer(VersusPlayer $player): static
+    {
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->setVersus($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(VersusPlayer $player): static
+    {
+        if ($this->players->removeElement($player)) {
+            // set the owning side to null (unless already changed)
+            if ($player->getVersus() === $this) {
+                $player->setVersus(null);
+            }
+        }
+
+        return $this;
     }
 }

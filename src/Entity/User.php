@@ -63,8 +63,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Challenge::class, orphanRemoval: true)]
     private Collection $challengesCreated;
 
-    #[ORM\ManyToMany(targetEntity: Challenge::class, mappedBy: 'players')]
-    private Collection $challengesPlayed;
 
     #[ORM\ManyToMany(targetEntity: Versus::class, mappedBy: 'players')]
     private Collection $versusesPlayed;
@@ -75,6 +73,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user1', targetEntity: Friendship::class, orphanRemoval: true)]
     private Collection $friendships;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PlayChallenge::class, orphanRemoval: true)]
+    private Collection $challengesPlayed;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: VersusPlayer::class, orphanRemoval: true)]
+    private Collection $versusPlayed;
+
     // ----------------------------------------------------------------------------
     // ----------------------------------------------------------------------------
 
@@ -83,10 +87,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->likes = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->challengesCreated = new ArrayCollection();
-        $this->challengesPlayed = new ArrayCollection();
         $this->versusesPlayed = new ArrayCollection();
         $this->versusesCreated = new ArrayCollection();
         $this->friendships = new ArrayCollection();
+        $this->challengesPlayed = new ArrayCollection();
+        $this->versusPlayed = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -232,33 +237,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($challengesCreated->getCreator() === $this) {
                 $challengesCreated->setCreator(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Challenge>
-     */
-    public function getChallengesPlayed(): Collection
-    {
-        return $this->challengesPlayed;
-    }
-
-    public function addChallengesPlayed(Challenge $challengesPlayed): static
-    {
-        if (!$this->challengesPlayed->contains($challengesPlayed)) {
-            $this->challengesPlayed->add($challengesPlayed);
-            $challengesPlayed->addPlayer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChallengesPlayed(Challenge $challengesPlayed): static
-    {
-        if ($this->challengesPlayed->removeElement($challengesPlayed)) {
-            $challengesPlayed->removePlayer($this);
         }
 
         return $this;
@@ -422,6 +400,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($friendship->getUser1() === $this) {
                 $friendship->setUser1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayChallenge>
+     */
+    public function getChallengesPlayed(): Collection
+    {
+        return $this->challengesPlayed;
+    }
+
+    public function addChallengesPlayed(PlayChallenge $challengesPlayed): static
+    {
+        if (!$this->challengesPlayed->contains($challengesPlayed)) {
+            $this->challengesPlayed->add($challengesPlayed);
+            $challengesPlayed->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChallengesPlayed(PlayChallenge $challengesPlayed): static
+    {
+        if ($this->challengesPlayed->removeElement($challengesPlayed)) {
+            // set the owning side to null (unless already changed)
+            if ($challengesPlayed->getUser() === $this) {
+                $challengesPlayed->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VersusPlayer>
+     */
+    public function getVersusPlayed(): Collection
+    {
+        return $this->versusPlayed;
+    }
+
+    public function addVersusPlayed(VersusPlayer $versusPlayed): static
+    {
+        if (!$this->versusPlayed->contains($versusPlayed)) {
+            $this->versusPlayed->add($versusPlayed);
+            $versusPlayed->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVersusPlayed(VersusPlayer $versusPlayed): static
+    {
+        if ($this->versusPlayed->removeElement($versusPlayed)) {
+            // set the owning side to null (unless already changed)
+            if ($versusPlayed->getUser() === $this) {
+                $versusPlayed->setUser(null);
             }
         }
 

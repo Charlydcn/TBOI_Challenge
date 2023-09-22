@@ -29,9 +29,6 @@ class Challenge
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'challengesPlayed')]
-    private Collection $players;
-
     #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: Versus::class, orphanRemoval: true)]
     private Collection $versuses;
 
@@ -50,15 +47,18 @@ class Challenge
     #[ORM\Column(nullable: true)]
     private ?int $restrictionsChance = null;
 
+    #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: PlayChallenge::class, orphanRemoval: true)]
+    private Collection $players;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
-        $this->players = new ArrayCollection();
         $this->versuses = new ArrayCollection();
         $this->bosses = new ArrayCollection();
         $this->characters = new ArrayCollection();
         $this->restrictions = new ArrayCollection();
+        $this->players = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,30 +140,6 @@ class Challenge
     public function setCreator(?User $creator): static
     {
         $this->creator = $creator;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getPlayers(): Collection
-    {
-        return $this->players;
-    }
-
-    public function addPlayer(User $player): static
-    {
-        if (!$this->players->contains($player)) {
-            $this->players->add($player);
-        }
-
-        return $this;
-    }
-
-    public function removePlayer(User $player): static
-    {
-        $this->players->removeElement($player);
 
         return $this;
     }
@@ -343,6 +319,36 @@ class Challenge
     public function setRestrictionsChance(?int $restrictionsChance): static
     {
         $this->restrictionsChance = $restrictionsChance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayChallenge>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
+    public function addPlayer(PlayChallenge $player): static
+    {
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->setChallenge($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(PlayChallenge $player): static
+    {
+        if ($this->players->removeElement($player)) {
+            // set the owning side to null (unless already changed)
+            if ($player->getChallenge() === $this) {
+                $player->setChallenge(null);
+            }
+        }
 
         return $this;
     }
