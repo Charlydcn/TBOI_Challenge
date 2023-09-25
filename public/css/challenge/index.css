@@ -1,0 +1,28 @@
+#challenges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 90%;
+    margin: 2rem auto;
+    gap: 1rem;
+}
+
+.challenge {
+    position:relative;
+}
+
+.challenge div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.character img {
+    width: 50%;
+    image-rendering: pixelated;
+}
+
+.boss img {
+    max-width: 40%;
+}
