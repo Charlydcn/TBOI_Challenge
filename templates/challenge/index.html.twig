@@ -3,12 +3,93 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/challenge/index.css')}}">
 {% endblock stylesheets %}
 
 {% block body %}
+    {# container #}
+    <div id="challenges">
 
-    {% for challenge in challenges %}
-        <a href="{{ path('show_challenge', {'id': challenge.id}) }}">{{challenge.id}}</a>
-    {% endfor %}
+        {% for challenge in challenges %}
+
+            {# card #}
+            <div class="challenge href-element" data-href="{{ path('show_challenge', {'id': challenge.id})}}">
+
+                {# bg image (page blood) #}
+                <img src="{{ asset('/img/misc/page_alt_blood.webp')}}" alt="Page with blood on it">
+
+
+                {# details #}
+                <div>
+                    {# <p>id : {{ challenge.id }}</p> #}
+                    <p>{{ challenge.creationDate }}</p>
+                    <p>streak : {{ challenge.streak }}</p>
+
+                    {# --------------------------------------------------------------------------------------------- #}
+                    {# characters ---------------------------------------------------------------------------------- #}
+                    
+                    {# if challenge only has 1 character #}
+                    {% if challenge.characters|length == 1 %}
+
+                        {# display character's image #}
+                        {% for character in challenge.characters %}
+                        <figure class="character">
+                            <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="{{character.name}}'s image">
+                            <figcaption>{{character.name}}</figcaption>
+                        </figure>
+                        {% endfor %}
+
+                    {% elseif challenge.characters|length >= 34 %}
+                        <figure class="character">
+                            <img src="{{ asset('/img/characters/missing.webp')}}" alt="Mystery character image with question mark in it">
+                            <figcaption>All characters</figcaption>
+                        </figure>
+
+                    {# if challenge have more than 1 character (or 0) #}
+                    {% else %}
+                    <figure class="character">
+                        {# mystery character img #}
+                        <img src="{{ asset('/img/characters/missing.webp')}}" alt="Mystery character image with question mark in it">
+                        <figcaption>{{ challenge.characters|length }} characters</figcaption>
+                    </figure>
+                    {% endif %}
+                    {# --------------------------------------------------------------------------------------------- #}
+
+                    {# --------------------------------------------------------------------------------------------- #}
+                    {# bosses ---------------------------------------------------------------------------------- #}
+                    
+                    {# if challenge only has 1 boss #}
+                    {% if challenge.bosses|length == 1 %}
+
+                        {# display boss's image #}
+                        {% for boss in challenge.bosses %}
+                        <figure class="boss">
+                            <img src="{{ asset('/img/bosses/' ~ boss.img)}}" alt="{{boss.name}}'s image">
+                            <figcaption>{{boss.name}}</figcaption>
+                        </figure>
+                        {% endfor %}
+
+                    {% elseif challenge.bosses|length >= 34 %}
+                        <figure class="boss">
+                            <img src="{{ asset('/img/bosses/missing.webp')}}" alt="Mystery boss image with question mark in it">
+                            <figcaption>All bosses</figcaption>
+                        </figure>
+
+                    {# if challenge have more than 1 boss (or 0) #}
+                    {% else %}
+                    <figure class="boss">
+                        {# mystery boss img #}
+                        <img src="{{ asset('/img/bosses/missing.webp')}}" alt="Mystery boss image with question mark in it">
+                        <figcaption>{{ challenge.bosses|length }} bosses</figcaption>
+                    </figure>
+                    {% endif %}
+                    {# --------------------------------------------------------------------------------------------- #}
+
+                </div>
+
+            </div>
+        {% endfor %}
+
+    </div>
 
 {% endblock %}
