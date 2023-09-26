@@ -11,6 +11,9 @@
 
 {% block body %}
 
+<a href="{{ path('show_challenge', {'id': challenge.id})}}">&lt; Challenge</a>
+
+
     <div id="page">
         
         <img src="{{ asset('/img/misc/page_blood_empty.webp')}}" alt="image of a notebook page with blood on it">
@@ -19,7 +22,7 @@
         <div>
             <img src="{{ asset('/img/misc/reset.png')}}" data-href="" class="href-element" alt="reset icon" onClick="window.location.reload();">
 
-            <div id="play-result">
+            <div id="result">
     
                 <div id="character">
                     {% if character is defined %}
@@ -28,8 +31,6 @@
                         {# text img #}
                         {# AJOUTER LES TAINTED NAMES #}
                         <img src="{{ asset('/img/characters/text/' ~ character.img|replace({"tainted_": ""}))}}" alt="{{ character.name }}'s name">
-                        {# infos box on hover #}
-                        <p class="hover-infos">{{ character.name }}</p>
                     {% endif %}
                 </div>
     
@@ -40,19 +41,17 @@
                         <img src="{{ asset('/img/bosses/text/' ~ boss.img)}}" alt="{{ boss.name }}'s name">
                         {# img #}
                         <img src="{{ asset('/img/bosses/' ~ boss.img )}}" alt="{{ boss.name }}'s image">
-                        {# infos box on hover #}
-                        <p class="hover-infos">{{ boss.name }}</p>
                     {% endif %}
                 </div>
     
-                <div id="restrictions-result">
+                <div id="restrictions">
                     {% if restrictions is defined %}
                         {% for restriction in restrictions %}
                         <div>
                             {# img #}
                             <img src="{{ asset('/img/restrictions/' ~ restriction.img )}}" alt="{{ restriction.name }}'s image">
                             {# infos box on hover #}
-                            <p class="hover-infos">{{ restriction.name }}</p>
+                            <p class="hover-infos hidden prevent-select">{{ restriction.name }}</p>
                         </div>
                         {% endfor %}
                     {% endif %}
@@ -62,17 +61,21 @@
 
             <div id="win-counter"
                 class="hidden"
-                onclick=""
-                data-href="{{ path('win_challenge', {'id': challenge.id, 'playChallenge': playChallenge.id})}}">
+                onclick="increment()">
 
                 <img src="{{ asset('/img/misc/fire.webp')}}" alt="Fire image from The Binding of Isaac">
                 <p></p>
             </div>
 
+            <div id="completion-time" class="hidden">
+                <p onclick="showBtns()">&lt;</p>
+                {{ form_start(playChallengeForm, {'action': path('play_challenge', {'id': challenge.id})})}}
 
+                {{ form_row(playChallengeForm.completionTime)}}
+                {{ form_row(playChallengeForm.submit)}}
 
-            {# {{ dump(playChallenge) }} #}
-    
+                {{ form_end(playChallengeForm)}}
+            </div>
             <div id="btns">
                 <img src="{{ asset('img/text/win.webp')}}"
                     onclick="increment()"
@@ -80,13 +83,14 @@
                     
                 <img src="{{ asset('img/text/loose.webp')}}"
                     class="href-element"
-                    data-href="{{ path('show_challenge', {'id': challenge.id}) }}"
+                    data-href="{{ path('loose_challenge', {'id': challenge.id}) }}"
                     alt="The word LOOSE">
             </div>
 
         </div>
     </div>
 
+    <div id="overlay" class="hidden"></div>
     <p class="hidden" id="challenge-streak">{{ challenge.streak }}</p>
 
 {% endblock %}
