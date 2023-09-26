@@ -304,6 +304,11 @@ class Challenge
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->id;
+    }
+
     /**
      * @return Collection<int, PlayChallenge>
      */
@@ -332,24 +337,5 @@ class Challenge
         }
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        $r = "";
-
-        foreach($this->characters as $character) {
-            $r .= " " . $character->getName() . "<br>";
-        }
-
-        foreach($this->bosses as $boss) {
-            $r .= " " . $boss->getName() . "<br>";
-        }
-
-        foreach($this->restrictions as $restriction) {
-            $r .= " " . $restriction->getName() . "<br>";
-        }
-
-        return $r;
     }
 }
