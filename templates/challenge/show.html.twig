@@ -18,16 +18,26 @@
     </div> #}
 
     <div>
-        {% for player in challenge.players %}
-            {{ player|raw }}<br>
-        {% endfor %}
-    </div>
-
-    <div>
         <img src="{{ asset('img/text/play.webp')}}"
             class="href-element" 
             data-href="{{ path('play_challenge', {'id': challenge.id}) }}"
             alt="The word PLAY">
+    </div>
+
+    <div>
+        {% for player in challenge.players %}
+            <div>
+                <p>Player : {{ player.user }}</p>
+                <p>Challenge : {{ player.challenge }}</p>
+                <p>Completed : {{ player.completed ? "Yes" : "No" }}</p>
+                {% if player.completed %}
+                    <p>Completion time : {{ player.completionTime ? player.completionTime|date('H:i:s') : "Unknown" }}</p>
+                {% endif %}
+                <p>Play date : {{ player.playDate|date('d/m/Y H:i') }}</p>
+            </div>
+            <br>
+            <br>
+        {% endfor %}
     </div>
 
     <div id="infos">
