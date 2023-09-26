@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\Challenge;
 use App\Form\ChallengeType;
 use App\Entity\PlayChallenge;
+use App\Form\PlayChallengeType;
 use App\Repository\BossRepository;
 use App\Repository\ChallengeRepository;
 use App\Repository\CharacterRepository;
@@ -131,27 +132,36 @@ class ChallengeController extends AbstractController
         Challenge $challenge,
         PlayChallenge $playChallenge = null,
         Security $security,
+        Request $request,
         EntityManagerInterface $entityManager): Response
     {
-        // find current user with Security's method getUser()
-        $user = $security->getUser();
 
-        // create a PlayChallenge object to add it to challenge players
-        $playChallenge = new PlayChallenge();
+        $playChallenge = new PlayChallenge;
 
-        $playChallenge->setChallenge($challenge);
-        $playChallenge->setUser($user);
-        $playChallenge->setCompleted(false);
-        $playChallenge->setPlayDate(new DateTime);        
+        // create playChallenge object through PlayChallengeType
+        $playChallengeForm = $this->createForm(PlayChallengeType::class, $playChallenge);
 
-        // and add current user to challenge players
-        $challenge->addPlayer($playChallenge);
+        $playChallengeForm->handleRequest($request);
 
-        // persist new PlayChallenge object in database
-        $entityManager->persist($playChallenge);
-        // flush changes
-        $entityManager->flush();
+        if ($playChallengeForm->isSubmitted() && $playChallengeForm->isValid()) {
 
+            // find current user with Security's method getUser()
+            $user = $security->getUser();
+
+            $playChallenge->setCompleted(true);
+            $playChallenge->setPlayDate(new DateTime);
+            $playChallenge->setChallenge($challenge);
+            $playChallenge->setUser($user);
+
+            // add current user to challenge players
+            $challenge->addPlayer($playChallenge);
+
+
+            // persist new PlayChallenge object in database
+            $entityManager->persist($playChallenge);
+            // flush changes
+            $entityManager->flush();
+        }
 
         // convert persistentCollection of characters to array of entities (can be done with 'getValues()' aswell)
         $charactersArray = $challenge->getCharacters()->toArray();
@@ -216,6 +226,7 @@ class ChallengeController extends AbstractController
         
         return $this->render('challenge/play.html.twig', [
             'playChallenge' => $playChallenge,
+            'playChallengeForm' => $playChallengeForm,
             'challenge' => $challenge,
             'character' => $character,
             'boss' => $boss,
@@ -223,17 +234,35 @@ class ChallengeController extends AbstractController
         ]);
     }
 
-    #[Route('/challenge/win/{id}/{playChallenge}', name: 'win_challenge')]
-    public function win(Challenge $challenge, PlayChallenge $playChallenge): Response
-    {
-        dd($playChallenge); // RECUPERE BIEN L'OBJET PLAYCHALLENGE, DONC ENSUITE ON MODIFIE CET OBJET POUR DIRE QUE COMPLETED = TRUE
-        // ET ON REDIRIGE SUR CHALLENGE SHOW AVEC ID CHALLENGE YESSS
-    }
-
     #[Route('/challenge/loose/{id}', name: 'loose_challenge')]
-    public function loose(Challenge $challenge): Response
+    public function loose(
+        Challenge $challenge,
+        PlayChallenge $playChallenge = null,
+        Security $security,
+        Request $request,
+        EntityManagerInterface $entityManager): Response
     {
-        dd('loose');
+            $playChallenge = new PlayChallenge;
+            // find current user with Security's method getUser()
+            $user = $security->getUser();
+
+            $playChallenge->setCompleted(false);
+            $playChallenge->setPlayDate(new DateTime);
+            $playChallenge->setChallenge($challenge);
+            $playChallenge->setUser($user);
+
+            // add current user to challenge players
+            $challenge->addPlayer($playChallenge);
+
+            // persist new PlayChallenge object in database
+            $entityManager->persist($playChallenge);
+            // flush changes
+            $entityManager->flush();
+
+            // redirect to challenge created
+            return $this->redirectToRoute('show_challenge', [
+                'id' => $challenge->getId(),
+            ]);
     }
 
 }
