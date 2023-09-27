@@ -15,20 +15,28 @@
     <body>
         <nav>
             <img src="{{ asset('/img/misc/navbar.webp')}}" alt="Navigation bar's image">
+            
             <ul id="desktop">
-
                 <div id="nav-left">
                     <li class="text-shadow underline-hover href-element" data-href="{{ path('app_challenge') }}">
                         Browse
+                        <ul class="sub-menu">
+                            <li class="href-element" data-href="{{ path('app_challenge') }}">Challenges</li>
+                            <li class="href-element" {# data-href="{{ path('app_versus') }}" #}>Versus</li>
+                        </ul>
                     </li>
-    
+        
                     <li class="text-shadow underline-hover href-element" data-href="{{ path('new_challenge') }}">
                         Create
+                        <ul class="sub-menu">
+                            <li class="href-element" data-href="{{ path('new_challenge') }}">Challenge</li>
+                            <li class="href-element" {# data-href="{{ path('new_versus') }}" #} >Versus</li>
+                        </ul>
                     </li>
                 </div>
-
+        
                 <a class="text-shadow" href="{{ path('app_home') }}">TBOI Challenge</a>
-
+        
                 <div id="nav-right">
                     {% if app.user %}
                         {# if a user is logged in #}
@@ -49,8 +57,8 @@
                     {% endif %}
                 </div>
             </ul>
-            
         </nav>
+        
 
         <div id="flash-messages">
             {# flash message displaying #}

@@ -16,17 +16,6 @@ body {
     min-height: 125vh;
 }
 
-nav {
-    width: 75%;
-    margin: auto;
-    padding: 1rem 0;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-    justify-content: center;
-}
-
 /* flash messages */
 #flash-messages {
     position: absolute;
@@ -122,6 +111,21 @@ nav {
     user-select: none; /* Standard syntax */
 }
 
+/* --------------------------------------------------------------------------------------------------------- */
+/* NAV ----------------------------------------------------------------------------------------------------- */
+
+nav {
+    width: 75%;
+    margin: auto;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+}
+
+
 nav #desktop {
     display: flex;
     list-style: none;
@@ -157,7 +161,42 @@ nav > img {
 #nav-left li,
 #nav-right li {
     font-size: 1.4rem;
+    /* already position: relative because of class text-shadow */
 }
+
+/* .sub-menu <ul> */
+#desktop .sub-menu {
+    display: none;
+    position: absolute;
+    background-color: #e9dbe0;
+    min-width: 160px;
+    box-shadow: 8px 7px 1.5px rgba(0, 0, 0, 0.26);
+    z-index: 1;
+}
+
+/* show .sub-menu when li:hover */
+#desktop li:hover .sub-menu {
+    display: block;
+    margin: 0;
+}
+
+/* .sub-menu links */
+#desktop .sub-menu li {
+    font-size: 1.15rem;
+    padding: 7.5% 10%;
+    display: block;
+    transition: background-color .1s;
+}
+
+/* .sub-menu links hover */
+#desktop .sub-menu li:hover {
+    background-color: #746e6b;
+    color:#ded5d0;
+}
+
+
+/* --------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------------------------- */
 
 /* hide arrows from number input */
 input::-webkit-outer-spin-button,
