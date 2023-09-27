@@ -26,8 +26,14 @@ class Versus
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
-    #[ORM\OneToMany(mappedBy: 'versus', targetEntity: VersusPlayer::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'versus', targetEntity: PlayVersus::class, orphanRemoval: true)]
     private Collection $players;
+
+    #[ORM\Column]
+    private ?bool $public = null;
+
+    #[ORM\Column]
+    private ?bool $closed = null;
 
     public function __construct()
     {
@@ -87,14 +93,14 @@ class Versus
     }
 
     /**
-     * @return Collection<int, VersusPlayer>
+     * @return Collection<int, PlayVersus>
      */
     public function getPlayers(): Collection
     {
         return $this->players;
     }
 
-    public function addPlayer(VersusPlayer $player): static
+    public function addPlayer(PlayVersus $player): static
     {
         if (!$this->players->contains($player)) {
             $this->players->add($player);
@@ -104,7 +110,7 @@ class Versus
         return $this;
     }
 
-    public function removePlayer(VersusPlayer $player): static
+    public function removePlayer(PlayVersus $player): static
     {
         if ($this->players->removeElement($player)) {
             // set the owning side to null (unless already changed)
@@ -112,6 +118,30 @@ class Versus
                 $player->setVersus(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isPublic(): ?bool
+    {
+        return $this->public;
+    }
+
+    public function setPublic(bool $public): static
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    public function isClosed(): ?bool
+    {
+        return $this->closed;
+    }
+
+    public function setClosed(bool $closed): static
+    {
+        $this->closed = $closed;
 
         return $this;
     }
