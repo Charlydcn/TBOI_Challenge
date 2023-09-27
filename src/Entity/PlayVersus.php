@@ -7,18 +7,18 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VersusPlayerRepository::class)]
-class VersusPlayer
+class PlayVersus
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $completionTime = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $completionDate = null;
+    private ?\DateTimeInterface $playDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'players')]
     #[ORM\JoinColumn(nullable: false)]
@@ -45,14 +45,14 @@ class VersusPlayer
         return $this;
     }
 
-    public function getCompletionDate(): ?\DateTimeInterface
+    public function getPlayDate(): ?\DateTimeInterface
     {
-        return $this->completionDate;
+        return $this->playDate;
     }
 
-    public function setCompletionDate(\DateTimeInterface $completionDate): static
+    public function setPlayDate(\DateTimeInterface $playDate): static
     {
-        $this->completionDate = $completionDate;
+        $this->playDate = $playDate;
 
         return $this;
     }
