@@ -73,6 +73,11 @@
 
 .character figcaption img {
     height: 22px;
+    max-width: 90%;
+}
+
+.character figcaption {
+    text-align: center;
 }
 
 .boss figcaption img {
@@ -89,13 +94,20 @@
 }
 
 .streak {
-    position:relative;
+    position: absolute;
+    top: 15%;
+    right: 15%;
 }
 
 .streak img,
 .streak figcaption {
     position: absolute;
     transform: translate(-50%, -50%);
+}
+
+.streak img {
+    width: 40px;
+    filter: saturate(2);
 }
 
 @media screen and (max-width: 1300px) {
