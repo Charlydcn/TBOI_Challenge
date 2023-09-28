@@ -13,7 +13,8 @@ button {
 body {
     background-image: url("../img/misc/background.webp");
     background-repeat: no-repeat;
-    min-height: 125vh;
+    background-size: cover;
+    min-height: 100vh;
 }
 
 /* flash messages */
@@ -61,7 +62,6 @@ body {
 /* underline hover animation */
 .underline-hover {
     position: relative;
-    transition: 1s;
 }
 
 .underline-hover::after {
@@ -90,6 +90,7 @@ body {
 
 .href-element:active {
     filter: invert(0.3);
+    z-index:2;
 }
 
 .text-shadow {
@@ -97,7 +98,7 @@ body {
 }
 
 .text-shadow {
-    transition: 0.3s;
+    transition: text-shadow 0.3s;
 }
 
 .text-shadow:hover {
@@ -147,6 +148,7 @@ nav #desktop {
 nav > img {
     position: absolute;
     width: 112.5%;
+    min-height: 100%;
     z-index: -1;
 }
 
