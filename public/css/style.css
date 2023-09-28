@@ -166,6 +166,18 @@ nav > img {
     /* already position: relative because of class text-shadow */
 }
 
+#nav-right li:first-of-type {
+    position: relative;
+}
+
+#nav-right li:first-of-type img {
+    position: absolute;
+    top: 50%;
+    left: -15%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+}
+
 /* .sub-menu <ul> */
 #desktop .sub-menu {
     display: none;
@@ -205,4 +217,17 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/* cursor pointer on onclick infos elements */
+.onclick-infos-element {
+    cursor:pointer;
+}
+
+@media screen and (max-width: 1300px) {
+
+    nav {
+        width:85%;
+    }
+
 }
