@@ -22,6 +22,13 @@
             class="href-element" 
             data-href="{{ path('play_challenge', {'id': challenge.id}) }}"
             alt="The word PLAY">
+
+        <br>
+
+        <img src="{{ asset('img/text/versus.webp')}}"
+            class="href-element" 
+            data-href="{{ path('new_versus', {'id': challenge.id})}}"
+            alt="The word VERSUS">
     </div>
 
     <div>
@@ -84,7 +91,24 @@
                 <p>Win-streak : {{ challenge.streak }}</p>
             {% endif %}
         </div>
-       
+
+        <br>
+        <br>
+
+        <div id="versus">
+            <p>Versus on this challenge : (Total : {{ challenge.versus|length }})</p>
+
+            <br>
+            
+            {% for versus in challenge.versus %}
+            <div class="href-element" data-href=" {# {{ path('show_versus', {'id': versus.id})}} #}">
+                <p>id : {{ versus.id }}</p>
+                <p>creator : {{ versus.creator.username }}</p>
+            </div>
+            
+            <br>
+            {% endfor %}
+        </div>
     </div>
 
 {% endblock %}
