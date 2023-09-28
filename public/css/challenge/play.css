@@ -35,7 +35,7 @@
 }
 
 /* infos when hover on character/boss/restriction */
-.hover-infos {
+.onclick-infos {
     position: absolute;
     background-color: rgb(84 76 78 / 90%);
     padding: .5rem 1rem;
@@ -137,10 +137,6 @@
 /* ---------------------------------------------------------------------------------------- */
 /*                                                                                          */
 /* RESTRICTIONS RESULT -------------------------------------------------------------------- */
-
-#restrictions div img {
-    cursor:pointer;
-}
 
 /* when imgs are upscaled by client navigator, pixelise instead of blur effect */
 .pixelated {
