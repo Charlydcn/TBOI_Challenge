@@ -134,6 +134,7 @@
 #restrictions h2 {
     display: flex;
     gap: 1rem;
+    width: -moz-fit-content;
     width: fit-content;
 }
 
@@ -201,6 +202,7 @@
 .list label {
     font-size: 1.1em;
     display: flex;
+    width: -moz-fit-content;
     width: fit-content;
     align-items: center
 }
