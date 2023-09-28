@@ -30,7 +30,7 @@ class Challenge
     private ?User $creator = null;
 
     #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: Versus::class, orphanRemoval: true)]
-    private Collection $versuses;
+    private Collection $versus;
 
     #[ORM\ManyToMany(targetEntity: Restriction::class, inversedBy: 'challenges', fetch: 'EAGER')]
     private Collection $restrictions;
@@ -54,7 +54,7 @@ class Challenge
     {
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
-        $this->versuses = new ArrayCollection();
+        $this->versus = new ArrayCollection();
         $this->bosses = new ArrayCollection();
         $this->characters = new ArrayCollection();
         $this->restrictions = new ArrayCollection();
@@ -147,15 +147,15 @@ class Challenge
     /**
      * @return Collection<int, Versus>
      */
-    public function getVersuses(): Collection
+    public function getVersus(): Collection
     {
-        return $this->versuses;
+        return $this->versus;
     }
 
     public function addVersus(Versus $versus): static
     {
-        if (!$this->versuses->contains($versus)) {
-            $this->versuses->add($versus);
+        if (!$this->versus->contains($versus)) {
+            $this->versus->add($versus);
             $versus->setChallenge($this);
         }
 
@@ -164,7 +164,7 @@ class Challenge
 
     public function removeVersus(Versus $versus): static
     {
-        if ($this->versuses->removeElement($versus)) {
+        if ($this->versus->removeElement($versus)) {
             // set the owning side to null (unless already changed)
             if ($versus->getChallenge() === $this) {
                 $versus->setChallenge(null);
@@ -279,9 +279,9 @@ class Challenge
         return $this;
     }
 
-    public function getCreationDate(): string
+    public function getCreationDate(): \DateTime
     {
-        return $this->creationDate->format('d/m/Y H:i');
+        return $this->creationDate;
         
     }
 
