@@ -14,7 +14,7 @@ class PlayVersus
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $completionTime = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
