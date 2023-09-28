@@ -29,8 +29,7 @@
                         {# img #}
                         <img class="pixelated" src="{{ asset('/img/characters/' ~ character.img )}}" alt="{{ character.name }}'s image">
                         {# text img #}
-                        {# AJOUTER LES TAINTED NAMES #}
-                        <img src="{{ asset('/img/characters/text/' ~ character.img|replace({"tainted_": ""}))}}" alt="{{ character.name }}'s name">
+                        <img src="{{ asset('/img/characters/text/' ~ character.img)}}" alt="{{ character.name }}'s name">
                     {% endif %}
                 </div>
     
