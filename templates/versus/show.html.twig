@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Versus {{ versus.id }}{% endblock %}
+
+{% block body %}
+
+        <p>Challenge id : <a href="{{ path('show_challenge', {'id': versus.challenge.id})}}">{{ versus.challenge.id }}</a></p>
+        <p>Creator : {{ versus.creator.username }}</p>
+        <p>Time limit : {{ versus.timeLimit|date('H:i:s') }}</p>
+        <p>Public : {{ versus.public ? 'Yes' : 'No' }}</p>
+        <p>Closed : {{ versus.closed ? 'Yes' : 'No'  }}</p>
+        {% if versus.players %}
+                    <ul>
+                        {% for player in versus.players %}
+                            <li>{{ player }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No players yet</p>
+                {% endif %}
+        <p>Current winner : {{ versus.winner ? versus.winner : "No winner yet" }}</p>
+
+{% endblock %}
