@@ -1,20 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VersusController!{% endblock %}
+{% block title %}Versus list{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% for v in versus %}
+        <div class="href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
+            <p>Challenge id : <a href="{{ path('show_challenge', {'id': v.challenge.id})}}">{{ v.challenge.id }}</a></p>
+            <p>Creator : {{ v.creator.username }}</p>
+            <p>Time limit : {{ v.timeLimit|date('H:i:s') }}</p>
+            <p>Public : {{ v.public ? 'Yes' : 'No' }}</p>
+            <p>Closed : {{ v.closed ? 'Yes' : 'No'  }}</p>
+            <p>Players : {{ v.players ? v.players|length : "No players yet" }}</p>
+            <p>Current winner : {{ v.winner ? v.winner : "No winner yet" }}</p>
+        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/laragon/www/TBOI_Challenge/src/Controller/VersusController.php'|file_link(0) }}">src/Controller/VersusController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/laragon/www/TBOI_Challenge/templates/versus/index.html.twig'|file_link(0) }}">templates/versus/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <br>
+        <br>
+    {% endfor %}
+
 {% endblock %}
