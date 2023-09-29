@@ -1,0 +1,41 @@
+#challenge {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    margin: 2rem 0;
+}
+
+#characters,
+#bosses,
+#restrictions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.2rem 1rem;
+    align-content: stretch;
+    max-height: 500px;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+.character,
+.boss,
+.restriction {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.character img,
+.restriction img {
+    width: 30px;
+    object-fit: scale-down;
+    height: 25px;
+}
+
+.boss img {
+    width: 25px;
+}
+
+
