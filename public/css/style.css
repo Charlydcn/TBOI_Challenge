@@ -168,6 +168,8 @@ nav > img {
 
 #nav-right li:first-of-type {
     position: relative;
+    min-width: 25%;
+    text-align: center;
 }
 
 #nav-right li:first-of-type img {
@@ -176,6 +178,7 @@ nav > img {
     left: -15%;
     transform: translate(-50%, -50%);
     width: 30px;
+    image-rendering: pixelated;
 }
 
 /* .sub-menu <ul> */
@@ -228,6 +231,10 @@ input::-webkit-inner-spin-button {
 
     nav {
         width:85%;
+    }
+
+    #nav-right li:first-of-type {
+        min-width: 30%;
     }
 
 }
