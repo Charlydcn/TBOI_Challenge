@@ -11,20 +11,78 @@
 
 {% block body %}
 
+{% set c = challenge %}
+
 <a href="{{ path('show_challenge', {'id': challenge.id})}}">&lt; Challenge</a>
 
-
+{# METTRE LE RESULTAT EN DISPLAY HIDDEN, AFFICHER UN PERSO/BOSS/RESTRICTIONS RANDOMS, ET LORSQU'ON PLAY, ON AFFICHE LE RESULTAT ?? #}
     <div id="page">
         
         <img src="{{ asset('/img/misc/page_blood_empty.webp')}}" alt="image of a notebook page with blood on it">
-
         
-        <div>
+        <div id="step1">
+            <div class="character">
+                {# img #}
+                <img class="pixelated" src="{{ asset('/img/characters/missing.webp')}}" alt="Mystery character image">
+                {# text img #}
+                <p class="onclick-infos-element">{{ c.characters|length }} characters</p>
+                {# characters list #}
+                <div id="characters" class="onclick-infos hidden">
+                    {% for character in c.characters %}
+                        <figure class="character">
+                            <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.webp') }}" alt="{{ character.name }}'s head">
+                            <figcaption>{{ character.name }}</figcaption>
+                        </figure>
+                    {% endfor %} 
+                </div>
+            </div>
+
+            <div class="boss">
+                {# img #}
+                <img class="pixelated" src="{{ asset('/img/bosses/missing.webp')}}" alt="Mystery boss image">
+                {# text img #}
+                <p class="onclick-infos-element">{{ c.bosses|length }} bosses</p>
+                
+                {# bosses list #}
+                <div id="bosses" class="onclick-infos hidden">
+                    {% for boss in c.bosses %}
+                        <figure class="boss">
+                            <img src="{{ asset('/img/completion_marks/' ~ boss.name|replace({" ": "", "'": ""}) ~ '.webp') }}" alt="{{ boss.name }}'s completion mark">
+                            <figcaption>{{ boss.name }}</figcaption>
+                        </figure>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="restriction">
+                {# img #}
+                <img class="pixelated" src="{{ asset('/img/restrictions/missing.webp')}}" alt="Mystery restriction image">
+                {# text img #}
+                <p class="onclick-infos-element">{{ c.restrictions|length }} restrictions</p>
+
+                {# restrictions list #}
+                <div id="restrictions" class="onclick-infos hidden">
+                    <p>Chances of occuring : {{c.restrictionsChance}}%</p>
+                    {% for restriction in c.restrictions %}
+                        <figure class="restriction">
+                            <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
+                            {{ restriction.name }}
+                        </figure>
+                    {% endfor %} 
+                </div>
+            </div>
+
+            <img class="play-btn" src="{{ asset('/img/text/play.webp')}}" alt="The word play">
+        </div>
+
+        <div id="step2" class="hidden">
+            <p class="back-btn">&lt;</p>
+
             <img src="{{ asset('/img/misc/reset.png')}}" data-href="" class="href-element" alt="reset icon" onClick="window.location.reload();">
 
             <div id="result">
     
-                <div id="character">
+                <div class="character">
                     {% if character is defined %}
                         {# img #}
                         <img class="pixelated" src="{{ asset('/img/characters/' ~ character.img )}}" alt="{{ character.name }}'s image">
@@ -33,7 +91,7 @@
                     {% endif %}
                 </div>
     
-                <div id="boss">
+                <div class="boss">
             
                     {% if boss is defined %}
                         {# text img #}
@@ -43,14 +101,14 @@
                     {% endif %}
                 </div>
     
-                <div id="restrictions">
+                <div class="restrictions">
                     {% if restrictions is defined %}
                         {% for restriction in restrictions %}
                         <div>
                             {# img #}
-                            <img src="{{ asset('/img/restrictions/' ~ restriction.img )}}" alt="{{ restriction.name }}'s image">
-                            {# infos box on hover #}
-                            <p class="hover-infos hidden prevent-select">{{ restriction.name }}</p>
+                            <img class="onclick-infos-element" src="{{ asset('/img/restrictions/' ~ restriction.img )}}" alt="{{ restriction.name }}'s image">
+                            {# infos box on click #}
+                            <p class="onclick-infos hidden prevent-select">{{ restriction.name }}</p>
                         </div>
                         {% endfor %}
                     {% endif %}
@@ -67,10 +125,25 @@
             </div>
 
             <div id="completion-time" class="hidden">
-                <p onclick="showBtns()">&lt;</p>
-                {{ form_start(playChallengeForm, {'action': path('play_challenge', {'id': challenge.id})})}}
+                <p class="back-btn win" onclick="showBtns()">&lt;</p>
+                
+                {% if versus %}
+                    {# if user came from a versus, send versusId in url parameter for WIN (action) and LOOSE (looseHref)) #}
+                    {% set action = path('play_challenge', {'challengeId': c.id, 'versusId': versus.id}) %}
+                    {% set looseHref = path('loose_challenge', {'challengeId': c.id, 'versusId': versus.id}) %}
 
-                {{ form_row(playChallengeForm.completionTime)}}
+                    {# make completionTime input required if user came from a versus #}
+                    {% set required = 'required' %}
+                {% else %}
+                    {# else, no change #}
+                    {% set action = path('play_challenge', {'challengeId': c.id}) %}
+                    {% set looseHref = path('loose_challenge', {'challengeId': c.id}) %}
+
+                    {% set required = false %}
+                    {% endif %}
+
+                {{ form_start(playChallengeForm, {'action': action}) }}
+                {{ form_row(playChallengeForm.completionTime, {'attr': {'required': required}}) }}
                 {{ form_row(playChallengeForm.submit)}}
 
                 {{ form_end(playChallengeForm)}}
@@ -82,7 +155,7 @@
                     
                 <img src="{{ asset('img/text/loose.webp')}}"
                     class="href-element"
-                    data-href="{{ path('loose_challenge', {'id': challenge.id}) }}"
+                    data-href="{{ looseHref }}"
                     alt="The word LOOSE">
             </div>
 
@@ -90,7 +163,7 @@
     </div>
 
     <div id="overlay" class="hidden"></div>
-    <p class="hidden" id="challenge-streak">{{ challenge.streak }}</p>
+    <p class="hidden" id="challenge-streak">{{ c.streak }}</p>
 
 {% endblock %}
 
