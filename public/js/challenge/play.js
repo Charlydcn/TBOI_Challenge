@@ -10,7 +10,6 @@ const btnsDiv = document.getElementById("btns")
 // <div id="completion-time"> containing playChallenge creation form (for completion time)
 const completionTimeForm = document.getElementById("completion-time")
 
-
 let count = 0
 
 function increment() {
@@ -57,3 +56,22 @@ function showBtns() {
     // hide completion time input
     completionTimeForm.classList.add('hidden')
 }
+
+
+// ---------------------------------------------------------------------------------------------------
+// REVEAL RESULT / GO BACK TO WIN/LOOSE BTNS ---------------------------------------------------------
+
+const playBtn = document.querySelector('.play-btn')
+const backBtn = document.querySelector('.back-btn')
+const step1 = document.querySelector('#step1')
+const step2 = document.querySelector('#step2')
+
+playBtn.addEventListener('click', () => {
+    step1.classList.add('hidden')
+    step2.classList.remove('hidden')
+})
+
+backBtn.addEventListener('click', () => {
+    step2.classList.add('hidden')
+    step1.classList.remove('hidden')
+})
