@@ -16,7 +16,7 @@
 }
 
 /* div before #play-result div and bg img */
-#page > img ~ div {
+#step2 {
     flex-direction: column;
     align-items: center;
     display: flex;
@@ -28,22 +28,36 @@
 }
 
 /* reset btn */
-#page > img ~ div > img:first-of-type {
+#step2 > img:first-of-type {
     position: absolute;
     right: 7.5%;
     top: 7.5%;
 }
 
-/* infos when hover on character/boss/restriction */
-.onclick-infos {
+/* ---------------------------------------------------------------------------------------------- */
+/*                                                                                                
+/* Step 1 --------------------------------------------------------------------------------------- */
+
+.length-span {
+    color: #372b2d;
+    font-size: 3.5rem;
+}
+
+.play-btn,
+.back-btn {
+    cursor: pointer;
+}
+
+#completion-time .back-btn {
+    position: unset;
+    font-size: 1.5rem;
+}
+
+.back-btn {
+    font-size: 2rem;
     position: absolute;
-    background-color: rgb(84 76 78 / 90%);
-    padding: .5rem 1rem;
-    z-index: 2;
-    border-radius: 5px;
-    color: #dfdfdf;
-    letter-spacing: 1px;
-    word-spacing: 5px;
+    top: 5%;
+    left: 0;
 }
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -52,14 +66,14 @@
 
 #result {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     align-items: center;
     gap: 1rem;
 }
 
-#character,
-#boss,
-#restrictions {
+.character,
+.boss,
+.restrictions {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -70,6 +84,12 @@
     display: flex;
     width: 100%;
     justify-content: space-around;
+}
+
+#completion-time {
+    justify-content: center;
+    gap:1rem;
+    align-items: center;;
 }
 
 #btns img {
@@ -100,18 +120,18 @@
 /* CHARACTER RESULT ----------------------------------------------------------------------- */
 
 /* div containing boss img + text img */
-#character {
+.character {
     flex-direction: column;
-    max-width: 100px;
+    /* max-width: 100px; */
 }
 
 /* text img */
-#character img:first-of-type {
+.character img:first-of-type {
     height: 100px;
 }
 
 /* character img */
-#character img:last-of-type {
+.character img:last-of-type {
     height:30px;
 }
 
@@ -120,17 +140,17 @@
 /* BOSS RESULT ---------------------------------------------------------------------------- */
 
 /* div containing boss img + text img */
-/* #boss {
+/* .boss {
 
 } */
 
 /* text img */
-#boss img:first-of-type {
+.boss img:first-of-type {
     height: 25px;
 }
 
 /* boss img */
-#boss img:last-of-type {
+.boss img:last-of-type {
     height:50px;
 }
 
