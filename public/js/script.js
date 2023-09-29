@@ -33,18 +33,18 @@ hrefElements.forEach(function (hrefElement) {
 var onclickInfosElements = $('.onclick-infos-element')
 var onclickInfos = $('.onclick-infos')
 
-onclickInfosElements.on('click', function(event) {
-    $.each(onclickInfos, function() {
-        if ($(this) !== $(event.currentTarget)) {
-            $(this).addClass('hidden')
-        }
-    })
+// on infosElement click
+onclickInfosElements.on('click', function() {
+    // add 'hidden' class to all onclickInfos except clicked infosElement
+    onclickInfos.not($(this).next()).addClass('hidden')
 
     $(this).next().toggleClass('hidden')
 })
 
 $(document).on('click', function(event) {
+    // is the click isn't on a onclickInfos element nor a onclickInfosElement
     if (!$(event.target).is(onclickInfos) && !$(event.target).is(onclickInfosElements)) {
-        $('.onclick-infos').addClass('hidden');
+        // hide all onclickInfos elements
+        $('.onclick-infos').addClass('hidden')
     }
-});
+})
