@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\VersusPlayerRepository;
+use App\Repository\PlayVersusRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: VersusPlayerRepository::class)]
+#[ORM\Entity(repositoryClass: PlayVersusRepository::class)]
 class PlayVersus
 {
     #[ORM\Id]
@@ -27,6 +27,9 @@ class PlayVersus
     #[ORM\ManyToOne(inversedBy: 'versusPlayed')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column]
+    private ?bool $completed = null;
 
     public function getId(): ?int
     {
@@ -79,5 +82,22 @@ class PlayVersus
         $this->user = $user;
 
         return $this;
+    }
+
+    public function isCompleted(): ?bool
+    {
+        return $this->completed;
+    }
+
+    public function setCompleted(bool $completed): static
+    {
+        $this->completed = $completed;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->id;
     }
 }
