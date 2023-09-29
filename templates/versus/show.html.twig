@@ -2,7 +2,47 @@
 
 {% block title %}Versus {{ versus.id }}{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/versus/show.css')}}">
+{% endblock stylesheets %}
+
 {% block body %}
+
+        {% set c = versus.challenge %}
+
+        <div id="challenge">
+            <div id="characters">
+                {% for character in c.characters %}
+                    <figure class="character">
+                        <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.webp') }}" alt="{{ character.name }}'s head">
+                        <figcaption>{{ character.name }}</figcaption>
+                    </figure>
+                {% endfor %} 
+            </div>
+    
+            <div id="bosses">
+                {% for boss in c.bosses %}
+                    <figure class="boss">
+                        <img src="{{ asset('/img/completion_marks/' ~ boss.name|replace({" ": "", "'": ""}) ~ '.webp') }}" alt="{{ boss.name }}'s completion mark">
+                        <figcaption>{{ boss.name }}</figcaption>
+                    </figure>
+                {% endfor %}
+            </div>
+    
+            <div id="restrictions">
+                {% for restriction in c.restrictions %}
+                    <figure class="restriction">
+                        <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
+                        {{ restriction.name }}
+                    </figure>
+                {% endfor %} 
+            </div>
+        </div>
+        
+        
+        
+
+        
 
         <p>Challenge id : <a href="{{ path('show_challenge', {'id': versus.challenge.id})}}">{{ versus.challenge.id }}</a></p>
         <p>Creator : {{ versus.creator.username }}</p>
@@ -19,5 +59,7 @@
                     <p>No players yet</p>
                 {% endif %}
         <p>Current winner : {{ versus.winner ? versus.winner : "No winner yet" }}</p>
+
+        <img src="{{ asset('/img/text/join.webp')}}" class="href-element" data-href="" alt="Text saying JOIN">
 
 {% endblock %}
