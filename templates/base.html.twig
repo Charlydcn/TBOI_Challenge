@@ -4,9 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" href="{{ asset('/img/misc/save_png/icon.png')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
         <link href="https://fonts.cdnfonts.com/css/upheaval" rel="stylesheet">
-
         <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
         {% block stylesheets %}
         {% endblock %}
@@ -36,8 +36,9 @@
                 <div id="nav-right">
                     {% if app.user %}
                         {# if a user is logged in #}
-                        <li class="text-shadow underline-hover href-element" data-href="">
-                            Profile
+                        <li class="text-shadow href-element" data-href="">
+                            <img src="{{ asset('/img/user_icons/' ~ app.user.icon)}}" alt="{{ app.user.icon|replace({'.webp': ''})}} user icon">
+                            <span class="underline-hover">{{ app.user.username }}
                         </li>
                         <li class="text-shadow underline-hover href-element" data-href="{{ path('app_logout') }}">
                             Log off
