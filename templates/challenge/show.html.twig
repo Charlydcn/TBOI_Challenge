@@ -11,10 +11,10 @@
 
 {% block body %}
 
-    {# {# <div>
+    <div>
         <img src="{{ asset('img/text/play.webp')}}"
             class="href-element" 
-            data-href="{{ path('play_challenge', {'id': challenge.id}) }}"
+            data-href="{{ path('play_challenge', {'challengeId': challenge.id}) }}"
             alt="The word PLAY">
 
         <br>
@@ -23,7 +23,7 @@
             class="href-element" 
             data-href="{{ path('new_versus', {'id': challenge.id})}}"
             alt="The word VERSUS">
-    </div> #}
+    </div>
 
     <div>
         {% for player in challenge.players %}
@@ -98,7 +98,7 @@
             <p>Win-streak : {{ c.streak }}</p>
         {% endif %}
 
-        {# <div id="versus">
+        <div id="versus">
             <p>Versus on this challenge : (Total : {{ challenge.versus|length }})</p>
 
             {% for versus in challenge.versus %}
@@ -108,7 +108,7 @@
             </div>
             
             {% endfor %}
-        </div> #}
+        </div>
 
 {% endblock %}
 
