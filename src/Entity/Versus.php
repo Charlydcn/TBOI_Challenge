@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\VersusRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\VersusRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: VersusRepository::class)]
 class Versus
@@ -139,7 +139,7 @@ class Versus
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->id;
     }
