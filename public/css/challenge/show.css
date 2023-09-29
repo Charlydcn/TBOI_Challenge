@@ -13,20 +13,20 @@
 #characters,
 #bosses,
 #restrictions {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
     gap: 0.2rem 1rem;
     margin: .75rem auto;
-    padding: 1rem .5rem;
-    background-color: #e9dadf;
-    width: 150%;
+    width: 125%;
 }
 
 #characters {
     max-height: 600px;
     flex-wrap: wrap;
-    width: 200%;
+    width: 155%;
+}
+
+#restrictions > p:first-of-type {
+    opacity: 50%;
+    margin: .75rem 0;
 }
 
 .character,
