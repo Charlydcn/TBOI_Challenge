@@ -8,7 +8,9 @@
 
 {% block body %}
 
-        {% set c = versus.challenge %}
+        {% set v = versus %}
+
+        {% set c = v.challenge %}
 
         <div id="challenge">
             <div id="characters">
@@ -38,28 +40,47 @@
                 {% endfor %} 
             </div>
         </div>
-        
-        
-        
 
-        
-
-        <p>Challenge id : <a href="{{ path('show_challenge', {'id': versus.challenge.id})}}">{{ versus.challenge.id }}</a></p>
-        <p>Creator : {{ versus.creator.username }}</p>
-        <p>Time limit : {{ versus.timeLimit|date('H:i:s') }}</p>
-        <p>Public : {{ versus.public ? 'Yes' : 'No' }}</p>
-        <p>Closed : {{ versus.closed ? 'Yes' : 'No'  }}</p>
-        {% if versus.players %}
+        <p>Challenge id : <a href="{{ path('show_challenge', {'id': v.challenge.id})}}">{{ v.challenge.id }}</a></p>
+        <p>Creator : {{ v.creator.username }}</p>
+        <p>Time limit : {{ v.timeLimit|date('H:i:s') }}</p>
+        <p>Public : {{ v.public ? 'Yes' : 'No' }}</p>
+        <p>Closed : {{ v.closed ? 'Yes' : 'No'  }}</p>
+        {% if v.players %}
                     <ul>
-                        {% for player in versus.players %}
+                        {% for player in v.players %}
                             <li>{{ player }}</li>
                         {% endfor %}
                     </ul>
                     {% else %}
                     <p>No players yet</p>
                 {% endif %}
-        <p>Current winner : {{ versus.winner ? versus.winner : "No winner yet" }}</p>
+        <p>Current winner : {{ v.winner ? v.winner : "No winner yet" }}</p>
 
-        <img src="{{ asset('/img/text/join.webp')}}" class="href-element" data-href="" alt="Text saying JOIN">
+        {# VERIFIER QUE L'UTILISATEUR N'A PAS DEJA JOUE AU CHALLENGE, ON PEUT QUE Y JOUER UNE FOIS ET FAIRE SON TEMPS SINON C'EST CHIANT #}
+        
+        <img 
+            src="{{ asset('/img/text/join.webp')}}"
+            class="href-element"
+            data-href="{{ path('play_challenge', {'challengeId': c.id, 'versusId': v.id})}}"
+            alt="Text saying JOIN">
+
+        {% if v.players %}
+            <h2>Players : </h2>
+
+            {% for player in v.players %}
+                <div>
+                    <p>Player : {{ player.user }}</p>
+                    <p>Completed : {{ player.completed ? "Yes" : "No" }}</p>
+                    {% if player.completed %}
+                        <p>Completion time : {{ player.completionTime ? player.completionTime|date('H:i:s') : "Unknown" }}</p>
+                    {% endif %}
+                    <p>Play date : {{ player.playDate|date('d/m/Y H:i') }}</p>
+                </div>
+                <br>
+                <br>
+            {% endfor %}
+
+        {% endif %}
 
 {% endblock %}
