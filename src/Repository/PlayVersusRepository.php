@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method PlayVersus[]    findAll()
  * @method PlayVersus[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class VersusPlayerRepository extends ServiceEntityRepository
+class PlayVersusRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
