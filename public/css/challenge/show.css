@@ -1,25 +1,86 @@
-/* ---------------------------------------------------------------------------------------------- */
-/* Infos ---------------------------------------------------------------------------------------- */
+#challenge {
+    display: flex;
+    gap:1rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+    justify-content: space-around;
+}
 
-/* div with 3 divs : characters + bosses + restrictions */
+.container {
+    position: relative;
+}
+
+#characters,
+#bosses,
+#restrictions {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem 1rem;
+    margin: .75rem auto;
+    padding: 1rem .5rem;
+    background-color: #e9dadf;
+    width: 150%;
+}
+
+#characters {
+    max-height: 600px;
+    flex-wrap: wrap;
+    width: 200%;
+}
+
+.character,
+.boss,
+.restriction {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.character img,
+.restriction img {
+    width: 30px;
+    object-fit: scale-down;
+    height: 30px;
+}
+
+.boss img {
+    width: 25px;
+    height: 25px;
+}
+
+.length-span {
+    color: #372b2d;
+    font-size: 3.5rem;
+}
+
+.onclick-infos-element {
+    height: 30px;
+}
+
+
+/* ---------------------------------------------------------------------------------------------- */
+/* Infos ----------------------------------------------------------------------------------------
+
+/* div with 3 divs : characters + bosses + restrictions
 #infos {
-    /* display: none; */
+    /* display: none;
     flex-wrap: wrap;
     flex-direction: row;
     width:36.66%;
 }
 
-/* 3 divs : characters + bosses + restrictions */
+/* 3 divs : characters + bosses + restrictions
 #characters,
 #bosses,
 #restrictions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    /* position:relative; */
+    /* position:relative;
 }
 
-/* #infos > #characters > div(img + text) */
+/* #infos > #characters > div(img + text)
 #characters div,
 #bosses div,
 #restrictions div {
@@ -27,8 +88,8 @@
     position: relative;
 }
 
-#characters div:hover .hover-infos,
-#bosses div:hover .hover-infos,
-#restrictions div:hover .hover-infos {
+#characters div:hover .onclick-infos,
+#bosses div:hover .onclick-infos,
+#restrictions div:hover .onclick-infos {
     opacity:66%;
 }
