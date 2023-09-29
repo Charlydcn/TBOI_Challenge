@@ -88,6 +88,7 @@ body {
     cursor: pointer;
 }
 
+/* effect when click on href-elements */
 .href-element:active {
     filter: invert(0.3);
     z-index:2;
@@ -110,6 +111,23 @@ body {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+}
+
+.onclick-infos-element {
+    position: relative;
+}
+
+.onclick-infos {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(84 76 78 / 90%);
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    color: #dfdfdf;
+    letter-spacing: 1px;
+    word-spacing: 5px;
+    z-index:2;
 }
 
 /* --------------------------------------------------------------------------------------------------------- */
