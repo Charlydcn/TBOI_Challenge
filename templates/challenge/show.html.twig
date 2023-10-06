@@ -35,6 +35,9 @@
                     <p>Completion time : {{ player.completionTime ? player.completionTime|date('H:i:s') : "Unknown" }}</p>
                 {% endif %}
                 <p>Play date : {{ player.playDate|date('d/m/Y H:i') }}</p>
+                {% if player.comment %}
+                    <p>Comment : {{ player.comment }}</p>
+                {% endif %}
             </div>
             <br>
             <br>
