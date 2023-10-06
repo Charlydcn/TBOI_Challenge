@@ -144,6 +144,7 @@
 
                 {{ form_start(playChallengeForm, {'action': action}) }}
                 {{ form_row(playChallengeForm.completionTime, {'attr': {'required': required}}) }}
+                {{ form_row(playChallengeForm.comment) }}
                 {{ form_row(playChallengeForm.submit)}}
 
                 {{ form_end(playChallengeForm)}}
