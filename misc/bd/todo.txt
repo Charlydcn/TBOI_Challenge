@@ -1,0 +1,26 @@
+tboi chall:
+
+ajouter une win-streak utilisateur, chaque challenge win = +1, si il perd un challenge, reset à 0
+
+il faut pouvoir utiliser le site sans être co, mais si on est pas co, on a simplement un randomizer sans pouvoir créer de presets
+
+ajouter les résultats du challenge dans l'objet PlayChallenge pour savoir sur quel perso/boss/restriction le joueur est tombé
+
+ajouter un commentaire sur la page play challenge pour dire qu'il faut regarder le timer avant d'exit la run puisqu'on demande le completion time quand on win
+
+commentaire de run sur playChallenge/Versus ?
+
+!! stocker les résultats d'un challenge en session ou quelque part, pour que si on quitte la page ou refresh par erreur, on perde pas son challenge, ou pire, sa win-streak actuel (sur un challenge à win-streak !!
+
+
+Exemple d'un objet playChallenge avec les résultats + un commentaire utilisateur optionnel:
+
+PLAYER : Charly763
+CHALLENGE : 128
+COMPLETED : Yes
+COMPLETION TIME : 00:25:13
+PLAY DATE : 01/10/2023 16:44
+CHARACTER : Azazel
+BOSS : Ultra greed
+RESTRICTION(S) : None
+COMMENT : Ez
