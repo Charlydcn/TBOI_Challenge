@@ -142,6 +142,19 @@ class ChallengeController extends AbstractController
         VersusRepository $versusRepository,
     ): Response {
 
+        // call randomize() custom method to randomize on Challenge's collections
+        $result = $this->randomize($challenge);
+
+        // Character's index in $result returned array is 0, boss is 1, restrictions is 2 (restrictions is an array)
+        $character = $result[0];
+        $boss = $result[1];
+        $restrictions = [];
+
+        // push every restriction in restrictions array
+        foreach($result[2] as $restriction) {
+            array_push($restrictions, $restriction);
+        }
+
         // ***********************************************************************************************************
         // FORM HANDLING WHEN USER WIN THE CHALLENGE *****************************************************************
 
@@ -209,7 +222,77 @@ class ChallengeController extends AbstractController
         }
         // -----------------------------------------------------------------------------------------------------------
         // -----------------------------------------------------------------------------------------------------------
+        
+        return $this->render('challenge/play.html.twig', [
+            'playChallenge' => $playChallenge,
+            'playChallengeForm' => $playChallengeForm,
+            'challenge' => $challenge,
+            'character' => $character,
+            'boss' => $boss,
+            'restrictions' => $restrictions,
+            'versus' => $versus,
+        ]);
+    }
 
+    #[Route('/challenge/loose/{challengeId}/{versusId?}', name: 'loose_challenge')]
+    public function loose(
+        #[MapEntity(id: 'challengeId')]Challenge $challenge,
+        #[MapEntity(id: 'versusId')] ?Versus $versus,
+        PlayChallenge $playChallenge = null,
+        Security $security,
+        Request $request,
+        EntityManagerInterface $entityManager): Response
+    {
+            $playChallenge = new PlayChallenge;
+            // find current user with Security's method getUser()
+            $user = $security->getUser();
+
+            $playChallenge->setCompleted(false);
+            $playChallenge->setPlayDate(new DateTime);
+            $playChallenge->setChallenge($challenge);
+            $playChallenge->setUser($user);
+
+            // add current user to challenge players
+            $challenge->addPlayer($playChallenge);
+
+            // if user came from a versus, create playVersus object
+            if ($versus) {
+                $playVersus = new PlayVersus;
+
+                $playVersus->setCompleted(false);
+                $playVersus->setPlayDate(new DateTime);
+                $playVersus->setVersus($versus);
+                $playVersus->setUser($user);
+
+                
+                // add current user to challenge players
+                $versus->addPlayer($playVersus);
+
+                // persist new PlayVersus object in database
+                $entityManager->persist($playVersus);
+                
+            }
+
+            // persist new PlayChallenge object in database
+            $entityManager->persist($playChallenge);
+            // flush changes
+            $entityManager->flush();
+
+            if ($versus) {
+                // redirect to versus played
+                return $this->redirectToRoute('show_versus', [
+                    'id' => $versus->getId(),
+                ]);
+            }
+
+            // redirect to challenge created
+            return $this->redirectToRoute('show_challenge', [
+                'id' => $challenge->getId(),
+            ]);
+    }
+
+    public function randomize(Challenge $challenge)
+    {
         // ***********************************************************************************************************
         // CHALLENGE CHARACTERS, BOSSES, RESTRICTIONS RANDOMIZATION (RESULT) *****************************************
 
@@ -286,76 +369,14 @@ class ChallengeController extends AbstractController
 
         // -----------------------------------------------------------------------
 
+        return [
+            $character,
+            $boss,
+            $restrictions
+        ];
+
         // ***********************************************************************************************************
         // ***********************************************************************************************************
-
-        
-        return $this->render('challenge/play.html.twig', [
-            'playChallenge' => $playChallenge,
-            'playChallengeForm' => $playChallengeForm,
-            'challenge' => $challenge,
-            'character' => $character,
-            'boss' => $boss,
-            'restrictions' => $restrictions,
-            'versus' => $versus,
-        ]);
-    }
-
-    #[Route('/challenge/loose/{challengeId}/{versusId?}', name: 'loose_challenge')]
-    public function loose(
-        #[MapEntity(id: 'challengeId')]Challenge $challenge,
-        #[MapEntity(id: 'versusId')] ?Versus $versus,
-        PlayChallenge $playChallenge = null,
-        Security $security,
-        Request $request,
-        EntityManagerInterface $entityManager): Response
-    {
-            $playChallenge = new PlayChallenge;
-            // find current user with Security's method getUser()
-            $user = $security->getUser();
-
-            $playChallenge->setCompleted(false);
-            $playChallenge->setPlayDate(new DateTime);
-            $playChallenge->setChallenge($challenge);
-            $playChallenge->setUser($user);
-
-            // add current user to challenge players
-            $challenge->addPlayer($playChallenge);
-
-            // if user came from a versus, create playVersus object
-            if ($versus) {
-                $playVersus = new PlayVersus;
-
-                $playVersus->setCompleted(false);
-                $playVersus->setPlayDate(new DateTime);
-                $playVersus->setVersus($versus);
-                $playVersus->setUser($user);
-
-                
-                // add current user to challenge players
-                $versus->addPlayer($playVersus);
-
-                // persist new PlayVersus object in database
-                $entityManager->persist($playVersus);
-                
-            }
-
-            // persist new PlayChallenge object in database
-            $entityManager->persist($playChallenge);
-            // flush changes
-            $entityManager->flush();
-
-            if ($versus) {
-                // redirect to versus played
-                return $this->redirectToRoute('show_versus', [
-                    'id' => $versus->getId(),
-                ]);
-            }
-
-            // redirect to challenge created
-            return $this->redirectToRoute('show_challenge', [
-                'id' => $challenge->getId(),
-            ]);
     }
 
 }
