@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\PlayChallenge;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -23,7 +25,19 @@ class PlayChallengeType extends AbstractType
             'label' => 'Time (optionnal) :',
         ])
 
-            ->add('submit', SubmitType::class);
+        ->add('comment', TextType::class, [
+            'label' => 'Comment (50 characters max)',
+            'constraints' => [
+                new Length([
+                    'min' => 3,
+                    'minMessage' => 'Comments must be 3 characters max',
+                    'max' => 50,
+                    'maxMessage' => 'Comments must be 50 characters max',
+                ])
+            ]
+        ])
+
+        ->add('submit', SubmitType::class);
         ;
     }
 
