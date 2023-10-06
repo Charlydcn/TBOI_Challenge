@@ -31,6 +31,9 @@ class PlayVersus
     #[ORM\Column]
     private ?bool $completed = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $comment = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -99,5 +102,17 @@ class PlayVersus
     public function __toString(): string
     {
         return $this->id;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): static
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 }
