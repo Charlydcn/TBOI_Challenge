@@ -19,9 +19,18 @@ class PlayVersusType extends AbstractType
                 'with_seconds' => true,
                 'label' => 'Completion time :',
             ])
-            // ->add('playDate')
-            // ->add('versus')
-            // ->add('user')
+
+            ->add('comment', TextType::class, [
+                'label' => 'Comment (50 characters max)',
+                'constraints' => [
+                    new Length([
+                        'min' => 3,
+                        'minMessage' => 'Comments must be 3 characters max',
+                        'max' => 50,
+                        'maxMessage' => 'Comments must be 50 characters max',
+                    ])
+                ]
+            ])
 
             ->add('submit', SubmitType::class);
         ;
