@@ -31,6 +31,9 @@ class PlayChallenge
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $completionTime = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $comment = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class PlayChallenge
     public function setCompletionTime(?\DateTimeInterface $completionTime): static
     {
         $this->completionTime = $completionTime;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): static
+    {
+        $this->comment = $comment;
 
         return $this;
     }
