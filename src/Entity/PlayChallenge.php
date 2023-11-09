@@ -21,7 +21,7 @@ class PlayChallenge
     private ?\DateTimeInterface $playDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'challengesPlayed')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'players')]
