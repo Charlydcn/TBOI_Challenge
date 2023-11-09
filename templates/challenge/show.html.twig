@@ -28,7 +28,7 @@
     <div>
         {% for player in challenge.players %}
             <div>
-                <p>Player : {{ player.user }}</p>
+                <p>Player : {{ player.user ? player.user : 'Unknown' }}</p>
                 <p>Challenge : {{ player.challenge }}</p>
                 <p>Completed : {{ player.completed ? "Yes" : "No" }}</p>
                 {% if player.completed %}
