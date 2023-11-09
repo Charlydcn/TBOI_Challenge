@@ -11,6 +11,7 @@ use App\Form\ChallengeType;
 use App\Form\PlayChallengeType;
 use App\Repository\VersusRepository;
 use App\Repository\ChallengeRepository;
+use App\Controller\RandomizerController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ChallengeController extends AbstractController
 {
-    #[Route('/challenge', name: 'app_challenge')]
+    #[Route('/challenge', name: 'challenges')]
     public function index(ChallengeRepository $challengeRepository): Response
     {
         $challenges = $challengeRepository->findAll();
@@ -37,7 +38,8 @@ class ChallengeController extends AbstractController
         Challenge $challenge = null,
         Request $request,
         EntityManagerInterface $entityManager,
-        Security $security): Response
+        Security $security,
+        RandomizerController $randomizerController): Response
     {
         if (!$challenge) {
             $challenge = new Challenge();
@@ -52,64 +54,52 @@ class ChallengeController extends AbstractController
         // if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // if no character selected, exit method
-            if (count($form->get('characters')->getData()) < 1) {
-                $this->addFlash(
-                    'warning',
-                    'You have to select atleast 1 character'
-                );
-                
-                // redirect to challenge creation
-                return $this->redirectToRoute('new_challenge');
-            }
+            // saveChall checkbox, if true, create Challenge entity, else, just randomizer user's selection
+            $saveChall = $form->get('saveChall')->getData();
 
-            // if no boss selected, exit method
-            if (count($form->get('bosses')->getData()) < 1) {
-
-                // add flash message of category warning
-                $this->addFlash(
-                    'warning',
-                    'You have to select atleast 1 boss'
-                );
-                
-                // redirect to challenge creation
-                return $this->redirectToRoute('new_challenge');
-            }
-
-
-            // restriction chance (mapped=false input) in variable
+            // restriction chance (x% chance of each restrictions to occur)
             $restrictionsChance = $form->get('restrictionsChance')->getData();
-
 
             // hydrate new challenge with form data
             $challenge = $form->getData();
 
-
-            // if winstreak checkbox isn't checked, set challenge winstreak attribute to 0 to make sure user can't
-            // submit a winstreak if winstreak checkbox isn't checked
+            // if winstreak checkbox isn't checked, set challenge winstreak attribute to 0
+            // (because you can check winstreak, put a value, then uncheck it, but the value of the input still remains)
             if ($form->get('streakCheckbox')->getData() === false) {
                 $challenge->setStreak(0);
             }
 
+            // if user checked $saveChall, create the challenge
+            if($saveChall) {
+                // add creationDate (current date)
+                $challenge->setCreationDate(new DateTime);
+    
+                // find current user with Security's method getUser()
+                $user = $security->getUser();
+                // and set current user to challenge creator (you have to be logged in to create a challenge)
+                $challenge->setCreator($user);
+    
+                // persist = prepare object to be saved on database
+                $entityManager->persist($challenge);
+                // flush = execute the queries to save object
+                $entityManager->flush();
+    
+                // redirect to challenge created, passing challenge id to show the created challenge
+                return $this->redirectToRoute('show_challenge', [
+                    'id' => $challenge->getId(),
+                ]);
 
-            // add creationDate (current date)
-            $challenge->setCreationDate(new DateTime);
+            // else, just randomize
+            } else {
+                $r = $randomizerController->randomize($challenge);
 
+                return $this->render('randomizer/result.html.twig', [
+                    'character' => $r['character'],
+                    'boss' => $r['boss'],
+                    'restrictions' => $r['restrictions'],
+                ]);
+            }
 
-            // find current user with Security's method getUser()
-            $user = $security->getUser();
-            // and set current user to challenge creator (you have to be logged in to create a challenge)
-            $challenge->setCreator($user);
-
-            // persist = prepare object to be saved on database
-            $entityManager->persist($challenge);
-            // flush = execute the queries to save object
-            $entityManager->flush();
-
-            // redirect to challenge created, passing challenge id to show the created challenge
-            return $this->redirectToRoute('show_challenge', [
-                'id' => $challenge->getId(),
-            ]);
         }
         
         return $this->render('challenge/new.html.twig', [
@@ -140,18 +130,19 @@ class ChallengeController extends AbstractController
         EntityManagerInterface $entityManager,
         ChallengeRepository $challengeRepository,
         VersusRepository $versusRepository,
+        RandomizerController $randomizerController,
     ): Response {
 
         // call randomize() custom method to randomize on Challenge's collections
-        $result = $this->randomize($challenge);
+        $result = $randomizerController->randomize($challenge);
 
         // Character's index in $result returned array is 0, boss is 1, restrictions is 2 (restrictions is an array)
-        $character = $result[0];
-        $boss = $result[1];
+        $character = $result['character'];
+        $boss = $result['boss'];
         $restrictions = [];
 
         // push every restriction in restrictions array
-        foreach($result[2] as $restriction) {
+        foreach($result['restrictions'] as $restriction) {
             array_push($restrictions, $restriction);
         }
 
@@ -289,94 +280,6 @@ class ChallengeController extends AbstractController
             return $this->redirectToRoute('show_challenge', [
                 'id' => $challenge->getId(),
             ]);
-    }
-
-    public function randomize(Challenge $challenge)
-    {
-        // ***********************************************************************************************************
-        // CHALLENGE CHARACTERS, BOSSES, RESTRICTIONS RANDOMIZATION (RESULT) *****************************************
-
-        // -----------------------------------------------------------------------
-        // character -------------------------------------------------------------
-
-        // convert persistentCollection of characters to array of entities (can be done with 'getValues()' aswell)
-        $charactersArray = $challenge->getCharacters()->toArray();
-        // array_rand to get 1 entity randomized from new array
-        $character = $charactersArray[array_rand($charactersArray)];
-
-        // -----------------------------------------------------------------------
-
-        // -----------------------------------------------------------------------
-        // boss ------------------------------------------------------------------
-        
-        // convert persistentCollection of boss to array of entities (can be done with 'getValues()' aswell)
-        $bossesArray = $challenge->getBosses()->toArray();
-        // array_rand to get 1 entity randomized from new array
-        $boss = $bossesArray[array_rand($bossesArray)];
-        
-        // -----------------------------------------------------------------------
-
-        // -----------------------------------------------------------------------
-        // restrictions ----------------------------------------------------------
-
-        // convert persistentCollection of restriction to array of entities
-        $restrictionsArray = $challenge->getRestrictions()->toArray();
-
-        $restrictionsChance = $challenge->getRestrictionsChance();
-
-        // declare $restrictions as empty array to hydrate it with restrictions entities
-        $restrictions = [];
-
-        $countRestrictions = count($restrictionsArray);
-
-        // if user selected atleast 1 restiction
-        if ($countRestrictions > 0) {            
-            // if user selected between 1 and 3 restrictions
-            if ($countRestrictions >= 1 && $countRestrictions <= 3) {
-
-                // shuffle array to randomize all restrictions
-                shuffle($restrictionsArray);
-                
-                // for each restrictions
-                foreach ($restrictionsArray as $restriction) {                    
-                    // generate random number between 0 and 100 (with mt_rand() because it is faster than rand())                    
-                    $randomNb = mt_rand(0, 100);
-
-                    // if randomNb is <= than the challenge restrictions chance, push restriction in array
-                    if ($randomNb <= $restrictionsChance) {
-                        array_push($restrictions, $restriction);
-                    }
-                }
-            } else {
-                // if user selected more than 3 restrictions, shuffle array 
-                shuffle($restrictionsArray);
-                
-                // slice 3 firsts restrictions of shuffled array
-                $selectedRestrictions = array_slice($restrictionsArray, 0, 3);
-
-                // for each restriction in sliced restrictions array
-                foreach ($selectedRestrictions as $restriction) {
-                    // generate random number between 0 and 100 (with mt_rand() because it is faster than rand())                    
-                    $randomChance = mt_rand(0, 100);
-
-                    // if randomNb is <= than the challenge restrictions chance, push restriction in array
-                    if ($randomChance <= $restrictionsChance) {
-                        array_push($restrictions, $restriction);
-                    }
-                }
-            }
-        }
-
-        // -----------------------------------------------------------------------
-
-        return [
-            $character,
-            $boss,
-            $restrictions
-        ];
-
-        // ***********************************************************************************************************
-        // ***********************************************************************************************************
     }
 
 }
