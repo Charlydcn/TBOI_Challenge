@@ -1,0 +1,28 @@
+#tuto {
+    display: flex;
+    width: 66%;
+    margin: auto;
+    opacity: .4;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+#tuto img {
+    height: 100px;
+    object-fit: scale-down;
+}
+
+#tuto img:last-of-type {
+    height: 175px;
+}
+
+@media screen and (max-width: 1440px) {
+    #tuto img {
+        height: 80px;
+    }
+    
+    #tuto img:last-of-type {
+        height: 150px;
+    }
+}
