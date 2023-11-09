@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Result{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/challenge/play.css')}}">
+{% endblock %}
+{% block body %}
+
+<img src="{{ asset('/img/misc/reset.png')}}" alt="reset icon" onClick="window.location.reload();">
+    
+    <div id="result">
+    
+        <div class="character">
+            {% if character is defined %}
+                {# img #}
+                <img class="pixelated" src="{{ asset('/img/characters/' ~ character.img )}}" alt="{{ character.name }}'s image">
+                {# text img #}
+                <img src="{{ asset('/img/characters/text/' ~ character.img)}}" alt="{{ character.name }}'s name">
+            {% endif %}
+        </div>
+
+        <div class="boss">
+    
+            {% if boss is defined %}
+                {# text img #}
+                <img src="{{ asset('/img/bosses/text/' ~ boss.img)}}" alt="{{ boss.name }}'s name">
+                {# img #}
+                <img src="{{ asset('/img/bosses/' ~ boss.img )}}" alt="{{ boss.name }}'s image">
+            {% endif %}
+        </div>
+
+        <div class="restrictions">
+            {% if restrictions is defined %}
+                {% for restriction in restrictions %}
+                <div>
+                    {# img #}
+                    <img class="onclick-infos-element" src="{{ asset('/img/restrictions/' ~ restriction.img )}}" alt="{{ restriction.name }}'s image">
+                    {# infos box on click #}
+                    <p class="onclick-infos hidden prevent-select">{{ restriction.name }}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock %}
