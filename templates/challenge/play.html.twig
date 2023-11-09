@@ -7,7 +7,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/challenge/play.css')}}">
-    {% endblock %}
+{% endblock %}
 
 {% block body %}
 
@@ -78,7 +78,7 @@
         <div id="step2" class="hidden">
             <p class="back-btn">&lt;</p>
 
-            <img src="{{ asset('/img/misc/reset.png')}}" data-href="" class="href-element" alt="reset icon" onClick="window.location.reload();">
+            <img src="{{ asset('/img/misc/reset.png')}}" alt="reset icon" onClick="window.location.reload();">
 
             <div id="result">
     
