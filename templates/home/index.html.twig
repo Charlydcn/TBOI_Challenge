@@ -3,10 +3,16 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('/css/home/index.css')}}">
+    <link rel="stylesheet" href="{{ asset('/css/home.css')}}">
 {% endblock stylesheets %}
 
-{% block body %}    
+{% block body %}
+    <div id="tuto">
+        <img src="{{ asset('/img/tuto/step1.png')}}" alt="">
+        <img src="{{ asset('/img/tuto/step2.png')}}" alt="">
+        <img src="{{ asset('/img/tuto/step3.png')}}" alt="">
+        <img src="{{ asset('/img/tuto/bonus.png')}}" alt="">
+    </div>
 {% endblock %}
 
 {% block javascripts %}
