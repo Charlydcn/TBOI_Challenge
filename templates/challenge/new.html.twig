@@ -8,8 +8,7 @@
 
 {% block body %}
 
-    {% if app.user %}
-    <a class="prevent-select" id="options">Options</a>
+    <a class="prevent-select" id="options">Create a challenge</a>
 
         <div id="form" class="hidden">
             {# background image #}
@@ -134,8 +133,7 @@
                         </div>
                         
                         {# list of all existing restrictions + input of restriction chance + win streak #}
-                        <div class="list">
-
+                        <div class="list">                            
                             {# restriction chance input #}
                             <div id="restr-chance">
                                 {# input number #}
@@ -172,34 +170,46 @@
                                 </label>
                                 
                             {% endfor %}
-                                {# win-streak checkbox + input #}
-                                <div id="streak">
-                                    {# checkbox #}
-                                    <label class="prevent-select">
-                                        {# <input type="checkbox"> #}
-                                        {{ form_widget(newChallengeForm.streakCheckbox)}}
-    
-                                        <div class="check-btn">
-                                            <img src="{{ asset('/img/misc/fire.webp') }}" alt="fire image">
-                                            Win-streak
-                                        </div>
-                                    </label>
-    
-                                    {# input #}
-                                    <label class="prevent-select">
-                                        {# <input type="number"> #}
-                                        {{ form_widget(newChallengeForm.streak, {
-                                            'attr': {
-                                                'onkeypress': 'if (this.value.length > 2) return false;',
-                                                'value': 5,
-                                            }
-                                        }) 
-                                        }}
-                                    </label>
-                                </div>
+                            {# win-streak checkbox + input #}
+                            <div id="streak">
+                                {# checkbox #}
+                                <label class="prevent-select">
+                                    {# <input type="checkbox"> #}
+                                    {{ form_widget(newChallengeForm.streakCheckbox)}}
+
+                                    <div class="check-btn">
+                                        <img src="{{ asset('/img/misc/fire.webp') }}" alt="fire image">
+                                        Win-streak
+                                    </div>
+                                </label>
+
+                                {# input #}
+                                <label class="prevent-select">
+                                    {# <input type="number"> #}
+                                    {{ form_widget(newChallengeForm.streak, {
+                                        'attr': {
+                                            'onkeypress': 'if (this.value.length > 2) return false;',
+                                            'value': 5,
+                                        }
+                                    }) 
+                                    }}
+                                </label>
+                            </div>
                         </div>
                         
                     </div>
+                </div>
+
+                <div id="end-btns" class="hidden">
+                    {#
+                        display checkbox to save the challenge if user is logged in (if user checks it, it will create
+                        a challenge, else, it will just randomize his selection)
+                    #}
+                    {% if app.user %}
+                        {{ form_row(newChallengeForm.saveChall)}}
+                    {% endif %}
+
+                    {{ form_widget(newChallengeForm.submit)}}
                 </div>
         
             {{ form_end(newChallengeForm) }}
@@ -207,16 +217,11 @@
 
         {# overlay behind options menu (dark bg) #}
         <div id="overlay" class="hidden"></div>
-    
-    {% else %}
-        <h1>faut être co</h1>
-
-    {% endif %}
 
     
 {% endblock %}
     
 {% block javascripts %}
-    <script src="{{ asset('/js/checkboxes.js')}}"></script>
-    <script src="{{ asset('/js/options.js')}}"></script>
+    <script src="{{ asset('/js/challenge/new.js')}}"></script>
+    <script src="{{ asset('/js/challenge/challStepsDisplay.js')}}"></script>
 {% endblock javascripts %}
