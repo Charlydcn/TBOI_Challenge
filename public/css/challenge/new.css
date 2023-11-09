@@ -1,10 +1,13 @@
 /* <div id="form"> : <img> ~ <form> */
 #form {
     position: relative;
-    width: 60%;
+    width: 900px;
     margin: auto;
     z-index: 2;
-    max-height: 100%;
+}
+
+#form form {
+    height: 650px;
 }
 
 #form h2 {
@@ -26,12 +29,12 @@
 #step2 {
     display: flex;
     position: relative;
-    height: 650px;
     flex-direction: row;
     padding: 2rem 3rem;
     justify-content: center;
     flex-wrap: wrap;
     gap:2rem;
+    height:100%;
 }
 
 /* step 2 = restrictions + submit */
@@ -138,8 +141,7 @@
     width: fit-content;
 }
 
-#next-btn,
-#challenge_submit {
+#next-btn {
     font-size: 3rem;
     position: absolute;
     bottom: 5%;
@@ -147,6 +149,21 @@
     background: none;
     border:none;
     cursor:pointer;
+}
+
+#end-btns {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+}
+
+#end-btns button {
+    font-size: 3rem;
+    text-decoration: none;
+    color:unset;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 /* btns = 'ALL/NONE/ALL TAINTED/ALL NON TAINTED etc.' presets for checkboxes */
@@ -236,17 +253,5 @@ label img {
 }
 
 @media screen and (max-width: 1300px) {
-
-    #form {
-        width:70%;
-    }
-
-    .list label {
-        font-size: 1rem;
-    }
-
-    #step1 {
-        padding: 2rem 1rem;
-    }
 
 }
