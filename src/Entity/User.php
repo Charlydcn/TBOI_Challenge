@@ -87,6 +87,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user1', targetEntity: Friendship::class, orphanRemoval: true)]
     private Collection $friendships;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $winStreak = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $bestWinStreak = null;
+
 
     // ----------------------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -474,6 +480,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $versusWon->setWinner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWinStreak(): ?int
+    {
+        return $this->winStreak;
+    }
+
+    public function setWinStreak(?int $winStreak): static
+    {
+        $this->winStreak = $winStreak;
+
+        return $this;
+    }
+
+    public function getBestWinStreak(): ?int
+    {
+        return $this->bestWinStreak;
+    }
+
+    public function setBestWinStreak(?int $bestWinStreak): static
+    {
+        $this->bestWinStreak = $bestWinStreak;
 
         return $this;
     }
