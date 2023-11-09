@@ -34,55 +34,64 @@ class VersusController extends AbstractController
         Security $security,
         EntityManagerInterface $entityManager): Response
     {
-        // verify that versus id in url parameter doesn't already exist
-        if (!$versus) {
-            $versus = new Versus();
+        // find current user with Security's method getUser()
+        $user = $security->getUser();
+
+        if($user) {
+            // verify that versus id in url parameter doesn't already exist
+            if (!$versus) {
+                $versus = new Versus();
+            } else {
+                // if versus already exist, redirect to show view (no edit for this entity)
+                return $this->redirectToRoute('show_challenge', [
+                    'id' => $challenge->getId(),
+                ]);
+            }
+            
+            // create form from VersusType
+            $form = $this->createForm(VersusType::class, $versus);
+    
+            // handle request
+            $form->handleRequest($request);
+    
+            // if form submitted & valid
+            if ($form->isSubmitted() && $form->isValid()) {
+    
+                // hydrate $versus attributes with form data
+                $versus = $form->getData();
+    
+                // set versus challenge to challenge from which the versus is getting created (challenge id passed in url parameter)
+                $versus->setChallenge($challenge);
+    
+                // set user with current logged in user
+                $versus->setCreator($user);
+    
+                $versus->setClosed(false);
+    
+                // if public isn't checked (so is null in form data, set it to false)
+                if (!$versus->isPublic()) {
+                    $versus->setPublic(false);
+                }
+    
+                $versus->setWinner($user);
+                
+                // persist = prepare PDO
+                $entityManager->persist($versus);
+                // flush = execute PDO
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('show_versus', [
+                    'id' => $versus->getId(),
+                ]);
+            }
         } else {
-            // if versus already exist, redirect to show view (no edit for this entity)
+            $this->addFlash('error', 'You have to be logged on to play a Versus.');
+
             return $this->redirectToRoute('show_challenge', [
                 'id' => $challenge->getId(),
             ]);
         }
-        
-        // create form from VersusType
-        $form = $this->createForm(VersusType::class, $versus);
 
-        // handle request
-        $form->handleRequest($request);
-
-        // if form submitted & valid
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            // find current user with Security's method getUser()
-            $user = $security->getUser();
-
-            // hydrate $versus attributes with form data
-            $versus = $form->getData();
-
-            // set versus challenge to challenge from which the versus is getting created (challenge id passed in url parameter)
-            $versus->setChallenge($challenge);
-
-            // set user with current logged in user
-            $versus->setCreator($user);
-
-            $versus->setClosed(false);
-
-            // if public isn't checked (so is null in form data, set it to false)
-            if (!$versus->isPublic()) {
-                $versus->setPublic(false);
-            }
-
-            $versus->setWinner($user);
-            
-            // persist = prepare PDO
-            $entityManager->persist($versus);
-            // flush = execute PDO
-            $entityManager->flush();
-
-            return $this->redirectToRoute('show_versus', [
-                'id' => $versus->getId(),
-            ]);
-        }
         
         return $this->render('versus/new.html.twig', [
             'newVersusForm' => $form,
