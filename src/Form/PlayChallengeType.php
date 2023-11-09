@@ -34,7 +34,8 @@ class PlayChallengeType extends AbstractType
                     'max' => 50,
                     'maxMessage' => 'Comments must be 50 characters max',
                 ])
-            ]
+                ],
+                'required' => false,
         ])
 
         ->add('submit', SubmitType::class);
