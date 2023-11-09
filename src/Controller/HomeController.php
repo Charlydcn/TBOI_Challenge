@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         $timedBosses = $bossRepository->findBy(['timed' => 1]);
         $restrictions = $restrictionRepository->findAll();
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('home.html.twig', [
             'characters' => $characters,
             'bosses' => $bosses,
             'timedBosses' => $timedBosses,
