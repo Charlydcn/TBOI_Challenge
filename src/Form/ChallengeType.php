@@ -93,13 +93,13 @@ class ChallengeType extends AbstractType
 
                 'required' => false,
             ])
+
+            ->add('saveChall', CheckboxType::class, [
+                'mapped' => false,
+                'required' => false,
+            ])
             
-            
-            ->add('submit', SubmitType::class, [
-                'attr' => [
-                    'class' => 'hidden',
-                ],
-            ]);
+            ->add('submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
