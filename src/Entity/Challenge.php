@@ -29,8 +29,6 @@ class Challenge
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
-    #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: Versus::class, orphanRemoval: true)]
-    private Collection $versus;
 
     #[ORM\ManyToMany(targetEntity: Restriction::class, inversedBy: 'challenges', fetch: 'EAGER')]
     private Collection $restrictions;
@@ -50,15 +48,18 @@ class Challenge
     #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: PlayChallenge::class, orphanRemoval: true)]
     private Collection $players;
 
+    #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: Versus::class, orphanRemoval: true)]
+    private Collection $versus;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
-        $this->versus = new ArrayCollection();
         $this->bosses = new ArrayCollection();
         $this->characters = new ArrayCollection();
         $this->restrictions = new ArrayCollection();
         $this->players = new ArrayCollection();
+        $this->versus = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,35 +145,6 @@ class Challenge
         return $this;
     }
 
-    /**
-     * @return Collection<int, Versus>
-     */
-    public function getVersus(): Collection
-    {
-        return $this->versus;
-    }
-
-    public function addVersus(Versus $versus): static
-    {
-        if (!$this->versus->contains($versus)) {
-            $this->versus->add($versus);
-            $versus->setChallenge($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVersus(Versus $versus): static
-    {
-        if ($this->versus->removeElement($versus)) {
-            // set the owning side to null (unless already changed)
-            if ($versus->getChallenge() === $this) {
-                $versus->setChallenge(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Like>
@@ -333,6 +305,36 @@ class Challenge
             // set the owning side to null (unless already changed)
             if ($player->getChallenge() === $this) {
                 $player->setChallenge(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Versus>
+     */
+    public function getVersus(): Collection
+    {
+        return $this->versus;
+    }
+
+    public function addVersu(Versus $versu): static
+    {
+        if (!$this->versus->contains($versu)) {
+            $this->versus->add($versu);
+            $versu->setChallenge($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVersu(Versus $versu): static
+    {
+        if ($this->versus->removeElement($versu)) {
+            // set the owning side to null (unless already changed)
+            if ($versu->getChallenge() === $this) {
+                $versu->setChallenge(null);
             }
         }
 
