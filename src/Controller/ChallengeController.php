@@ -130,14 +130,14 @@ class ChallengeController extends AbstractController
         }
 
         $winners = $playChallengeRepository->findBy(['challenge' => $challenge->getId(), 'completed' => true]);
-        // $bestRuns = $playChallengeRepository->findBestRuns($challenge->getId(), 10);
-        // dd($bestRuns);
+        $bestsRuns = $playChallengeRepository->findBestRuns($challenge->getId(), 10);
 
 
         return $this->render('challenge/show.html.twig', [
             'challenge' => $challenge,
             'winners' => $winners,
             'liked' => $liked,
+            'bestsRuns' => $bestsRuns,
         ]);
     }
     
