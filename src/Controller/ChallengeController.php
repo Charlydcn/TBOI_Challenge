@@ -3,16 +3,19 @@
 namespace App\Controller;
 
 use DateTime;
+use App\Entity\Like;
 use App\Entity\Versus;
 use App\Entity\Challenge;
 use App\Entity\PlayVersus;
-use App\Entity\PlayChallenge;
 use App\Form\ChallengeType;
+use App\Entity\PlayChallenge;
 use App\Form\PlayChallengeType;
+use App\Repository\LikeRepository;
 use App\Repository\VersusRepository;
 use App\Repository\ChallengeRepository;
 use App\Controller\RandomizerController;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PlayChallengeRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -110,10 +113,31 @@ class ChallengeController extends AbstractController
 
 
     #[Route('/challenge/{id}', name: 'show_challenge')]
-    public function show(Challenge $challenge): Response
+    public function show(
+        Challenge $challenge,
+        Security $security,
+        PlayChallengeRepository $playChallengeRepository,
+        LikeRepository $likeRepository): Response
     {
+        // find current user with Security's method getUser()
+        $user = $security->getUser();
+        
+        if($user) {
+            $userLike = $likeRepository->findBy(['creator' => $user, 'challenge' => $challenge]);
+            $userLike ? $liked = true : $liked = false;
+        } else {
+            $liked = false;
+        }
+
+        $winners = $playChallengeRepository->findBy(['challenge' => $challenge->getId(), 'completed' => true]);
+        // $bestRuns = $playChallengeRepository->findBestRuns($challenge->getId(), 10);
+        // dd($bestRuns);
+
+
         return $this->render('challenge/show.html.twig', [
             'challenge' => $challenge,
+            'winners' => $winners,
+            'liked' => $liked,
         ]);
     }
     
@@ -169,7 +193,15 @@ class ChallengeController extends AbstractController
             
             // add current user to challenge players
             $challenge->addPlayer($playChallenge);
-            
+
+            // +1 to user personnal win-streak
+            $user->setWinStreak($user->getWinStreak() + 1);
+
+            // if user's new win streak > user's best win streak, update his best win streak
+            if($user->getWinStreak() > $user->getBestWinStreak()) {
+                $user->setBestWinStreak($user->getWinStreak());
+            }
+
 
         # VERIFIER QUE L'UTILISATEUR N'A PAS DEJA JOUE AU CHALLENGE, ON PEUT QUE Y JOUER UNE FOIS ET FAIRE SON TEMPS SINON C'EST CHIANT #}
 
@@ -246,6 +278,9 @@ class ChallengeController extends AbstractController
             // add current user to challenge players
             $challenge->addPlayer($playChallenge);
 
+            // reset user's win streak to 0
+            $user->setWinStreak(0);
+
             // if user came from a versus, create playVersus object
             if ($versus) {
                 $playVersus = new PlayVersus;
@@ -280,6 +315,44 @@ class ChallengeController extends AbstractController
             return $this->redirectToRoute('show_challenge', [
                 'id' => $challenge->getId(),
             ]);
+    }
+
+    #[Route('/challenge/like/{id}', name: 'like_challenge')]
+    public function like(
+        Challenge $challenge,
+        Security $security,
+        LikeRepository $likeRepository,        
+        EntityManagerInterface $entityManager,
+        ): Response
+    {
+        // find current user with Security's method getUser()
+        $user = $security->getUser();
+
+        // try to find an existing like of the user on this challenge
+        $existingLike = $likeRepository->findBy(['creator' => $user, 'challenge' => $challenge]);
+
+        // if user liked the challenge and clicks on the heart, delete the like
+        if($existingLike) {
+            $entityManager->remove($existingLike[0]);
+            
+        // else, create the like
+        } else {
+            $like = new Like;
+    
+            $like->setCreator($user);
+            $like->setChallenge($challenge);
+    
+            $challenge->addLike($like);
+    
+            $entityManager->persist($like);
+        }
+
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('show_challenge', [
+            'id' => $challenge->getId(),
+        ]);
     }
 
 }
