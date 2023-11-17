@@ -22,8 +22,6 @@ $('.check-btn').click(function(event) {
 // check all checkboxes on checkall btns ------------------------------------------------
 $('.check-all').click(function(event) {
 
-    console.log('all')
-
                     // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
     var checkboxes = $(this).parent().next().find('.checkbox')
 
@@ -51,8 +49,7 @@ $('.check-all').click(function(event) {
 // check none checkboxes on checknone btns ----------------------------------------------
 
 $('.check-none').click(function(event) {
-    console.log('none')
-    // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
+                    // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
     var checkboxes = $(this).parent().next().find('.checkbox')
 
     $.each(checkboxes, function() {
@@ -115,20 +112,23 @@ streakCheckbox.on('change', function() {
 // --------------------------------------------------------------------------------------
 // check all tainted characters on btn click --------------------------------------------
 $('.check-all-tainted').click(function(event) {
-                // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
+    // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
 var checkboxes = $(this).parent().next().find('.checkbox')
 
 $.each(checkboxes, function() {
 
-    var charactersName = $(this).closest('label').find('.check-btn').text().trim();
-    var checkBtnDiv = $(this).closest('label').find('.check-btn')
-    
+                        // checkbox input > label parent > find .check-btn div > get the text
+    var checkBtnDiv = $(this).parent().find('.check-btn')
+    var charactersName = checkBtnDiv.text().trim()
+
+    // uncheck all checkboxes
     $(this).prop('checked', false)
     $(this).trigger('change')
 
     checkBtnDiv.removeClass('checked')
     checkBtnDiv.find('img').removeClass('checked')
 
+    // then check all non-tainted characters checkboxes
     if(charactersName.startsWith('Tainted')) {
         $(this).prop('checked', true)
         $(this).trigger('change')
@@ -138,35 +138,38 @@ $.each(checkboxes, function() {
     }
 })
 
-// preventDefault to not trigger function twice (<a> tag so it triggers twice)
-event.preventDefault()
+    // preventDefault to not trigger function twice (<a> tag so it triggers twice)
+    event.preventDefault()
 })
 
 // --------------------------------------------------------------------------------------
-// check all tainted characters on btn click --------------------------------------------
+// check all non-tainted characters on btn click --------------------------------------------
 $('.check-all-nontainted').click(function(event) {
     // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
 var checkboxes = $(this).parent().next().find('.checkbox')
 
 $.each(checkboxes, function() {
 
-    var charactersName = $(this).closest('label').find('.check-btn').text().trim();
-    var checkBtnDiv = $(this).closest('label').find('.check-btn')
+                        // checkbox input > label parent > find .check-btn div > get the text
+    var checkBtnDiv = $(this).parent().find('.check-btn')
+    var charactersName = checkBtnDiv.text().trim()
 
+    // uncheck all checkboxes
     $(this).prop('checked', false)
     $(this).trigger('change')
 
     checkBtnDiv.removeClass('checked')
     checkBtnDiv.find('img').removeClass('checked')
 
+    // then check all non-tainted characters checkboxes
     if(!charactersName.startsWith('Tainted')) {
-    $(this).prop('checked', true)
-    $(this).trigger('change')
+        $(this).prop('checked', true)
+        $(this).trigger('change')
 
-    checkBtnDiv.addClass('checked')
-    checkBtnDiv.find('img').addClass('checked')
+        checkBtnDiv.addClass('checked')
+        checkBtnDiv.find('img').addClass('checked')
     }
-    })
+})
 
     // preventDefault to not trigger function twice (<a> tag so it triggers twice)
     event.preventDefault()
