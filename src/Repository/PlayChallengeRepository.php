@@ -21,6 +21,22 @@ class PlayChallengeRepository extends ServiceEntityRepository
         parent::__construct($registry, PlayChallenge::class);
     }
 
+    public function findBestRuns($challengeId, $limit): array
+    {
+        return $this->createQueryBuilder('pc')
+            ->select('pc.completionTime', 'u.username', 'pc.playDate', 'pc.comment')
+            ->leftJoin('pc.user', 'u')
+            ->where('pc.challenge = :challengeId')
+            ->andWhere('pc.completionTime IS NOT NULL')
+            ->setParameter('challengeId', $challengeId)
+            ->orderBy('pc.completionTime', 'ASC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
 //    /**
 //     * @return PlayChallenge[] Returns an array of PlayChallenge objects
 //     */
