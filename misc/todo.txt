@@ -2,6 +2,10 @@ tboi chall:
 
 LOGIN WITH GOOGLE??
 
+ajouter la confirmation du mdp par mail
+
+faire une DQL d'exemple (peut-être pour les stats ?)
+
 ajouter une win-streak utilisateur, chaque challenge win = +1, si il perd un challenge, reset à 0
 
 il faut pouvoir utiliser le site sans être co, mais si on est pas co, on a simplement un randomizer sans pouvoir créer de presets
@@ -12,8 +16,33 @@ ajouter un commentaire sur la page play challenge pour dire qu'il faut regarder 
 
 commentaire de run sur playChallenge/Versus ?
 
-!! stocker les résultats d'un challenge en session ou quelque part, pour que si on quitte la page ou refresh par erreur, on perde pas son challenge, ou pire, sa win-streak actuel (sur un challenge à win-streak !!
+!! stocker les résultats d'un challenge en session ou quelque part, pour que si on quitte la page ou refresh par erreur, on perde pas son challenge, ou pire, sa win-streak actuel (sur un challenge à win-streak !!)
 
+Une page détails utilisateur pour que l'utilisateur consulte son compte, ses challenges, ses stats etc. et pour que d'autres utilisateurs puissent consulter les détails d'un utilisateur, pour voir ses stats, l'ajouter en ami etc
+
+Le système d'amitié, qui n'est pas du tout implémenté
+
+Le CSS de pas mal de parties
+
+Les statistiques (nombre de win, win-streak max, challenges joués, etc.)
+
+Intégrer le système de Time Limit
+
+Gérer les bosses liés au temps (Hush, Boss Rush..)
+
+Empêcher les challenges impossibles (Exemple: 2 restrictions : prendre toute les pilules et ne prendre aucun consommables)
+
+RGPD/SEO
+
+Quand on clique sur consulter un challenge puis VERSUS, il faudrait une page avec la liste des versus déjà créés pour ce challenge,
++ un bouton pour en créer un nouveau
+
+Limiter le nombre de play d'un versus à 1 par personne
+
+Faire correspondre mon MCD et mon app
+
+Faire le maquettage rétroactivement car j'ai uniquement une page sur Figma
+etc..
 
 Exemple d'un objet playChallenge avec les résultats + un commentaire utilisateur optionnel:
 
