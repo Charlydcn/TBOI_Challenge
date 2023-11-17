@@ -9,9 +9,9 @@
 
 .challenge {
     position: relative;
-    height: 325px;
+    width: 300px;
+    height: 350px;
     display: flex;
-    width: 20%;
     justify-content: center;
 }
 
@@ -111,10 +111,6 @@
 }
 
 @media screen and (max-width: 1300px) {
-
-    .challenge {
-        width: 30%;
-    }
 
     #challenges {
         gap: 3rem 1rem;
