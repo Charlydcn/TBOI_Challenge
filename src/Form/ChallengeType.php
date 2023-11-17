@@ -95,11 +95,14 @@ class ChallengeType extends AbstractType
             ])
 
             ->add('saveChall', CheckboxType::class, [
+                'label' => 'Save my selection',
                 'mapped' => false,
                 'required' => false,
             ])
             
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'RANDOMIZE!',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
