@@ -50,24 +50,15 @@
         <p>{{ (winners|length / (challenge.players|length / 100))|number_format(2) }}% Win rate</p>
         <p>{{ winners|length }} wins</p>
         <p>{{ challenge.players|length - winners|length }} pathetics loosers</p>
-        <p>Best times : </p>
-        
-        {# {% for player in challenge.players %}
-            <div>
-                <p>Player : {{ player.user ? player.user : 'Unknown' }}</p>
-                <p>Challenge : {{ player.challenge }}</p>
-                <p>Completed : {{ player.completed ? "Yes" : "No" }}</p>
-                {% if player.completed %}
-                    <p>Completion time : {{ player.completionTime ? player.completionTime|date('H:i:s') : "Unknown" }}</p>
-                {% endif %}
-                <p>Play date : {{ player.playDate|date('d/m/Y H:i') }}</p>
-                {% if player.comment %}
-                    <p>Comment : {{ player.comment }}</p>
-                {% endif %}
-            </div>
-            <br>
-            <br>
-        {% endfor %} #}
+        <p>Best runs : </p>
+        <ul>
+            {% for run in bestsRuns %}
+                <li>
+                    {{ run.completionTime|date('H:i:s') }} by {{ run.username }}<br>
+                    Comment : {{ run.comment ? run.comment : 'None' }}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 
     {% set c = challenge %}
