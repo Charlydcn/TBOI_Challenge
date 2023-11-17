@@ -96,6 +96,10 @@ class ChallengeType extends AbstractType
 
             ->add('saveChall', CheckboxType::class, [
                 'label' => 'Save my selection',
+                'label_attr' => [
+                    'class' => 'prevent-select',
+                ],
+
                 'mapped' => false,
                 'required' => false,
             ])
