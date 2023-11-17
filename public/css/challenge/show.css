@@ -1,3 +1,12 @@
+p {
+    font-size: 1.25rem;
+}
+
+.like {
+    width: 45px;
+    image-rendering: pixelated;
+}
+
 #challenge {
     display: flex;
     gap: 1rem;
