@@ -16,9 +16,6 @@ class Versus
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'versus')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Challenge $challenge = null;
 
     #[ORM\ManyToOne(inversedBy: 'versusCreated')]
     #[ORM\JoinColumn(nullable: false)]
@@ -39,6 +36,10 @@ class Versus
     #[ORM\ManyToOne(inversedBy: 'versusWon')]
     private ?User $winner = null;
 
+    #[ORM\ManyToOne(inversedBy: 'versus')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Challenge $challenge = null;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -47,18 +48,6 @@ class Versus
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getChallenge(): ?Challenge
-    {
-        return $this->challenge;
-    }
-
-    public function setChallenge(?Challenge $challenge): static
-    {
-        $this->challenge = $challenge;
-
-        return $this;
     }
 
     public function getCreator(): ?User
@@ -152,6 +141,18 @@ class Versus
     public function setWinner(?User $winner): static
     {
         $this->winner = $winner;
+
+        return $this;
+    }
+
+    public function getChallenge(): ?Challenge
+    {
+        return $this->challenge;
+    }
+
+    public function setChallenge(?Challenge $challenge): static
+    {
+        $this->challenge = $challenge;
 
         return $this;
     }
