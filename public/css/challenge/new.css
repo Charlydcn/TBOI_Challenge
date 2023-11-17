@@ -177,6 +177,19 @@
     cursor: pointer;
 }
 
+#end-btns > div:first-of-type {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 1.2rem;
+}
+
+#end-btns > div:first-of-type label,
+#end-btns > div:first-of-type input {
+    cursor:pointer;
+
+}
+
 /* btns = 'ALL/NONE/ALL TAINTED/ALL NON TAINTED etc.' presets for checkboxes */
 .btns a,
 .list img,
