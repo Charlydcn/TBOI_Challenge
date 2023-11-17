@@ -1,28 +1,53 @@
 #page {
     display: flex;
     position: relative;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 100vh;
 }
 
+/* text img to remind user to note his completion time before ending the run */
+#protip {
+    position: absolute;
+    top: 5rem;
+    left: 3rem;
+    rotate: -4deg;
+    width: 250px;
+    opacity: .5;
+}
+
+/* set fixed width/height top bg img, step1 and step2 */
+#page > img:first-of-type,
+#step1,
+#step2 {
+    width: 500px;
+    height: 500px;
+}
+
 /* bg image (page with blood) */
 #page > img:first-of-type {
-    min-width: 33%;
-    height: 70%;
     position: absolute;
     z-index: -1;
 }
+
+/* step 1 (hide result and show challenge characters, bosses, restrictions */
+
+#step1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* step 2 */
+
 
 /* div before #play-result div and bg img */
 #step2 {
     flex-direction: column;
     align-items: center;
     display: flex;
-    padding: 5% 0;
-    height: 70%;
-    min-width: 33%;
+    padding: 3rem 0;
     justify-content: space-around;
     position: relative;
 }
@@ -34,35 +59,22 @@
     top: 7.5%;
 }
 
-/* ---------------------------------------------------------------------------------------------- */
-/*                                                                                                
-/* Step 1 --------------------------------------------------------------------------------------- */
-
-.length-span {
-    color: #372b2d;
-    font-size: 3.5rem;
-}
-
 .play-btn,
 .back-btn {
     cursor: pointer;
 }
 
+/* back */
 #completion-time .back-btn {
-    position: unset;
     font-size: 1.5rem;
 }
 
-.back-btn {
+.back-btn:not(#completion-time .back-btn) {
     font-size: 2rem;
     position: absolute;
     top: 5%;
     left: 0;
 }
-
-/* ---------------------------------------------------------------------------------------------- */
-/*                                                                                                
-/* Result --------------------------------------------------------------------------------------- */
 
 #result {
     display: flex;
@@ -122,7 +134,6 @@
 /* div containing boss img + text img */
 .character {
     flex-direction: column;
-    /* max-width: 100px; */
 }
 
 /* text img */
