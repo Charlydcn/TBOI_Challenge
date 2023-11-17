@@ -11,6 +11,25 @@
 
 {% block body %}
 
+    {% if app.user %}
+        {% if liked %}
+            <img class="like href-element"
+            data-href="{{ path('like_challenge', {'id': challenge.id}) }}"
+            src="{{ asset('/img/misc/heart.png')}}"
+            alt="">   
+
+            {% else %}
+            <img class="like href-element"
+            data-href="{{ path('like_challenge', {'id': challenge.id}) }}"
+            src="{{ asset('/img/misc/empty_heart.png')}}"
+            alt="">            
+
+        {% endif %}
+    {% endif %}
+
+
+    
+
     <div>
         <img src="{{ asset('img/text/play.webp')}}"
             class="href-element" 
@@ -18,15 +37,22 @@
             alt="The word PLAY">
 
         <br>
-
-        <img src="{{ asset('img/text/versus.webp')}}"
-            class="href-element" 
-            data-href="{{ path('new_versus', {'id': challenge.id})}}"
-            alt="The word VERSUS">
+        {% if app.user %}
+            <img src="{{ asset('img/text/versus.webp')}}"
+                class="href-element" 
+                data-href="{{ path('new_versus', {'id': challenge.id})}}"
+                alt="The word VERSUS">
+        {% endif %}
     </div>
 
     <div>
-        {% for player in challenge.players %}
+        <p>{{ challenge.players|length }} runs</p>
+        <p>{{ (winners|length / (challenge.players|length / 100))|number_format(2) }}% Win rate</p>
+        <p>{{ winners|length }} wins</p>
+        <p>{{ challenge.players|length - winners|length }} pathetics loosers</p>
+        <p>Best times : </p>
+        
+        {# {% for player in challenge.players %}
             <div>
                 <p>Player : {{ player.user ? player.user : 'Unknown' }}</p>
                 <p>Challenge : {{ player.challenge }}</p>
@@ -41,7 +67,7 @@
             </div>
             <br>
             <br>
-        {% endfor %}
+        {% endfor %} #}
     </div>
 
     {% set c = challenge %}
@@ -116,5 +142,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {# <script src="{{ asset('/js/challenge/play.js')}}"></script> #}
+    <script src="{{ asset('/js/challenge/show.js')}}"></script>
 {% endblock javascripts %}
