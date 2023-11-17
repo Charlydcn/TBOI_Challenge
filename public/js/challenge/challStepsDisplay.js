@@ -1,4 +1,3 @@
-const optionsBtn = document.querySelector('#options')
 const closeBtn = document.querySelector('#close-btn')
 const formDiv = document.querySelector('#form')
 const overlay = document.querySelector('#overlay')
@@ -7,24 +6,26 @@ const step1 = document.querySelector('#step1')
 const step2 = document.querySelector('#step2')
 const previousBtn = step2.querySelector('#restrictions h2')
 const endBtns = document.querySelector('#end-btns')
+const howToPlayBtn = document.querySelector('#howtoplay-btn')
+const howToPlay = document.querySelector('#howtoplay')
 
-// OPEN MENU (options on click : show form, step 1 and overlay)
-optionsBtn.addEventListener('click', () => {
-    formDiv.classList.remove('hidden')
-    step1.classList.remove('hidden')
+// display tutorial on how to play btn click
+howToPlayBtn.addEventListener('click', () => {
+    howToPlay.classList.remove('hidden')
     overlay.classList.remove('hidden')
 })
 
-// CLOSE MENU (closeBtn/overlay on click : hide form and reset step)
 // close on X btn click
 closeBtn.addEventListener('click', () => {
-    hideFormAndSteps()
+    howToPlay.classList.add('hidden')
+    overlay.classList.add('hidden')
 })
 
 // close on overlay click
 overlay.addEventListener('click', (event) => {
     if (event.target === overlay) {
-        hideFormAndSteps()
+        howToPlay.classList.add('hidden')
+        overlay.classList.add('hidden')
     }
 })
 
@@ -59,27 +60,3 @@ previousBtn.addEventListener('click', () => {
     step2.classList.add('hidden')
     endBtns.classList.add('hidden')
 })
-
-// CLOSE MENU
-closeBtn.addEventListener('click', resetAndHideForm)
-
-// -----------------------------------------------------------------------------------------
-// FUNCTIONS -------------------------------------------------------------------------------
-// hidden on everything + step 1 not hidden
-// -----------------------------------------------------------------------------------------
-function resetAndHideForm() {
-    hideFormAndSteps()
-    step1.classList.remove('hidden')
-    endBtns.classList.add('hidden')
-}
-
-// put hidden on everything
-function hideFormAndSteps() {
-    formDiv.classList.add('hidden')
-    step1.classList.add('hidden')
-    step2.classList.add('hidden')
-    overlay.classList.add('hidden')
-    endBtns.classList.remove('hidden')
-}
-// -----------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------
