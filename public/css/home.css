@@ -6,7 +6,7 @@ figure {
 
 figure:nth-of-type(2) {
     opacity: 40%;
-    width: 66%;
+    width: 85%;
     justify-content: start;
     margin: auto auto 3rem auto;
 }
@@ -17,7 +17,7 @@ figure:nth-of-type(2) img {
 
 #tuto {
     display: flex;
-    width: 66%;
+    width: 85%;
     max-height: 700px;
     margin: auto auto 10% auto;
     opacity: .4;
