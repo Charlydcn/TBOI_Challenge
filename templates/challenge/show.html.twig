@@ -50,7 +50,7 @@
         <p>{{ (winners|length / (challenge.players|length / 100))|number_format(2) }}% Win rate</p>
         <p>{{ winners|length }} wins</p>
         <p>{{ challenge.players|length - winners|length }} pathetics loosers</p>
-        <p>Best runs : </p>
+        <p>Leaderboard : </p>
         <ul>
             {% for run in bestsRuns %}
                 <li>
