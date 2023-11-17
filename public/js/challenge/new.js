@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------
-// check checkbox on click on '.check-btn' ----------------------------------------------
+// check single checkbox on click on '.check-btn' div ----------------------------------------------
 $('.check-btn').click(function(event) {
     // checkbox = closest 'input' element from $(this), which is the '.check-btn' that has been clicked
     var checkbox = $(this).closest('input')
@@ -20,7 +20,10 @@ $('.check-btn').click(function(event) {
 
 // --------------------------------------------------------------------------------------
 // check all checkboxes on checkall btns ------------------------------------------------
-$('.prevent-select[data-action="checkall"]').click(function(event) {
+$('.check-all').click(function(event) {
+
+    console.log('all')
+
                     // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
     var checkboxes = $(this).parent().next().find('.checkbox')
 
@@ -47,8 +50,9 @@ $('.prevent-select[data-action="checkall"]').click(function(event) {
 // --------------------------------------------------------------------------------------
 // check none checkboxes on checknone btns ----------------------------------------------
 
-$('.prevent-select[data-action="checknone"]').click(function(event) {
-                    // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
+$('.check-none').click(function(event) {
+    console.log('none')
+    // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
     var checkboxes = $(this).parent().next().find('.checkbox')
 
     $.each(checkboxes, function() {
@@ -107,4 +111,66 @@ streakCheckbox.on('change', function() {
 })
 
 // --------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------
+// check all tainted characters on btn click --------------------------------------------
+$('.check-all-tainted').click(function(event) {
+                // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
+var checkboxes = $(this).parent().next().find('.checkbox')
+
+$.each(checkboxes, function() {
+
+    var charactersName = $(this).closest('label').find('.check-btn').text().trim();
+    var checkBtnDiv = $(this).closest('label').find('.check-btn')
+    
+    $(this).prop('checked', false)
+    $(this).trigger('change')
+
+    checkBtnDiv.removeClass('checked')
+    checkBtnDiv.find('img').removeClass('checked')
+
+    if(charactersName.startsWith('Tainted')) {
+        $(this).prop('checked', true)
+        $(this).trigger('change')
+
+        checkBtnDiv.addClass('checked')
+        checkBtnDiv.find('img').addClass('checked')
+    }
+})
+
+// preventDefault to not trigger function twice (<a> tag so it triggers twice)
+event.preventDefault()
+})
+
+// --------------------------------------------------------------------------------------
+// check all tainted characters on btn click --------------------------------------------
+$('.check-all-nontainted').click(function(event) {
+    // checkall > '.btns' > '.list' > input checkbox of class '.checkbox'
+var checkboxes = $(this).parent().next().find('.checkbox')
+
+$.each(checkboxes, function() {
+
+    var charactersName = $(this).closest('label').find('.check-btn').text().trim();
+    var checkBtnDiv = $(this).closest('label').find('.check-btn')
+
+    $(this).prop('checked', false)
+    $(this).trigger('change')
+
+    checkBtnDiv.removeClass('checked')
+    checkBtnDiv.find('img').removeClass('checked')
+
+    if(!charactersName.startsWith('Tainted')) {
+    $(this).prop('checked', true)
+    $(this).trigger('change')
+
+    checkBtnDiv.addClass('checked')
+    checkBtnDiv.find('img').addClass('checked')
+    }
+    })
+
+    // preventDefault to not trigger function twice (<a> tag so it triggers twice)
+    event.preventDefault()
+})
+
+
 
