@@ -1,0 +1,25 @@
+sign in with twitch
+sign in with discord : https://www.youtube.com/watch?v=g0_hcRxomNU&ab_channel=Pentiminax
+
+créer un versus limité dans le temps
+un versus livestreamé par twitch exemple:
+un streamer lance un versus sur un chall, et ses viewers peuvent rejoindre si c'est pas trop tard
+donc limité le join du versus en date/heures
+rassembler etc.
+
+date début et fin du versus
+
+créateur du versus donne le lien pour join le versus
+idée: stream versus
+
+SOLO : challenge
+VERSUS : communauté
+
+nullable le lien 
+
+profile utilisateur : lien vers résseaux sociaux, challenges joués, créés, versus pareil, changement mdp, 
+
+priorité : 
+co via discord, profile (voir le profil des gens) dans entité user : discord et twitch, versus
+
+créer des user stories
