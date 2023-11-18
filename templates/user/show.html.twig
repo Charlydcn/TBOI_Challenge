@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }}'s profile{% endblock %}
+
+{% block body %}
+    <img src="{{ asset('/img/user_icons/' ~ user.icon) }}" alt="">
+    <h1>{{ user }}</h1>
+    <h2>Member since {{ user.registrationDate|date('d/m/Y') }}</h2>
+    <ul>
+        <li>Challenge played : {{ user.challengesPlayed|length }}</li>
+        <li>Win rate : {{ challengeWinRate }}%</li>
+        <li id="user-challenges">Challenges created ({{ user.challengesCreated|length }})</li>
+        <li>Versus played : {{ user.versusPlayed|length }}</li>
+        <li>Versus win rate : {{ versusWinRate }}%</li>
+        <li>Current win streak : {{ user.winStreak }}</li>
+        <li>Best win streak : {{ user.bestWinStreak }}</li>
+    </ul>
+
+    {% if user.discord %}
+        <img src="{{ asset('/img/misc/discord_logo.webp')}}" class="href-element" data-href="" alt="Discord logo">
+    {% endif %}
+
+    {% if user.twitch %}
+        <img src="{{ asset('/img/misc/twitch_logo.webp')}}" class="href-element" data-href="" alt="Twitch logo">
+    {% endif %}
+    
+{% endblock %}
