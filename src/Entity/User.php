@@ -45,9 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $icon = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $banner = null;
-
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
@@ -92,6 +89,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?int $bestWinStreak = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $discord = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $twitch = null;
 
 
     // ----------------------------------------------------------------------------
@@ -211,18 +214,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIcon(?string $icon): static
     {
         $this->icon = $icon;
-
-        return $this;
-    }
-
-    public function getBanner(): ?string
-    {
-        return $this->banner;
-    }
-
-    public function setBanner(?string $banner): static
-    {
-        $this->banner = $banner;
 
         return $this;
     }
@@ -504,6 +495,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBestWinStreak(?int $bestWinStreak): static
     {
         $this->bestWinStreak = $bestWinStreak;
+
+        return $this;
+    }
+
+    public function getDiscord(): ?string
+    {
+        return $this->discord;
+    }
+
+    public function setDiscord(?string $discord): static
+    {
+        $this->discord = $discord;
+
+        return $this;
+    }
+
+    public function getTwitch(): ?string
+    {
+        return $this->twitch;
+    }
+
+    public function setTwitch(?string $twitch): static
+    {
+        $this->twitch = $twitch;
 
         return $this;
     }
