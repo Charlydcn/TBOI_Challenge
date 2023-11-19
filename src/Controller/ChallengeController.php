@@ -194,11 +194,11 @@ class ChallengeController extends AbstractController
             // add current user to challenge players
             $challenge->addPlayer($playChallenge);
 
-            // +1 to user personnal win-streak
-            $user->setWinStreak($user->getWinStreak() + 1);
+            // +1 to user personnal win-streak if user is logged in
+            $user ? $user->setWinStreak($user->getWinStreak() + 1) : "";
 
             // if user's new win streak > user's best win streak, update his best win streak
-            if($user->getWinStreak() > $user->getBestWinStreak()) {
+            if($user && $user->getWinStreak() > $user->getBestWinStreak()) {
                 $user->setBestWinStreak($user->getWinStreak());
             }
 
@@ -267,6 +267,7 @@ class ChallengeController extends AbstractController
         EntityManagerInterface $entityManager): Response
     {
             $playChallenge = new PlayChallenge;
+
             // find current user with Security's method getUser()
             $user = $security->getUser();
 
@@ -278,8 +279,8 @@ class ChallengeController extends AbstractController
             // add current user to challenge players
             $challenge->addPlayer($playChallenge);
 
-            // reset user's win streak to 0
-            $user->setWinStreak(0);
+            // reset user's win streak to 0 (if user is logged in)
+            $user ? $user->setWinStreak(0) : "";
 
             // if user came from a versus, create playVersus object
             if ($versus) {

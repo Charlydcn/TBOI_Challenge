@@ -8,12 +8,25 @@
     <h2>Member since {{ user.registrationDate|date('d/m/Y') }}</h2>
     <ul>
         <li>Challenge played : {{ user.challengesPlayed|length }}</li>
-        <li>Win rate : {{ challengeWinRate }}%</li>
+
+        {% if user.challengesPlayed|length > 0 %}
+            <li>Win rate : {{ challengeWinRate }}%</li>
+        {% endif %}
+
         <li id="user-challenges">Challenges created ({{ user.challengesCreated|length }})</li>
         <li>Versus played : {{ user.versusPlayed|length }}</li>
-        <li>Versus win rate : {{ versusWinRate }}%</li>
-        <li>Current win streak : {{ user.winStreak }}</li>
-        <li>Best win streak : {{ user.bestWinStreak }}</li>
+
+        {% if user.versusPlayed|length > 0 %}
+            <li>Versus Win rate : {{ versusWinRate }}%</li>
+        {% endif %}
+
+        {% if user.winStreak and user.winStreak > 0 %}
+            <li>Current win streak : {{ user.winStreak }}</li>
+        {% endif %}
+
+        {% if user.bestWinStreak and user.bestWinStreak > 0 %}
+            <li>Best win streak : {{ user.bestWinStreak }}</li>
+        {% endif %}
     </ul>
 
     {% if user.discord %}

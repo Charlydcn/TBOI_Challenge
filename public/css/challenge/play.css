@@ -37,6 +37,7 @@
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    justify-content: center;
 }
 
 /* step 2 */
@@ -60,7 +61,8 @@
 }
 
 .play-btn,
-.back-btn {
+.back-btn,
+#randomize-btn {
     cursor: pointer;
 }
 
@@ -137,13 +139,8 @@
 }
 
 /* text img */
-.character img:first-of-type {
+.character img:first-of-type:not(figure img) {
     height: 100px;
-}
-
-/* character img */
-.character img:last-of-type {
-    height:30px;
 }
 
 /* ---------------------------------------------------------------------------------------- */
@@ -158,11 +155,6 @@
 /* text img */
 .boss img:first-of-type {
     height: 25px;
-}
-
-/* boss img */
-.boss img:last-of-type {
-    height:50px;
 }
 
 /* ---------------------------------------------------------------------------------------- */

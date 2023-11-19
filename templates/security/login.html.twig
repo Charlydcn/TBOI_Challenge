@@ -6,6 +6,13 @@
 {% endblock %}
 
 {% block body %}
+
+
+<form action="{{ path('oauth_discord')}}" method="POST">
+    <input type="hidden" name="token" value="{{ csrf_token('discord-auth') }}"/>
+    <button type="submit">Connexion avec Discord</button>
+</form>
+
 <form method="post">
 
     <div class="error">

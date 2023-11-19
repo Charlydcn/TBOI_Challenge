@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -96,6 +96,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $twitch = null;
 
+    // ----------------------------------------------------------------------------
+    // ----- oauth2 discord -------------------------------------------------------
+
+
+    #[ORM\Column(type: 'string', length: 32)]
+    private ?string $discordId;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $accessToken = null;
+
 
     // ----------------------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -136,7 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return "{$this->username}-{$this->email}";
     }
 
     /**
@@ -161,7 +171,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -519,6 +529,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTwitch(?string $twitch): static
     {
         $this->twitch = $twitch;
+
+        return $this;
+    }
+
+    public function getDiscordId(): ?int
+    {
+        return $this->discordId;
+    }
+
+    public function setDiscordId(int $discordId): static
+    {
+        $this->discordId = $discordId;
+
+        return $this;
+    }
+
+    public function getAccessToken(): ?string
+    {
+        return $this->accessToken;
+    }
+
+    public function setAccessToken(?string $accessToken): static
+    {
+        $this->accessToken = $accessToken;
 
         return $this;
     }

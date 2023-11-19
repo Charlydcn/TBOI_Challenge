@@ -19,14 +19,27 @@ class UserController extends AbstractController
     {
 
         $challengesPlayed = count($user->getChallengesPlayed());
-        $challengesWon = count($playChallengeRepository->findBy(['user' => $user, 'completed' => true]));
-        $x = ($challengesWon / $challengesPlayed) * 100;
-        $challengeWinRate = number_format($x, 2);
+
+        if ($challengesPlayed > 0) {
+            $challengesWon = count($playChallengeRepository->findBy(['user' => $user, 'completed' => true]));
+            $x = ($challengesWon / $challengesPlayed) * 100;
+            $challengeWinRate = number_format($x, 2);
+        } else {
+            $challengesWon = 0;
+            $challengeWinRate = 0;
+        }
 
         $versusPlayed = count($user->getVersusPlayed());
-        $versusWon = count($versusRepository->findBy(['winner' => $user]));
-        $y = ($versusWon / $versusPlayed) * 100;
-        $versusWinRate = number_format($y, 2);
+        
+        if($versusPlayed > 0) {
+            $versusWon = count($versusRepository->findBy(['winner' => $user]));
+            $y = ($versusWon / $versusPlayed) * 100;
+            $versusWinRate = number_format($y, 2);
+        } else {
+            $versusWon = 0;
+            $versusWinRate = 0;
+        }
+
 
 
         return $this->render('user/show.html.twig', [

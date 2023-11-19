@@ -9,56 +9,58 @@
         <link href="https://fonts.cdnfonts.com/css/upheaval" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
     </head>
     <body>
-        <nav>
-            <img src="{{ asset('/img/misc/navbar.webp')}}" alt="Navigation bar's image">
+        <header>
+            <nav>
+                <img src="{{ asset('/img/misc/navbar.webp')}}" alt="Navigation bar's image">
+                
+                <ul id="desktop">
+                    <div id="nav-left">
+                        <li class="text-shadow underline-hover href-element" data-href="{{ path('challenges') }}">
+                            Browse
+                            <ul class="sub-menu">
+                                <li class="href-element" data-href="{{ path('challenges') }}">Challenges</li>
+                                <li class="href-element" data-href="{{ path('app_versus') }}">Versus</li>
+                            </ul>
+                        </li>
             
-            <ul id="desktop">
-                <div id="nav-left">
-                    <li class="text-shadow underline-hover href-element" data-href="{{ path('challenges') }}">
-                        Browse
-                        <ul class="sub-menu">
-                            <li class="href-element" data-href="{{ path('challenges') }}">Challenges</li>
-                            <li class="href-element" data-href="{{ path('app_versus') }}">Versus</li>
-                        </ul>
-                    </li>
-        
-                    <li class="text-shadow underline-hover href-element" data-href="{{ path('new_challenge') }}">
-                        Randomizer
-                    </li>
-                </div>
-        
-                <a class="text-shadow" href="{{ path('app_home') }}">TBOI Challenge</a>
-        
-                <div id="nav-right">
-                    {% if app.user %}
-                        {# if a user is logged in #}
-                        <li class="text-shadow href-element" data-href="{{ path('show_user', {'id': app.user.id})}}">
-                            <img src="{{ asset('/img/user_icons/' ~ app.user.icon)}}" alt="{{ app.user.icon|replace({'.webp': ''})}} user icon">
-                            <span class="underline-hover">{{ app.user.username }}</span>
-                                {% if app.user.winStreak > 0 %}
-                                    <p id="user-winstreak">{{ app.user.winStreak }}</p>
-                                {% endif %}
+                        <li class="text-shadow underline-hover href-element" data-href="{{ path('new_challenge') }}">
+                            Randomizer
                         </li>
-                        <li class="text-shadow underline-hover href-element" data-href="{{ path('app_logout') }}">
-                            Log off
-                        </li>
-                    {% else %}
-                        {# if no one is logged in #}
-                        <li class="text-shadow underline-hover href-element" data-href="{{ path('app_login') }}">
-                            Log in
-                        </li>
-                        <li class="text-shadow underline-hover href-element" data-href="{{ path('app_register') }}">
-                            Register
-                        </li>
-                    {% endif %}
-                </div>
-            </ul>
-        </nav>
-        
+                    </div>
+            
+                    <a class="text-shadow" href="{{ path('app_home') }}">TBOI Challenge</a>
+            
+                    <div id="nav-right">
+                        {% if app.user %}
+                            {# if a user is logged in #}
+                            <li class="text-shadow href-element" data-href="{{ path('show_user', {'id': app.user.id})}}">
+                                <img src="{{ asset('/img/user_icons/' ~ app.user.icon)}}" alt="{{ app.user.icon|replace({'.webp': ''})}} user icon">
+                                <span class="underline-hover">{{ app.user.username }}</span>
+                                    {% if app.user.winStreak > 0 %}
+                                        <p id="user-winstreak">{{ app.user.winStreak }}</p>
+                                    {% endif %}
+                            </li>
+                            <li class="text-shadow underline-hover href-element" data-href="{{ path('app_logout') }}">
+                                Log off
+                            </li>
+                        {% else %}
+                            {# if no one is logged in #}
+                            <li class="text-shadow underline-hover href-element" data-href="{{ path('app_login') }}">
+                                Log in
+                            </li>
+                            <li class="text-shadow underline-hover href-element" data-href="{{ path('app_register') }}">
+                                Register
+                            </li>
+                        {% endif %}
+                    </div>
+                </ul>
+            </nav>
+        </header>
 
         <div id="flash-messages">
             {# flash message displaying #}
@@ -81,13 +83,16 @@
             {% endfor %}
         </div>
 
-        {% block body %}
-        {% endblock %}
+        <main>
+            {% block body %}
+            {% endblock %}
+        </main>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="{{ asset('/js/script.js')}}"></script>
 
         {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}  
         
     </body>

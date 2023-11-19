@@ -276,6 +276,8 @@ label img {
     z-index: -1;
 }
 
-@media screen and (max-width: 1300px) {
-
+@media screen and (max-width: 950px) {
+    #form > img {
+        rotate: -90deg;
+    }
 }
