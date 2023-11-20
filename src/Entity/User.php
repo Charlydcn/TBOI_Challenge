@@ -100,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // ----- oauth2 discord -------------------------------------------------------
 
 
-    #[ORM\Column(type: 'string', length: 32)]
+    #[ORM\Column(type: 'string', length: 32, nullable: true)]
     private ?string $discordId;
 
     #[ORM\Column(length: 255, nullable: true)]
