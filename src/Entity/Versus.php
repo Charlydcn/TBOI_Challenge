@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VersusRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use DateTimeInterface;
 
 #[ORM\Entity(repositoryClass: VersusRepository::class)]
 class Versus
@@ -15,7 +16,6 @@ class Versus
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
 
     #[ORM\ManyToOne(inversedBy: 'versusCreated')]
     #[ORM\JoinColumn(nullable: false)]
@@ -30,15 +30,24 @@ class Versus
     #[ORM\Column]
     private ?bool $closed = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $timeLimit = null;
-
     #[ORM\ManyToOne(inversedBy: 'versusWon')]
     private ?User $winner = null;
 
     #[ORM\ManyToOne(inversedBy: 'versus')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Challenge $challenge = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $startDate = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $endDate = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $discordChannel = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $slots = null;
 
     public function __construct()
     {
@@ -116,18 +125,6 @@ class Versus
         return $this;
     }
 
-    public function getTimeLimit(): ?\DateTimeInterface
-    {
-        return $this->timeLimit;
-    }
-
-    public function setTimeLimit(?\DateTimeInterface $timeLimit): static
-    {
-        $this->timeLimit = $timeLimit;
-
-        return $this;
-    }
-
     public function __toString(): string
     {
         return $this->id;
@@ -153,6 +150,54 @@ class Versus
     public function setChallenge(?Challenge $challenge): static
     {
         $this->challenge = $challenge;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(\DateTimeInterface $startDate): static
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(DateTimeInterface $endDate): static
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getDiscordChannel(): ?string
+    {
+        return $this->discordChannel;
+    }
+
+    public function setDiscordChannel(?string $discordChannel): static
+    {
+        $this->discordChannel = $discordChannel;
+
+        return $this;
+    }
+
+    public function getSlots(): ?int
+    {
+        return $this->slots;
+    }
+
+    public function setSlots(?int $slots): static
+    {
+        $this->slots = $slots;
 
         return $this;
     }

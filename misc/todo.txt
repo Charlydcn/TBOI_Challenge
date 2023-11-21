@@ -1,14 +1,4 @@
-tboi chall:
-
-LOGIN WITH GOOGLE??
-
 ajouter la confirmation du mdp par mail
-
-faire une DQL d'exemple (peut-être pour les stats ?)
-
-ajouter une win-streak utilisateur, chaque challenge win = +1, si il perd un challenge, reset à 0
-
-il faut pouvoir utiliser le site sans être co, mais si on est pas co, on a simplement un randomizer sans pouvoir créer de presets
 
 ajouter les résultats du challenge dans l'objet PlayChallenge pour savoir sur quel perso/boss/restriction le joueur est tombé
 
@@ -22,8 +12,6 @@ Une page détails utilisateur pour que l'utilisateur consulte son compte, ses ch
 
 Le système d'amitié, qui n'est pas du tout implémenté
 
-Le CSS de pas mal de parties
-
 Les statistiques (nombre de win, win-streak max, challenges joués, etc.)
 
 Intégrer le système de Time Limit
@@ -31,8 +19,6 @@ Intégrer le système de Time Limit
 Gérer les bosses liés au temps (Hush, Boss Rush..)
 
 Empêcher les challenges impossibles (Exemple: 2 restrictions : prendre toute les pilules et ne prendre aucun consommables)
-
-RGPD/SEO
 
 Quand on clique sur consulter un challenge puis VERSUS, il faudrait une page avec la liste des versus déjà créés pour ce challenge,
 + un bouton pour en créer un nouveau

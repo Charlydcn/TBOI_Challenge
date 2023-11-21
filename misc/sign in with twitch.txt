@@ -1,7 +1,8 @@
 sign in with twitch
 sign in with discord : https://www.youtube.com/watch?v=g0_hcRxomNU&ab_channel=Pentiminax
 
-créer un versus limité dans le temps
+créer un versus limité dans le temps + (AJOUTER UN TIMER SUR LA PAGE DES DETAILS DU VERSUS, VOUS POUVEZ ENCORE REJOINDRE PENDANT
+10:00, 9:59, 9:58, 9:57...)
 un versus livestreamé par twitch exemple:
 un streamer lance un versus sur un chall, et ses viewers peuvent rejoindre si c'est pas trop tard
 donc limité le join du versus en date/heures

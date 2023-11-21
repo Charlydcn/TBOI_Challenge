@@ -7,6 +7,7 @@ use App\Form\VersusType;
 use App\Entity\Challenge;
 use App\Form\PlayVersusType;
 use App\Repository\VersusRepository;
+use App\Repository\PlayVersusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -110,16 +111,16 @@ class VersusController extends AbstractController
     public function play(
         Versus $versus,
         PlayVersus $playVersus = null,
+        PlayVersusRepository $playVersusRepository,
         Security $security,
         Request $request,
         EntityManagerInterface $entityManager): Response
     {
 
-        $playVersus = new PlayVersus;
+        $userAlreadyPlayed = $playVersusRepository->findBy(['user' => $user, 'versus' => $versus]);
+        dd($userAlreadyPlayed);
 
-        // EN COURS DE CREATION, REFLECHIR COMMENT PROCEDER QUAND ON 'JOUE' A UN VERSUS, IL FAUT MONTRER LE CHALLENGE POUR QUE
-        // L'UTILISATEUR SACHE QUOI FAIRE
-        // maquettage en cours
+        $playVersus = new PlayVersus;
 
         // create form from VersusType
         $form = $this->createForm(PlayVersusType::class, $versus);
