@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Versus;
 use App\Form\VersusType;
 use App\Entity\Challenge;
@@ -39,15 +40,6 @@ class VersusController extends AbstractController
         $user = $security->getUser();
 
         if($user) {
-            // verify that versus id in url parameter doesn't already exist
-            if (!$versus) {
-                $versus = new Versus();
-            } else {
-                // if versus already exist, redirect to show view (no edit for this entity)
-                return $this->redirectToRoute('show_challenge', [
-                    'id' => $challenge->getId(),
-                ]);
-            }
             
             // create form from VersusType
             $form = $this->createForm(VersusType::class, $versus);
@@ -57,10 +49,17 @@ class VersusController extends AbstractController
     
             // if form submitted & valid
             if ($form->isSubmitted() && $form->isValid()) {
-    
+
                 // hydrate $versus attributes with form data
                 $versus = $form->getData();
-    
+
+                $now = new DateTime;
+
+                // if versus' end date isn't prior to today's date, redirect (it's already been prevented client-side with js, but extra verification)
+                if($versus->getEndDate() < $now) {
+                    return $this->redirectToRoute('new_versus', ['id' => $challenge->getId()]);
+                }
+
                 // set versus challenge to challenge from which the versus is getting created (challenge id passed in url parameter)
                 $versus->setChallenge($challenge);
     
@@ -116,7 +115,6 @@ class VersusController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager): Response
     {
-
         $userAlreadyPlayed = $playVersusRepository->findBy(['user' => $user, 'versus' => $versus]);
         dd($userAlreadyPlayed);
 
@@ -147,6 +145,19 @@ class VersusController extends AbstractController
             'newPlayVersusForm' => $form,
         ]);
 
-
     }
+
+    #[Route('/challenge/{id}/versus', name: 'show_challenge_versus')]
+    public function showChallengeVersus(
+        Challenge $challenge,
+        VersusRepository $versusRepository)
+    {
+        $versus = $versusRepository->findBy(['challenge' => $challenge, 'closed' => false]);
+
+        return $this->render('challenge/show_challenge_versus.html.twig', [
+            'versus' => $versus,
+            'challenge' => $challenge,
+        ]);
+    }
+    
 }

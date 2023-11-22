@@ -41,11 +41,11 @@
             </div>
         </div>
 
-        <p>Challenge id : <a href="{{ path('show_challenge', {'id': v.challenge.id})}}">{{ v.challenge.id }}</a></p>
-        <p>Creator : {{ v.creator.username }}</p>
-        <p>Time limit : {{ v.timeLimit|date('H:i:s') }}</p>
+        <a href="{{ path('show_challenge', {'id': v.challenge.id})}}">Challenge</a>
+        <p>Creator : <a href="{{ path('show_user', {'id': v.creator.id})}}">{{ v.creator.username }}</a></p>
         <p>Public : {{ v.public ? 'Yes' : 'No' }}</p>
         <p>Closed : {{ v.closed ? 'Yes' : 'No'  }}</p>
+        <p>Players : {{ v.players ? v.players|length : 0 }} / {{ v.slots }}</p>
         {% if v.players %}
                     <ul>
                         {% for player in v.players %}
@@ -65,7 +65,7 @@
             data-href="{{ path('play_challenge', {'challengeId': c.id, 'versusId': v.id})}}"
             alt="Text saying JOIN">
 
-        {% if v.players %}
+        {% if v.players and v.players|length > 0%}
             <h2>Players : </h2>
 
             {% for player in v.players %}
@@ -80,6 +80,10 @@
                 <br>
                 <br>
             {% endfor %}
+
+            {% else %}
+
+            <h2>No players yet</h2>
 
         {% endif %}
 

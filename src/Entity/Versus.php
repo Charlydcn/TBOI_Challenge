@@ -40,14 +40,14 @@ class Versus
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $startDate = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $endDate = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $discordChannel = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $slots = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $endDate = null;
 
     public function __construct()
     {
@@ -166,18 +166,6 @@ class Versus
         return $this;
     }
 
-    public function getEndDate(): ?\DateTimeInterface
-    {
-        return $this->endDate;
-    }
-
-    public function setEndDate(DateTimeInterface $endDate): static
-    {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
     public function getDiscordChannel(): ?string
     {
         return $this->discordChannel;
@@ -198,6 +186,18 @@ class Versus
     public function setSlots(?int $slots): static
     {
         $this->slots = $slots;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(?\DateTimeInterface $endDate): static
+    {
+        $this->endDate = $endDate;
 
         return $this;
     }

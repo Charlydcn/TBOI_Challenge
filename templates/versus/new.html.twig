@@ -9,38 +9,5 @@
 {% endblock %}
 
 {% block javascripts %}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Fonction pour remplir les champs de date et d'heure avec la date actuelle
-      function fillCurrentDateTime() {
-        var currentDate = new Date();
-  
-        // Fonction pour définir la valeur d'un élément de sélection
-        function setSelectValue(selectId, value) {
-          var select = document.getElementById(selectId);
-          if (select) {
-            for (var i = 0; i < select.options.length; i++) {
-              if (select.options[i].value == value) {
-                select.options[i].selected = true;
-                break;
-              }
-            }
-          }
-        }
-  
-        // Remplir les champs de date
-        setSelectValue('versus_startDate_date_month', currentDate.getMonth() + 1); // Les mois commencent à 0
-        setSelectValue('versus_startDate_date_day', currentDate.getDate());
-        setSelectValue('versus_startDate_date_year', currentDate.getFullYear());
-  
-        // Remplir les champs d'heure
-        setSelectValue('versus_startDate_time_hour', currentDate.getHours());
-        setSelectValue('versus_startDate_time_minute', Math.floor(currentDate.getMinutes() / 5) * 5); // Arrondir à la plage de 5 minutes
-      }
-  
-      // Appeler la fonction pour remplir les champs lors du chargement de la page
-      fillCurrentDateTime();
-    });
-  </script>
-  
+    <script src="{{ asset('/js/versus/new.js')}}"></script>
 {% endblock javascripts %}

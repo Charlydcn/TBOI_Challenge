@@ -27,9 +27,6 @@
         {% endif %}
     {% endif %}
 
-
-    
-
     <div id="btns">
         <img src="{{ asset('img/text/play.webp')}}"
             class="href-element" 
@@ -40,7 +37,7 @@
         {% if app.user %}
             <img src="{{ asset('img/text/versus.webp')}}"
                 class="href-element" 
-                data-href="{{ path('new_versus', {'id': challenge.id})}}"
+                data-href="{{ path('show_challenge_versus', {'id': challenge.id})}}"
                 alt="The word VERSUS">
         {% endif %}
     </div>

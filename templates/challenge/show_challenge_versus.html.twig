@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Versus{% endblock %}
+
+{% block metaTag %}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/challenge/show_challenge_versus.css')}}">
+{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('new_versus', {'id': challenge.id})}}">Create new Versus</a>
+
+    
+
+    {% if versus|length > 0 %}
+        <p>Current versus : </p>
+        {% for v in versus %}
+            {% if not v.closed and v.  %}
+                
+            {% endif %}
+            <ul class="versus href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
+                <li>Versus #{{ v.id }}</li>
+                <li>Creator : {{ v.creator.username }}</li>
+                <li>Starting : <span class="date" data-date="{{ v.startDate|date() }}"></span></li>
+                <li>Ending in <span class="date" data-date="{{ v.endDate|date() }}"></span></li>
+            </ul>
+            {% endfor %}
+
+        {% else %}
+        <p>No versus for this challenge yet, <a href="{{ path('new_versus', {'id': challenge.id})}}">create yours</a></p>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const dates = document.querySelectorAll('.date')
+        
+        dates.forEach(function (date) {
+
+            var now = new Date()
+            var target = new Date(date.getAttribute('data-date'))
+            var difference = target - now
+
+            var seconds = Math.floor(difference / 1000) % 60;
+            var minutes = Math.floor(difference / (1000 * 60)) % 60;
+            var hours = Math.floor(difference / (1000 * 60 * 60));
+
+            console.log(seconds)
+            console.log(minutes)
+            console.log(hours)
+
+        })
+    </script>
+    {# <script src="{{ asset('/js/challenge/show.js')}}"></script> #}
+{% endblock javascripts %}
