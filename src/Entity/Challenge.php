@@ -29,7 +29,6 @@ class Challenge
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
-
     #[ORM\ManyToMany(targetEntity: Restriction::class, inversedBy: 'challenges', fetch: 'EAGER')]
     private Collection $restrictions;
 

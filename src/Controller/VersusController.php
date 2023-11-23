@@ -50,7 +50,7 @@ class VersusController extends AbstractController
             // if form submitted & valid
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // hydrate $versus attributes with form data
+            // hydrate $versus attributes with form data
                 $versus = $form->getData();
 
                 $now = new DateTime;

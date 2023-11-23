@@ -1,0 +1,16 @@
+form:first-of-type button {
+    background-color: #5663F7;
+    border: none;
+    padding: .3rem;
+    border-radius: 10px;
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #eeeeee;
+}
+
+form:first-of-type button i {
+    font-size: 2rem;
+    color: #FFFFFF;
+}

@@ -1,0 +1,4 @@
+composer update
+composer require symfony/webpack-encore-bundle
+npm i
+npm run watch

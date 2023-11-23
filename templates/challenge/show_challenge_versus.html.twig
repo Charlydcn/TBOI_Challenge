@@ -18,7 +18,7 @@
     {% if versus|length > 0 %}
         <p>Current versus : </p>
         {% for v in versus %}
-            {% if not v.closed and v.  %}
+            {% if not v.closed and v.challenge == challenge %}
                 
             {% endif %}
             <ul class="versus href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
@@ -30,7 +30,7 @@
             {% endfor %}
 
         {% else %}
-        <p>No versus for this challenge yet, <a href="{{ path('new_versus', {'id': challenge.id})}}">create yours</a></p>
+        <p>No versus for this challenge yet</p>
 
     {% endif %}
 

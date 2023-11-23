@@ -3,6 +3,7 @@
 {% block title %}Log in{% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/login.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -10,7 +11,10 @@
 
 <form action="{{ path('oauth_discord')}}" method="POST">
     <input type="hidden" name="token" value="{{ csrf_token('discord-auth') }}"/>
-    <button type="submit">Connexion avec Discord</button>
+    <button type="submit">
+        <i class="fa-brands fa-discord"></i>
+        Sign in with Discord
+    </button>
 </form>
 
 <form method="post">
