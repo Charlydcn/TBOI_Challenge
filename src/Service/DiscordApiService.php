@@ -25,14 +25,17 @@ class DiscordApiService
 
     public function getAuthorizationUrl(array $scope): string
     {
+        // Déclaration des paramètres de requête pour l'URL d'autorisation
         $queryParameters = http_build_query([
-            'client_id' => $this->clientId,
-            'redirect_uri' => $this->redirectUri,
-            'response_type' => 'token',
-            'scope' => implode(' ', $scope),
-            'prompt' => 'none',
+            'client_id' => $this->clientId,          // ID du client OAuth2 (mon application TBOI Challenge sur Discord Developper)
+            'redirect_uri' => $this->redirectUri,    // URL de redirection après l'autorisation
+            'response_type' => 'token',              // Type de réponse (un token OAuth2)
+            'scope' => implode(' ', $scope),         // Les autorisations demandées (identité, email, etc.)
+                                                     // connexion et d'automatiquement connecter l'utilisation si son
+                                                     // ordinateur est déjà connecté à Discord 
         ]);
 
+        // Construction de l'URL complète d'autorisation en concaténant l'URI d'autorisation de Discord avec les paramètres de requête
         return self::AUTHORIZATION_URI . '?' . $queryParameters;
     }
 

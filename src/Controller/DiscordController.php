@@ -24,11 +24,20 @@ class DiscordController extends AbstractController
     #[Route('/discord/connect', name: 'oauth_discord', methods: ['POST'])]
     public function connect(Request $request): Response
     {
+        // récupération du token CSRF
         $token = $request->request->get('token');
 
+        // vérification de la validité du token CSRF
         if ($this->isCsrfTokenValid('discord-auth', $token)) {
+            // déclaration d'une variable 'discord-auth' comme 'true' en session 
             $request->getSession()->set('discord-auth', true);
+
+            // déclaration du scope qui définiera les informations demandée à l'API Discord
+            // (ici nous voulons le pseudo et l'adresse e-mail de l'utilisateur)
             $scope = ['identify', 'email'];
+
+            // redirection vers la méthode getAuthorizationUrl() de la classe DiscordApiService.php
+            // avec en paramètre de méthode notre variable $scope
             return $this->redirect($this->discordApiService->getAuthorizationUrl($scope));
         }
 

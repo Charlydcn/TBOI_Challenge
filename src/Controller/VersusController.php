@@ -50,7 +50,7 @@ class VersusController extends AbstractController
             // if form submitted & valid
             if ($form->isSubmitted() && $form->isValid()) {
 
-            // hydrate $versus attributes with form data
+                // hydrate $versus attributes with form data
                 $versus = $form->getData();
 
                 $now = new DateTime;
@@ -65,8 +65,12 @@ class VersusController extends AbstractController
     
                 // set user with current logged in user
                 $versus->setCreator($user);
-    
+
                 $versus->setClosed(false);
+
+                if ($slots) {
+                    $versus->setSlots($slots);
+                }
     
                 // if public isn't checked (so is null in form data, set it to false)
                 if (!$versus->isPublic()) {
