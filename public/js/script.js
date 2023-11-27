@@ -48,3 +48,10 @@ $(document).on('click', function(event) {
         $('.onclick-infos').addClass('hidden')
     }
 })
+
+// start a game (isaac's appId : 250900)
+function launchSteamGame(appId) {
+    var steamLink = "steam://run/" + appId;
+
+    window.open(steamLink);
+}

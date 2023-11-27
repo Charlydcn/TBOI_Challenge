@@ -2,9 +2,16 @@
 
 {% block title %}{{ user.username }}'s profile{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/user_profile.css')}}">
+{% endblock %}
+
 {% block body %}
-    <img src="{{ asset('/img/user_icons/' ~ user.icon) }}" alt="">
-    <h1>{{ user }}</h1>
+    <h1>
+        <img src="{{ asset('/img/user_icons/' ~ user.icon) }}" alt="">
+        {{ user }}
+    </h1>
+    
     <h2>Member since {{ user.registrationDate|date('d/m/Y') }}</h2>
     <ul>
         <li>Challenge played : {{ user.challengesPlayed|length }}</li>
@@ -35,6 +42,18 @@
 
     {% if user.twitch %}
         <img src="{{ asset('/img/misc/twitch_logo.webp')}}" class="href-element" data-href="" alt="Twitch logo">
+    {% endif %}
+
+    {% if challengesLiked|length > 0 %}
+        <h2>Challenges liked : </h2>
+        {% for c in challengesLiked %}
+            <ul class="challenge href-element" data-href="{{ path('show_challenge', {'id': c.id}) }}">
+                <li>Challenge #{{ c.id }}</li>
+                <li>{{ c.characters|length }} characters</li>
+                <li>{{ c.bosses|length }} bosses</li>
+                <li>{{ c.restrictions|length }} restrictions</li>
+            </ul>
+        {% endfor %}
     {% endif %}
     
 {% endblock %}

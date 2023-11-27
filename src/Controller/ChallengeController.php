@@ -14,6 +14,7 @@ use App\Repository\LikeRepository;
 use App\Repository\VersusRepository;
 use App\Repository\ChallengeRepository;
 use App\Controller\RandomizerController;
+use App\Repository\PlayVersusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PlayChallengeRepository;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -119,6 +120,7 @@ class ChallengeController extends AbstractController
         PlayChallengeRepository $playChallengeRepository,
         LikeRepository $likeRepository): Response
     {
+
         // find current user with Security's method getUser()
         $user = $security->getUser();
         
@@ -149,6 +151,7 @@ class ChallengeController extends AbstractController
 
         PlayChallenge $playChallenge = null,
         PlayVersus $playVersus = null,
+        PlayVersusRepository $playVersusRepository,
         Security $security,
         Request $request,
         EntityManagerInterface $entityManager,
@@ -180,10 +183,24 @@ class ChallengeController extends AbstractController
 
         $playChallengeForm->handleRequest($request);
 
+        // find current user with Security's method getUser()
+        $user = $security->getUser();
+
+        if ($versus) {
+            $userAlreadyPlayed = $playVersusRepository->findBy(['user' => $user, 'versus' => $versus]);
+
+            // if user already played the versus, prevent him from playing again (only 1 try per versus participant)
+            if ($userAlreadyPlayed) {
+                $this->addFlash('error', 'You can\'t play a Versus twice');
+
+                return $this->redirectToRoute('show_versus', [
+                    'id' => $versus->getId(),
+                ]);
+            }
+        }
+
         if ($playChallengeForm->isSubmitted() && $playChallengeForm->isValid()) {
 
-            // find current user with Security's method getUser()
-            $user = $security->getUser();
 
             // create playChallenge object
             $playChallenge->setCompleted(true);
@@ -207,6 +224,7 @@ class ChallengeController extends AbstractController
 
             // if user came from a versus, create playVersus object
             if ($versus) {
+
                 $playVersus = new PlayVersus;
 
                 $playVersus->setCompleted(true);
@@ -217,7 +235,24 @@ class ChallengeController extends AbstractController
                 $playVersus->setVersus($versus);
                 $playVersus->setUser($user);
 
-                
+
+                if ($versus->getWinner()) {
+                    $winnerPlayVersus = $playVersusRepository->findOneBy(['user' => $versus->getWinner(), 'versus' => $versus]);
+
+                    $i = $winnerPlayVersus->getCompletionTime();
+                    $bestVersusTime = $i->format('H:i:s');
+
+                    if($bestVersusTime < $playVersus->getCompletionTime()) {
+                        dd('oui');
+                    } else {
+                        dd('non');
+                    }
+
+                    dd('test');
+                } else {
+                    $versus->setWinner($user);
+                }
+
                 // add current user to challenge players
                 $versus->addPlayer($playVersus);
 

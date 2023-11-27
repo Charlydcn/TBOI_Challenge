@@ -18,16 +18,17 @@
     {% if versus|length > 0 %}
         <p>Current versus : </p>
         {% for v in versus %}
-            {% if not v.closed and v.challenge == challenge %}
-                
-            {% endif %}
-            <ul class="versus href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
+        <div class="versus href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
+            <ul>
                 <li>Versus #{{ v.id }}</li>
                 <li>Creator : {{ v.creator.username }}</li>
-                <li>Starting : <span class="date" data-date="{{ v.startDate|date() }}"></span></li>
-                <li>Ending in <span class="date" data-date="{{ v.endDate|date() }}"></span></li>
+                <li>Starting : <span class="date" data-date="{{ v.startDate|date('d:m:Y H:i') }}"></span></li>
+                <li>Ends in : <span class="date" data-date="{{ v.endDate|date('d:m:Y H:i') }}"></span></li>
+                <li>Slots : {{ v.players|length }} / {{ v.slots }}</li>
             </ul>
-            {% endfor %}
+            <img src="{{ asset('/img/misc/swords_versus.png')}}" alt="">
+        </div>
+        {% endfor %}
 
         {% else %}
         <p>No versus for this challenge yet</p>
@@ -37,24 +38,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        const dates = document.querySelectorAll('.date')
-        
-        dates.forEach(function (date) {
-
-            var now = new Date()
-            var target = new Date(date.getAttribute('data-date'))
-            var difference = target - now
-
-            var seconds = Math.floor(difference / 1000) % 60;
-            var minutes = Math.floor(difference / (1000 * 60)) % 60;
-            var hours = Math.floor(difference / (1000 * 60 * 60));
-
-            console.log(seconds)
-            console.log(minutes)
-            console.log(hours)
-
-        })
-    </script>
     {# <script src="{{ asset('/js/challenge/show.js')}}"></script> #}
 {% endblock javascripts %}

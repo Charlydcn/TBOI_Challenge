@@ -14,9 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // get today's date
       const now = new Date()
+      
+      now.setSeconds(0)
+      startDate.setSeconds(0)
 
       // if start date is prior to today's date
-      if (startDate < now) {
+      if (startDate.getTime() < now.getTime()) {
           // prevent form submitting
           event.preventDefault()
           // alert

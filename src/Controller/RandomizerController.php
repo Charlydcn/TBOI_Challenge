@@ -3,20 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Challenge;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RandomizerController extends AbstractController
 {
-    #[Route('/randomizer', name: 'randomize')]
-    public function randomizer(): Response
-    {
-        return $this->render('randomizer.html.twig', [
-            'controller_name' => 'RandomizerController',
-        ]);
-    }
-
     public function randomize(Challenge $challenge)
     {
         // ***********************************************************************************************************

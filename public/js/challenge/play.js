@@ -65,13 +65,16 @@ const playBtn = document.querySelector('.play-btn')
 const backBtn = document.querySelector('.back-btn')
 const step1 = document.querySelector('#step1')
 const step2 = document.querySelector('#step2')
+const textResult = document.querySelector('#text-result')
 
 playBtn.addEventListener('click', () => {
     step1.classList.add('hidden')
     step2.classList.remove('hidden')
+    textResult.classList.remove('hidden')
 })
 
 backBtn.addEventListener('click', () => {
     step2.classList.add('hidden')
     step1.classList.remove('hidden')
+    textResult.classList.add('hidden')
 })

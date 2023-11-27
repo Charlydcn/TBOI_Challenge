@@ -40,6 +40,8 @@ class VersusController extends AbstractController
         $user = $security->getUser();
 
         if($user) {
+
+            $versus = new Versus();
             
             // create form from VersusType
             $form = $this->createForm(VersusType::class, $versus);
@@ -67,17 +69,11 @@ class VersusController extends AbstractController
                 $versus->setCreator($user);
 
                 $versus->setClosed(false);
-
-                if ($slots) {
-                    $versus->setSlots($slots);
-                }
     
                 // if public isn't checked (so is null in form data, set it to false)
                 if (!$versus->isPublic()) {
                     $versus->setPublic(false);
                 }
-    
-                $versus->setWinner($user);
                 
                 // persist = prepare PDO
                 $entityManager->persist($versus);
@@ -89,8 +85,6 @@ class VersusController extends AbstractController
                 ]);
             }
         } else {
-            $this->addFlash('error', 'You have to be logged on to play a Versus.');
-
             return $this->redirectToRoute('show_challenge', [
                 'id' => $challenge->getId(),
             ]);
@@ -108,47 +102,6 @@ class VersusController extends AbstractController
         return $this->render('versus/show.html.twig', [
             'versus' => $versus,
         ]);
-    }
-
-    #[Route('/versus/play/{id}', name: 'play_versus')]
-    public function play(
-        Versus $versus,
-        PlayVersus $playVersus = null,
-        PlayVersusRepository $playVersusRepository,
-        Security $security,
-        Request $request,
-        EntityManagerInterface $entityManager): Response
-    {
-        $userAlreadyPlayed = $playVersusRepository->findBy(['user' => $user, 'versus' => $versus]);
-        dd($userAlreadyPlayed);
-
-        $playVersus = new PlayVersus;
-
-        // create form from VersusType
-        $form = $this->createForm(PlayVersusType::class, $versus);
-
-        // handle request
-        $form->handleRequest($request);
-
-        // if form submitted & valid
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            
-            
-            // persist = prepare PDO
-            $entityManager->persist($versus);
-            // flush = execute PDO
-            $entityManager->flush();
-
-            return $this->redirectToRoute('show_versus', [
-                'id' => $versus->getId(),
-            ]);
-        }
-        
-        return $this->render('versus/play.html.twig', [
-            'newPlayVersusForm' => $form,
-        ]);
-
     }
 
     #[Route('/challenge/{id}/versus', name: 'show_challenge_versus')]

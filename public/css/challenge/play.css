@@ -6,6 +6,46 @@
     height: 100vh;
 }
 
+#launchgame {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #d2d6ee;
+    width: max-content;
+    padding: 5px 1.5rem;
+}
+
+#launchgame img {
+    width: 40px;
+}
+
+#text-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#text-result span {
+    color: #67070a;
+    font-size: 1.5rem;
+    text-decoration: underline;
+    text-decoration-thickness: 4px;
+}
+
+#text-result ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem auto;
+}
+
+#text-result li {
+    list-style: none;
+    color: #67070a;
+}
+
 /* text img to remind user to note his completion time before ending the run */
 #protip {
     position: absolute;
@@ -56,8 +96,8 @@
 /* reset btn */
 #step2 > img:first-of-type {
     position: absolute;
-    right: 7.5%;
-    top: 7.5%;
+    right: 2rem;
+    top: 2rem;
 }
 
 .play-btn,
@@ -72,10 +112,10 @@
 }
 
 .back-btn:not(#completion-time .back-btn) {
-    font-size: 2rem;
+    font-size: 3rem;
     position: absolute;
-    top: 5%;
-    left: 0;
+    top: 2rem;
+    left: 2rem;
 }
 
 #result {
@@ -155,6 +195,10 @@
 /* text img */
 .boss img:first-of-type {
     height: 25px;
+}
+
+.boss img:last-of-type {
+    height: 80px;
 }
 
 /* ---------------------------------------------------------------------------------------- */

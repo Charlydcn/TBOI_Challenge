@@ -6,6 +6,19 @@
 {% endblock %}
 {% block body %}
 
+<div id="text-result">
+    {% if character is defined and boss is defined %}
+        <p>You have to play <span>{{ character.name|capitalize }}</span> and beat <span>{{ boss.name|capitalize }}</span></p>
+        {% if restrictions is defined and restrictions|length > 0 %}
+            <ul>Restrictions :
+                {% for restriction in restrictions %}
+                    <li>{{ restriction.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+</div>
+
 <div id="result">
 
     <div class="character">

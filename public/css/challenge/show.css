@@ -42,13 +42,13 @@ p {
 #restrictions {
     gap: 0.2rem 1rem;
     margin: .75rem auto;
-    width: 125%;
+    width: max-content;
 }
 
 #characters {
     max-height: 600px;
     flex-wrap: wrap;
-    width: 155%;
+    width: 550px;
 }
 
 #restrictions > p:first-of-type {

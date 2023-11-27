@@ -22,7 +22,6 @@ class PlayChallengeType extends AbstractType
             'widget' => 'single_text',
             'with_seconds' => true,
             'required' => false,
-            'label' => 'Time (optionnal) :',
         ])
 
         ->add('comment', TextType::class, [

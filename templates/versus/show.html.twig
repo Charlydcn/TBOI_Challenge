@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/versus/show.css')}}">
-{% endblock stylesheets %}
+    {% endblock stylesheets %}
 
 {% block body %}
 
@@ -13,31 +13,53 @@
         {% set c = v.challenge %}
 
         <div id="challenge">
-            <div id="characters">
-                {% for character in c.characters %}
-                    <figure class="character">
-                        <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.webp') }}" alt="{{ character.name }}'s head">
-                        <figcaption>{{ character.name }}</figcaption>
-                    </figure>
-                {% endfor %} 
+            {# characters #}
+            <div class="container">
+                {# CHARACTERS text #}
+                <span class="length-span">{{ c.characters|length }}</span> &nbsp;
+                <img src="{{ asset('/img/text/characters.webp')}}" class="onclick-infos-element" alt="Text saying characters">
+                {# characters list #}
+                <div id="characters" class="onclick-infos hidden">
+                    {% for character in c.characters %}
+                        <figure class="character">
+                            <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.webp') }}" alt="{{ character.name }}'s head">
+                            <figcaption>{{ character.name }}</figcaption>
+                        </figure>
+                    {% endfor %} 
+                </div>
             </div>
-    
-            <div id="bosses">
-                {% for boss in c.bosses %}
-                    <figure class="boss">
-                        <img src="{{ asset('/img/completion_marks/' ~ boss.name|replace({" ": "", "'": ""}) ~ '.webp') }}" alt="{{ boss.name }}'s completion mark">
-                        <figcaption>{{ boss.name }}</figcaption>
-                    </figure>
-                {% endfor %}
+
+            {# bosses #}
+            <div class="container">
+                {# BOSSES text #}
+                <span class="length-span">{{ c.bosses|length }}</span>&nbsp;
+                <img src="{{ asset('/img/text/bosses.webp')}}" class="onclick-infos-element" alt="Text saying bosses">
+                {# bosses list #}
+                <div id="bosses" class="onclick-infos hidden">
+                    {% for boss in c.bosses %}
+                        <figure class="boss">
+                            <img src="{{ asset('/img/completion_marks/' ~ boss.name|replace({" ": "", "'": ""}) ~ '.webp') }}" alt="{{ boss.name }}'s completion mark">
+                            <figcaption>{{ boss.name }}</figcaption>
+                        </figure>
+                    {% endfor %}
+                </div>
             </div>
-    
-            <div id="restrictions">
-                {% for restriction in c.restrictions %}
-                    <figure class="restriction">
-                        <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
-                        {{ restriction.name }}
-                    </figure>
-                {% endfor %} 
+
+            {# restrictions #}
+            <div class="container">
+                {# RESTRICTIONS text #}
+                <span class="length-span">{{ c.restrictions|length }}</span>&nbsp;
+                <img src="{{ asset('/img/text/restrictions.webp')}}" class="onclick-infos-element" alt="Text saying restrictions">
+                {# restrictions list #}
+                <div id="restrictions" class="onclick-infos hidden">
+                    <p>Chances of occuring : {{c.restrictionsChance}}%</p>
+                    {% for restriction in c.restrictions %}
+                        <figure class="restriction">
+                            <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
+                            {{ restriction.name }}
+                        </figure>
+                    {% endfor %} 
+                </div>
             </div>
         </div>
 
@@ -46,15 +68,6 @@
         <p>Public : {{ v.public ? 'Yes' : 'No' }}</p>
         <p>Closed : {{ v.closed ? 'Yes' : 'No'  }}</p>
         <p>Players : {{ v.players ? v.players|length : 0 }} / {{ v.slots }}</p>
-        {% if v.players %}
-                    <ul>
-                        {% for player in v.players %}
-                            <li>{{ player }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>No players yet</p>
-                {% endif %}
         <p>Current winner : {{ v.winner ? v.winner : "No winner yet" }}</p>
 
         {# VERIFIER QUE L'UTILISATEUR N'A PAS DEJA JOUE AU CHALLENGE, ON PEUT QUE Y JOUER UNE FOIS ET FAIRE SON TEMPS SINON C'EST CHIANT #}
@@ -76,6 +89,7 @@
                         <p>Completion time : {{ player.completionTime ? player.completionTime|date('H:i:s') : "Unknown" }}</p>
                     {% endif %}
                     <p>Play date : {{ player.playDate|date('d/m/Y H:i') }}</p>
+                    <p>Comment : {{ player.comment ? player.comment : "None" }}</p>
                 </div>
                 <br>
                 <br>

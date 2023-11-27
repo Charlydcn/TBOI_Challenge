@@ -16,7 +16,31 @@
 
 <a href="{{ path('show_challenge', {'id': challenge.id})}}">&lt; Challenge</a>
 
-{# METTRE LE RESULTAT EN DISPLAY HIDDEN, AFFICHER UN PERSO/BOSS/RESTRICTIONS RANDOMS, ET LORSQU'ON PLAY, ON AFFICHE LE RESULTAT ?? #}
+<div id="launchgame">
+    <img src="{{ asset('/img/misc/steam_logo.webp')}}" onclick="launchSteamGame(250900)" alt="Steam logo">
+    <p>Launch the game on Steam</p>
+</div>
+
+<div id="text-result" class="hidden">
+    {% if character is defined and boss is defined %}
+        <p>
+            You have to play
+            <span>{{ character.name|capitalize }}</span>
+            and beat
+            <span>{{ boss.name|capitalize }}</span>
+            {{ c.streak ? c.streak ~ " times in a row" : ""}}
+        </p>
+
+        {% if restrictions is defined and restrictions|length > 0 %}
+            <ul>Restrictions :
+                {% for restriction in restrictions %}
+                    <li>{{ restriction.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+</div>
+
     <div id="page">
         
         <img src="{{ asset('/img/misc/page_blood_empty.webp')}}" alt="image of a notebook page with blood on it">
@@ -145,7 +169,18 @@
                     {% endif %}
 
                 {{ form_start(playChallengeForm, {'action': action}) }}
-                {{ form_row(playChallengeForm.completionTime, {'attr': {'required': required}}) }}
+
+                {{ form_row(
+                    playChallengeForm.completionTime,
+                    {
+                        'attr': {
+                            'required': required
+                        },
+                        'label': 'Completion time' ~ (versus ? "" : " (Optionnal)")
+                    }
+                ) }}
+                
+
                 {{ form_row(playChallengeForm.comment) }}
                 {{ form_row(playChallengeForm.submit)}}
 

@@ -119,17 +119,6 @@
             <p>Win-streak : {{ c.streak }}</p>
         {% endif %}
 
-        <div id="versus">
-            <p>Versus on this challenge : (Total : {{ challenge.versus|length }})</p>
-
-            {% for versus in challenge.versus %}
-            <div class="href-element" data-href="{{ path('show_versus', {'id': versus.id})}}">
-                <p>id : {{ versus.id }}</p>
-                <p>creator : {{ versus.creator.username }}</p>
-            </div>
-            
-            {% endfor %}
-        </div>
 
 {% endblock %}
 
