@@ -6,6 +6,20 @@ p {
     font-size: 1.25rem;
 }
 
+h1 {
+    font-size: 3rem;
+}
+
+h2,
+h2 a {
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+h2 a {
+    color: #66080a;
+}
+
 #stats ul {
     list-style: none;
 }

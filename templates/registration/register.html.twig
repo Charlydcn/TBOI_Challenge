@@ -3,10 +3,18 @@
 {% block title %}Register{% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/login.css')}}">
 {% endblock %}
 
 {% block body %}
 
+<form action="{{ path('oauth_discord')}}" method="POST">
+    <input type="hidden" name="token" value="{{ csrf_token('discord-auth') }}"/>
+    <button type="submit">
+        <i class="fa-brands fa-discord"></i>
+        Log in with Discord
+    </button>
+</form>
 
 {{ form_start(registrationForm) }}
         

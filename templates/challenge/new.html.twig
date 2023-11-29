@@ -2,6 +2,12 @@
 
 {% block title %}Challenge creation{% endblock %}
 
+{% block meta %}
+    <meta name="description" 
+        content="Create your custom challenge : choose from 34 characters, 12 bosses, and up to 15 unique restrictions.
+                Test your skills in unique challenges and share them with the community!">
+{% endblock meta %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/challenge/new.css')}}">
 {% endblock stylesheets %}
@@ -25,7 +31,7 @@
         {{ form_start(newChallengeForm, {'action': path('new_challenge'), 'method': 'POST'}) }}
         {# <form action="{{ path('new_challenge') }}" method="POST"> #}
             
-            {# {{ form_errors(newChallengeForm) }} #}
+            {{ form_errors(newChallengeForm) }}
 
             {# step 1 (characters selection + boss selection + next btn) #}
             <div id="step1">
@@ -211,6 +217,8 @@
                 #}
                 {% if app.user %}
                     {{ form_row(newChallengeForm.saveChall)}}
+                    {% else %}
+                    {{ form_row(newChallengeForm.saveChall, {'attr': {'class': 'hidden'}, 'label_attr': {'class': 'hidden'}}) }}
                 {% endif %}
 
                 {{ form_widget(newChallengeForm.submit)}}

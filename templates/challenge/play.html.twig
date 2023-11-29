@@ -18,14 +18,14 @@
 
 <div id="launchgame">
     <img src="{{ asset('/img/misc/steam_logo.webp')}}" onclick="launchSteamGame(250900)" alt="Steam logo">
-    <p>Launch the game on Steam</p>
+    <p>Launch the game on <strong>Steam</strong></p>
 </div>
 
 <div id="text-result" class="hidden">
     {% if character is defined and boss is defined %}
         <p>
             You have to play
-            <span>{{ character.name|capitalize }}</span>
+            <span><strong></strong>{{ character.name|capitalize }}</span>
             and beat
             <span>{{ boss.name|capitalize }}</span>
             {{ c.streak ? c.streak ~ " times in a row" : ""}}

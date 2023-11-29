@@ -22,8 +22,8 @@
             <ul>
                 <li>Versus #{{ v.id }}</li>
                 <li>Creator : {{ v.creator.username }}</li>
-                <li>Starting : <span class="date" data-date="{{ v.startDate|date('d:m:Y H:i') }}"></span></li>
-                <li>Ends in : <span class="date" data-date="{{ v.endDate|date('d:m:Y H:i') }}"></span></li>
+                <li>Starting : <span class="date" data-date="{{ v.startDate|date('d:m:Y H:i') }}">{{v.startDate|date('d:m:Y H:i')}}</span></li>
+                <li>Ends in : <span class="date" data-date="{{ v.endDate|date('d:m:Y H:i') }}">{{v.endDate|date('d:m:Y H:i')}}</span></li>
                 <li>Slots : {{ v.players|length }} / {{ v.slots }}</li>
             </ul>
             <img src="{{ asset('/img/misc/swords_versus.png')}}" alt="">
@@ -34,6 +34,8 @@
         <p>No versus for this challenge yet</p>
 
     {% endif %}
+
+    <div id="compteur"></div>
 
 {% endblock %}
 

@@ -6,6 +6,11 @@
 {% endblock %}
 {% block body %}
 
+<div id="launchgame" onclick="launchSteamGame(250900)">
+    <img src="{{ asset('/img/misc/steam_logo.webp')}}" alt="Steam logo">
+    <p>Launch the game on Steam</p>
+</div>
+
 <div id="text-result">
     {% if character is defined and boss is defined %}
         <p>You have to play <span>{{ character.name|capitalize }}</span> and beat <span>{{ boss.name|capitalize }}</span></p>
@@ -56,6 +61,6 @@
     <img id="randomize-btn" src="{{ asset('/img/text/randomize.webp')}}" alt="reset icon" onClick="window.location.reload();">
 </div>
 
-    
+<img src="{{ asset('/img/tuto/protip.webp')}}" alt="">
 
 {% endblock %}

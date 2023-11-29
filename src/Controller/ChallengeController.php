@@ -26,7 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ChallengeController extends AbstractController
 {
-    #[Route('/challenge', name: 'challenges')]
+    #[Route('/challenges', name: 'challenges')]
     public function index(ChallengeRepository $challengeRepository): Response
     {
         $challenges = $challengeRepository->findAll();
@@ -187,6 +187,44 @@ class ChallengeController extends AbstractController
         $user = $security->getUser();
 
         if ($versus) {
+
+            // get datetime from now
+            $now = new DateTime();
+
+            // if the versus hasn't started yet, redirect
+            if($versus->getStartDate() > $now) {
+                $this->addFlash('error', 'This versus hasn\'t started yet');
+    
+                return $this->redirectToRoute('show_versus', [
+                    'id' => $versus->getId(),
+                ]);
+            }
+
+            // if versus has an endDate, and it is prior to $now, redirect
+            if($versus->getEndDate() && $versus->getEndDate() < $now) {
+                $this->addFlash('error', 'Sorry, you can\'t join this versus anymore');
+    
+                return $this->redirectToRoute('show_versus', [
+                    'id' => $versus->getId(),
+                ]);
+            }
+
+            // if the versus has limited slots, check if there is still
+            if($versus->getSlots()) {
+                // get the amount of availables slots in the challenge
+                $slotsAvailables = $versus->getSlots() - count($versus->getPlayers());
+    
+                // if no slots, flash msg + redirect
+                if($slotsAvailables <= 0) {
+                    $this->addFlash('error', 'Sorry, this versus is full');
+    
+                    return $this->redirectToRoute('show_versus', [
+                        'id' => $versus->getId(),
+                    ]);
+                }
+            }
+
+            // try to find a playVersus object with this versus and the current user who's trying to play
             $userAlreadyPlayed = $playVersusRepository->findBy(['user' => $user, 'versus' => $versus]);
 
             // if user already played the versus, prevent him from playing again (only 1 try per versus participant)
@@ -236,20 +274,21 @@ class ChallengeController extends AbstractController
                 $playVersus->setUser($user);
 
 
+                // if versus already have a winner, get the playVersus object of the winner to find the best completion time of
+                // the versus, then compare it with the current player
                 if ($versus->getWinner()) {
                     $winnerPlayVersus = $playVersusRepository->findOneBy(['user' => $versus->getWinner(), 'versus' => $versus]);
 
                     $i = $winnerPlayVersus->getCompletionTime();
                     $bestVersusTime = $i->format('H:i:s');
 
+                    // if current player completed the challenge faster than the actual best time of the versus,
                     if($bestVersusTime < $playVersus->getCompletionTime()) {
-                        dd('oui');
-                    } else {
-                        dd('non');
+                        // set the new player as new winner of the versus
+                        $versus->setWinner($playVersus->getUser());
                     }
-
-                    dd('test');
                 } else {
+                    // if challenge had no winner, set current player as winner
                     $versus->setWinner($user);
                 }
 

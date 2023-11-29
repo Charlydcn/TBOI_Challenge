@@ -1,0 +1,21 @@
+liste des versus: ne pas afficher si cest full, closed, ou déjà fini
+
+versus terminé, full ou closed: empêcher d'aller sur la page
+
+supression d'un user: ses challenges: set null le creator
+
+supression d'un user: supprime ses versus mais pas ses challenges
+
+axe d'améliroation: notifications pour les versus (mercure)
+
+ajouter les roles
+
+bouton CGU et Politique de confidentialité et contact
+
+symfony regex pour le mdp
+
+mettre en place un captcha (pas prioritaire)
+
+REVISIONS : 
+Différence entre chiffrement encodé et hashé
+REVISER LA FAILLE UPLOAD : type mime !!!!

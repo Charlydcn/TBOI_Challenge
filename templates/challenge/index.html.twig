@@ -44,7 +44,7 @@
                             {# display character's image #}
                             {% for character in challenge.characters %}
                             <figure class="character">
-                                <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="{{character.name}}'s image">
+                                <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="Image of {{character.name}}'s head">
                                 <figcaption>
                                     {# and his name with custom font #}
                                     <img

@@ -9,7 +9,7 @@ h1 {
 
 .challenge {
     background-color: #bca7a4;
-    width: 400px;
+    width: 500px;
     list-style: none;
     padding: 1rem;
     box-shadow: 5px 5px 0px #00000024;
@@ -20,8 +20,17 @@ h1 {
     line-height: 1.25rem;
 }
 
+.challenge:not(:last-of-type) {
+    margin-bottom: 1rem;
+}
+
 .challenge li:first-of-type {
     color: #64090a;
     font-size: 2rem;
     line-height: 2.5rem;
+}
+
+.challenge li:first-of-type span {
+    font-size: 1.2rem;
+    color: black;
 }

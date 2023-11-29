@@ -99,6 +99,45 @@ class VersusController extends AbstractController
     #[Route('/versus/{id}', name: 'show_versus')]
     public function show(Versus $versus): Response
     {
+
+        // -----------------------------------------------------------------------------
+        // ------------ END DATE VERIFICATION ------------------------------------------
+
+        $now = new DateTime();
+
+        if($versus->endDate() < $now) {
+            $this->addFlash('error', 'Sorry, this versus already ended.');
+    
+            return $this->redirectToRoute('show_challenge_versus', [
+                'id' => $versus->getChallenge()->getId(),
+            ]);
+        }
+        // -----------------------------------------------------------------------------
+
+        // -----------------------------------------------------------------------------
+        // ------------ STILL SLOTS AVAILABLE VERIFICATION -----------------------------
+        
+        $slotsAvailable = count($versus->getSlots() - $versus->getPlayers());
+
+        if($slotsAvailable <= 0) {
+            $this->addFlash('error', 'Sorry, this versus is full.');
+    
+            return $this->redirectToRoute('show_challenge_versus', [
+                'id' => $versus->getChallenge()->getId(),
+            ]);
+        }
+        // -----------------------------------------------------------------------------
+        // --------- CLOSED VERIFICATION -----------------------------------------------
+
+        if($versus->getClosed()) {
+            $this->addFlash('error', 'Sorry, this versus has been closed.');
+    
+            return $this->redirectToRoute('show_challenge_versus', [
+                'id' => $versus->getChallenge()->getId(),
+            ]);
+        }
+        // -----------------------------------------------------------------------------
+
         return $this->render('versus/show.html.twig', [
             'versus' => $versus,
         ]);

@@ -1,9 +1,70 @@
+main {
+    margin: auto 1rem;
+}
+
 #challenge {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     justify-content: space-between;
     margin: 2rem 0;
+}
+
+h1 {
+    font-size: 2rem;
+    color: var(--rougesang);
+    margin: 1rem auto;
+}
+
+h1 a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.5rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    text-decoration: underline;
+    margin: 1rem auto;
+}
+
+h3 {
+    color: var(--rougesang);
+    font-size: 1.25rem;
+}
+
+ul:first-of-type {
+    list-style: none;
+    line-height: 2rem;
+}
+
+ul:first-of-type li {
+    font-size: 1.5rem;
+}
+
+ul:first-of-type i {
+    color: var(--rougesang);
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+
+h1 + img {
+    width: 100px;
+}
+
+h2 ~ ul {
+    background-color: #bca7a4;
+    width: 500px;
+    list-style: none;
+    padding: 1rem;
+    box-shadow: 5px 5px 0px #00000024;
+    justify-content: space-between;
+    flex-direction: column;
+    line-height: 1.25rem;
+}
+
+h2 ~ ul:not(:last-of-type) {
+    margin-bottom: 1rem;
 }
 
 #characters,

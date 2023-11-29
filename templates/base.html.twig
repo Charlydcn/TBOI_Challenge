@@ -42,7 +42,7 @@
                                 <img src="{{ asset('/img/user_icons/' ~ app.user.icon)}}" alt="{{ app.user.icon|replace({'.webp': ''})}} user icon">
                                 <span class="underline-hover">{{ app.user.username }}</span>
                                     {% if app.user.winStreak > 0 %}
-                                        <p id="user-winstreak">{{ app.user.winStreak }}</p>
+                                        <p id="user-winstreak">streak: {{ app.user.winStreak }}</p>
                                     {% endif %}
                             </li>
                             <li class="text-shadow underline-hover href-element" data-href="{{ path('app_logout') }}">

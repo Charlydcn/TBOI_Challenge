@@ -12,87 +12,61 @@
 
         {% set c = v.challenge %}
 
-        <div id="challenge">
-            {# characters #}
-            <div class="container">
-                {# CHARACTERS text #}
-                <span class="length-span">{{ c.characters|length }}</span> &nbsp;
-                <img src="{{ asset('/img/text/characters.webp')}}" class="onclick-infos-element" alt="Text saying characters">
-                {# characters list #}
-                <div id="characters" class="onclick-infos hidden">
-                    {% for character in c.characters %}
-                        <figure class="character">
-                            <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.webp') }}" alt="{{ character.name }}'s head">
-                            <figcaption>{{ character.name }}</figcaption>
-                        </figure>
-                    {% endfor %} 
-                </div>
-            </div>
+        <ul>
+            <h1>Versus #{{ v.id }} <a href="{{ path('show_user', {'id': v.creator.id}) }}">by {{ v.creator.username }}</a></h1>
+            <li>
+                Public : 
+                {% if v.public %}
+                    <i class="fa-solid fa-check"></i>
+                    {% else %}  
+                    <i class="fa-solid fa-xmark"></i>
+                {% endif %}
+            </li>
 
-            {# bosses #}
-            <div class="container">
-                {# BOSSES text #}
-                <span class="length-span">{{ c.bosses|length }}</span>&nbsp;
-                <img src="{{ asset('/img/text/bosses.webp')}}" class="onclick-infos-element" alt="Text saying bosses">
-                {# bosses list #}
-                <div id="bosses" class="onclick-infos hidden">
-                    {% for boss in c.bosses %}
-                        <figure class="boss">
-                            <img src="{{ asset('/img/completion_marks/' ~ boss.name|replace({" ": "", "'": ""}) ~ '.webp') }}" alt="{{ boss.name }}'s completion mark">
-                            <figcaption>{{ boss.name }}</figcaption>
-                        </figure>
-                    {% endfor %}
-                </div>
-            </div>
+            <li>
+                Closed : 
+                {% if v.closed %}
+                    <i class="fa-solid fa-check"></i>
+                    {% else %}  
+                    <i class="fa-solid fa-xmark"></i>
+                {% endif %}
+            </li>
 
-            {# restrictions #}
-            <div class="container">
-                {# RESTRICTIONS text #}
-                <span class="length-span">{{ c.restrictions|length }}</span>&nbsp;
-                <img src="{{ asset('/img/text/restrictions.webp')}}" class="onclick-infos-element" alt="Text saying restrictions">
-                {# restrictions list #}
-                <div id="restrictions" class="onclick-infos hidden">
-                    <p>Chances of occuring : {{c.restrictionsChance}}%</p>
-                    {% for restriction in c.restrictions %}
-                        <figure class="restriction">
-                            <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
-                            {{ restriction.name }}
-                        </figure>
-                    {% endfor %} 
-                </div>
-            </div>
-        </div>
+            <li>
+                Starting : {{ v.startDate|date('d:m:Y H:i:s') }}
+            </li>
 
-        <a href="{{ path('show_challenge', {'id': v.challenge.id})}}">Challenge</a>
-        <p>Creator : <a href="{{ path('show_user', {'id': v.creator.id})}}">{{ v.creator.username }}</a></p>
-        <p>Public : {{ v.public ? 'Yes' : 'No' }}</p>
-        <p>Closed : {{ v.closed ? 'Yes' : 'No'  }}</p>
-        <p>Players : {{ v.players ? v.players|length : 0 }} / {{ v.slots }}</p>
-        <p>Current winner : {{ v.winner ? v.winner : "No winner yet" }}</p>
+            {% if v.endDate %}
+                <li>
+                    Ending : {{ v.endDate|date('d:m:Y H:i:s') }}
+                </li>
+            {% endif %}
 
-        {# VERIFIER QUE L'UTILISATEUR N'A PAS DEJA JOUE AU CHALLENGE, ON PEUT QUE Y JOUER UNE FOIS ET FAIRE SON TEMPS SINON C'EST CHIANT #}
-        
+            <li>Players : {{ v.players ? v.players|length : 0 }} / {{ v.slots }}</li>
+            <li>Current winner : {{ v.winner ? v.winner : "No winner yet" }}</li>       
+        </ul>
+
         <img 
             src="{{ asset('/img/text/join.webp')}}"
             class="href-element"
             data-href="{{ path('play_challenge', {'challengeId': c.id, 'versusId': v.id})}}"
             alt="Text saying JOIN">
 
+        <h3>! You only get 1 try at the Versus' Challenge !</h3>
+
+
         {% if v.players and v.players|length > 0%}
             <h2>Players : </h2>
 
             {% for player in v.players %}
-                <div>
-                    <p>Player : {{ player.user }}</p>
-                    <p>Completed : {{ player.completed ? "Yes" : "No" }}</p>
+                    <li>Player : {{ player.user }}</li>
+                    <li>Completed : {{ player.completed ? "Yes" : "No" }}</li>
                     {% if player.completed %}
-                        <p>Completion time : {{ player.completionTime ? player.completionTime|date('H:i:s') : "Unknown" }}</p>
+                        <li>Completion time : <span>{{ player.completionTime ? player.completionTime|date('H:i:s') : "Unknown" }}</span></li>
                     {% endif %}
-                    <p>Play date : {{ player.playDate|date('d/m/Y H:i') }}</p>
-                    <p>Comment : {{ player.comment ? player.comment : "None" }}</p>
-                </div>
-                <br>
-                <br>
+                    <li>Play date : {{ player.playDate|date('d/m/Y H:i') }}</li>
+                    <li>Comment : {{ player.comment ? player.comment : "None" }}</li>
+                </ul>
             {% endfor %}
 
             {% else %}

@@ -11,6 +11,9 @@
 
 {% block body %}
 
+    <h1>Challenge #{{ challenge.id }}</h1>
+    <h2>By <a href="{{ path('show_user', {'id': challenge.creator.id})}}">{{ challenge.creator.username }}</a></h2>
+
     {% if app.user %}
         {% if liked %}
             <img class="like href-element"
@@ -123,5 +126,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('/js/challenge/show.js')}}"></script>
+    {# <script src="{{ asset('/js/challenge/show.js')}}"></script> #}
 {% endblock javascripts %}

@@ -1,5 +1,4 @@
 const closeBtn = document.querySelector('#close-btn')
-const formDiv = document.querySelector('#form')
 const overlay = document.querySelector('#overlay')
 const nextBtn = document.querySelector('#next-btn')
 const step1 = document.querySelector('#step1')

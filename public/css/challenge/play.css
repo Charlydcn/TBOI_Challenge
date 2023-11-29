@@ -28,7 +28,7 @@
 }
 
 #text-result span {
-    color: #67070a;
+    color: var(--rougesang);
     font-size: 1.5rem;
     text-decoration: underline;
     text-decoration-thickness: 4px;
@@ -43,7 +43,7 @@
 
 #text-result li {
     list-style: none;
-    color: #67070a;
+    color: var(--rougesang);
 }
 
 /* text img to remind user to note his completion time before ending the run */
@@ -123,6 +123,14 @@
     flex-direction: column; 
     align-items: center;
     gap: 1rem;
+}
+
+#result ~ img:first-of-type {
+    width: 350px;
+    rotate: 2deg;
+    opacity: .7;
+    margin: 2rem;
+
 }
 
 .character,

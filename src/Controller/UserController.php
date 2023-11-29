@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\LikeRepository;
 use App\Repository\VersusRepository;
+use App\Repository\ChallengeRepository;
 use App\Repository\PlayChallengeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,7 @@ class UserController extends AbstractController
     public function show(
         User $user,
         LikeRepository $likeRepository,
+        ChallengeRepository $challengeRepository,
         PlayChallengeRepository $playChallengeRepository,
         VersusRepository $versusRepository): Response
     {
@@ -50,11 +52,14 @@ class UserController extends AbstractController
             array_push($challengesLiked, $challenge);
         }
 
+        $challengesCreated = $challengeRepository->findBy(['creator' => $user]);
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'challengeWinRate' => $challengeWinRate,
             'versusWinRate' => $versusWinRate,
             'challengesLiked' => $challengesLiked,
+            'challengesCreated' => $challengesCreated,
         ]);
     }
 }
