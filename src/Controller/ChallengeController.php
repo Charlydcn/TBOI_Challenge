@@ -239,7 +239,6 @@ class ChallengeController extends AbstractController
 
         if ($playChallengeForm->isSubmitted() && $playChallengeForm->isValid()) {
 
-
             // create playChallenge object
             $playChallenge->setCompleted(true);
             $playChallenge->setPlayDate(new DateTime);
@@ -256,9 +255,6 @@ class ChallengeController extends AbstractController
             if($user && $user->getWinStreak() > $user->getBestWinStreak()) {
                 $user->setBestWinStreak($user->getWinStreak());
             }
-
-
-        # VERIFIER QUE L'UTILISATEUR N'A PAS DEJA JOUE AU CHALLENGE, ON PEUT QUE Y JOUER UNE FOIS ET FAIRE SON TEMPS SINON C'EST CHIANT #}
 
             // if user came from a versus, create playVersus object
             if ($versus) {

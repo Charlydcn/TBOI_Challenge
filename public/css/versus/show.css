@@ -12,7 +12,7 @@ main {
 
 h1 {
     font-size: 2rem;
-    color: var(--rougesang);
+    color: var(--red);
     margin: 1rem auto;
 }
 
@@ -29,7 +29,7 @@ h2 {
 }
 
 h3 {
-    color: var(--rougesang);
+    color: var(--red);
     font-size: 1.25rem;
 }
 
@@ -42,8 +42,14 @@ ul:first-of-type li {
     font-size: 1.5rem;
 }
 
+ul:first-of-type li:last-of-type span {
+    text-decoration: underline;
+    font-size: 2rem;
+    color: var(--red);
+}
+
 ul:first-of-type i {
-    color: var(--rougesang);
+    color: var(--red);
     font-size: 1.5rem;
     vertical-align: middle;
 }

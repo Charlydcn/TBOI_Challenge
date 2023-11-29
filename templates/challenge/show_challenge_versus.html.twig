@@ -24,7 +24,9 @@
                 <li>Creator : {{ v.creator.username }}</li>
                 <li>Starting : <span class="date" data-date="{{ v.startDate|date('d:m:Y H:i') }}">{{v.startDate|date('d:m:Y H:i')}}</span></li>
                 <li>Ends in : <span class="date" data-date="{{ v.endDate|date('d:m:Y H:i') }}">{{v.endDate|date('d:m:Y H:i')}}</span></li>
-                <li>Slots : {{ v.players|length }} / {{ v.slots }}</li>
+                {% if v.slots %}
+                    <li>Slots : {{ v.players|length }} / {{ v.slots }}</li>
+                {% endif %}
             </ul>
             <img src="{{ asset('/img/misc/swords_versus.png')}}" alt="">
         </div>

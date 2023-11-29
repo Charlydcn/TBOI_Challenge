@@ -58,7 +58,9 @@ class VersusController extends AbstractController
                 $now = new DateTime;
 
                 // if versus' end date isn't prior to today's date, redirect (it's already been prevented client-side with js, but extra verification)
-                if($versus->getEndDate() < $now) {
+                if($versus->getEndDate() && $versus->getEndDate() < $now) {
+                    $this->addFlash('error', 'Incorrect end date');
+                    
                     return $this->redirectToRoute('new_versus', ['id' => $challenge->getId()]);
                 }
 
@@ -105,7 +107,7 @@ class VersusController extends AbstractController
 
         $now = new DateTime();
 
-        if($versus->endDate() < $now) {
+        if($versus->getEndDate() && $versus->getEndDate() < $now) {
             $this->addFlash('error', 'Sorry, this versus already ended.');
     
             return $this->redirectToRoute('show_challenge_versus', [
@@ -117,19 +119,24 @@ class VersusController extends AbstractController
         // -----------------------------------------------------------------------------
         // ------------ STILL SLOTS AVAILABLE VERIFICATION -----------------------------
         
-        $slotsAvailable = count($versus->getSlots() - $versus->getPlayers());
-
-        if($slotsAvailable <= 0) {
-            $this->addFlash('error', 'Sorry, this versus is full.');
-    
-            return $this->redirectToRoute('show_challenge_versus', [
-                'id' => $versus->getChallenge()->getId(),
-            ]);
+        if($versus->getSlots()) {
+            if(count($versus->getPlayers()) > 0) {
+                $slotsAvailable = $versus->getSlots() - count($versus->getPlayers());
+        
+                if($slotsAvailable <= 0) {
+                    $this->addFlash('error', 'Sorry, this versus is full.');
+            
+                    return $this->redirectToRoute('show_challenge_versus', [
+                        'id' => $versus->getChallenge()->getId(),
+                    ]);
+                }
+            }
         }
+
         // -----------------------------------------------------------------------------
         // --------- CLOSED VERIFICATION -----------------------------------------------
 
-        if($versus->getClosed()) {
+        if($versus->isClosed()) {
             $this->addFlash('error', 'Sorry, this versus has been closed.');
     
             return $this->redirectToRoute('show_challenge_versus', [

@@ -8,9 +8,6 @@
 
 {% block body %}
 
-
-    <img src="" class="href-element" data-href="{{ path('')}}" alt="">
-
     <h1>
         <img src="{{ asset('/img/user_icons/' ~ user.icon) }}" alt="">
         {{ user }}
@@ -49,32 +46,38 @@
         <img src="{{ asset('/img/misc/twitch_logo.webp')}}" class="href-element" data-href="" alt="Twitch logo">
     {% endif %}
 
-    {% if challengesCreated|length > 0 %}
-        <h2>Challenges created : </h2>
-        {% for c in challengesCreated %}
-            <ul class="challenge href-element" data-href="{{ path('show_challenge', {'id': c.id}) }}">
-                <li>Challenge #{{ c.id }}</li>
-                <li>{{ c.characters|length }} characters</li>
-                <li>{{ c.bosses|length }} bosses</li>
-                <li>{{ c.restrictions|length }} restrictions</li>
-            </ul>
-        {% endfor %}
-    {% endif %}
-
-    {# SHOW CHALLENGES LIKED IF USER PROFILE IS THE CURRENTLY LOGGED IN USER #}
-    {% if user == app.user %}
-        {% if challengesLiked|length > 0 %}
-            <h2>Challenges liked : </h2>
-            {% for c in challengesLiked %}
-                <ul class="challenge href-element" data-href="{{ path('show_challenge', {'id': c.id}) }}">
-                    <li>Challenge #{{ c.id }} <span>by {{ c.creator.username }}</span></li>
-                    <li>{{ c.characters|length }} characters</li>
-                    <li>{{ c.bosses|length }} bosses</li>
-                    <li>{{ c.restrictions|length }} restrictions</li>
-                </ul>
-            {% endfor %}
+    <div id="challs-container">
+        {% if challengesCreated|length > 0 %}
+            <div id="chall-created">
+                <h2>Challenges created : </h2>
+                {% for c in challengesCreated %}
+                    <ul class="challenge href-element" data-href="{{ path('show_challenge', {'id': c.id}) }}">
+                        <li>Challenge #{{ c.id }}</li>
+                        <li>{{ c.characters|length }} characters</li>
+                        <li>{{ c.bosses|length }} bosses</li>
+                        <li>{{ c.restrictions|length }} restrictions</li>
+                    </ul>
+                {% endfor %}
+            </div>
         {% endif %}
-    {% endif %}
+    
+        {# SHOW CHALLENGES LIKED IF USER PROFILE IS THE CURRENTLY LOGGED IN USER #}
+        {% if user == app.user %}
+            {% if challengesLiked|length > 0 %}
+                <div id="chall-liked">
+                    <h2>Challenges liked : </h2>
+                    {% for c in challengesLiked %}
+                        <ul class="challenge href-element" data-href="{{ path('show_challenge', {'id': c.id}) }}">
+                            <li>Challenge #{{ c.id }} <span>by {{ c.creator.username }}</span></li>
+                            <li>{{ c.characters|length }} characters</li>
+                            <li>{{ c.bosses|length }} bosses</li>
+                            <li>{{ c.restrictions|length }} restrictions</li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
 
     
     

@@ -16,6 +16,12 @@
 
 <a href="{{ path('show_challenge', {'id': challenge.id})}}">&lt; Challenge</a>
 
+<br>
+
+{% if versus %}
+    <a href="{{ path('show_versus', {'id': versus.id})}}">&lt; Versus</a>    
+{% endif %}
+
 <div id="launchgame">
     <img src="{{ asset('/img/misc/steam_logo.webp')}}" onclick="launchSteamGame(250900)" alt="Steam logo">
     <p>Launch the game on <strong>Steam</strong></p>
@@ -169,6 +175,7 @@
                     {% endif %}
 
                 {{ form_start(playChallengeForm, {'action': action}) }}
+
 
                 {{ form_row(
                     playChallengeForm.completionTime,

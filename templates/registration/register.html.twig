@@ -16,8 +16,7 @@
     </button>
 </form>
 
-{{ form_start(registrationForm) }}
-        
+    {{ form_start(registrationForm) }}
         
         <h1>Register</h1>
 
@@ -34,6 +33,7 @@
         </div>
 
         <div>
+            <p>*1 uppercase, 1 lowercase, 1 digit, 1 special character and at least 12 characters long.</p>
             <div class="error">{{ form_errors(registrationForm.password) }}</div>
             {{ form_widget(registrationForm.password) }}
         </div>
@@ -46,3 +46,8 @@
     {{ form_end(registrationForm) }}
 
 {% endblock %}
+
+    
+{% block javascripts %}
+    <script src="{{ asset('/js/register.js')}}"></script>
+{% endblock javascripts %}

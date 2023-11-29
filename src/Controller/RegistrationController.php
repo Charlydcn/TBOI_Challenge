@@ -37,6 +37,19 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $regex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{12,}$/';
+
+            if(!preg_match($regex, $form->get('password')->getData())) {
+                $this->addFlash(
+                    'error',
+                    'Your password must contain at least one lowercase letter, one uppercase letter, one digit, one special character,
+                    and be at least 12 characters long.'
+                );
+
+                return $this->redirectToRoute('app_register');
+            }
+
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(

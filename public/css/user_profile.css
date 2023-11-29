@@ -7,6 +7,18 @@ h1 {
     width: max-content;
 }
 
+h2 {
+    font-size: 1.5rem;
+    text-decoration: underline;
+    margin-left: 1rem;
+}
+
+#challs-container {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 1rem;
+}
+
 .challenge {
     background-color: #bca7a4;
     width: 500px;
@@ -22,6 +34,16 @@ h1 {
 
 .challenge:not(:last-of-type) {
     margin-bottom: 1rem;
+}
+
+h2 ~ ul {
+    list-style: none;
+    line-height: 1.5rem;
+    padding: 1rem;
+}
+
+h2 ~ ul li {
+    font-size: 1.25rem;
 }
 
 .challenge li:first-of-type {

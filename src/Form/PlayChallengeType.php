@@ -28,8 +28,6 @@ class PlayChallengeType extends AbstractType
             'label' => 'Comment (50 characters max)',
             'constraints' => [
                 new Length([
-                    'min' => 3,
-                    'minMessage' => 'Comments must be 3 characters max',
                     'max' => 50,
                     'maxMessage' => 'Comments must be 50 characters max',
                 ])

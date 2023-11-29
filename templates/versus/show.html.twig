@@ -42,8 +42,8 @@
                 </li>
             {% endif %}
 
-            <li>Players : {{ v.players ? v.players|length : 0 }} / {{ v.slots }}</li>
-            <li>Current winner : {{ v.winner ? v.winner : "No winner yet" }}</li>       
+            <li>Players : {{ v.players ? v.players|length : 0 ~ v.slots ? " / " ~ v.slots : "" }}</li>
+            <li>Current winner : <span>{{ v.winner ? v.winner : "No winner yet" }}</span></li>       
         </ul>
 
         <img 
@@ -59,6 +59,7 @@
             <h2>Players : </h2>
 
             {% for player in v.players %}
+                <ul>
                     <li>Player : {{ player.user }}</li>
                     <li>Completed : {{ player.completed ? "Yes" : "No" }}</li>
                     {% if player.completed %}

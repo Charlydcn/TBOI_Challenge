@@ -28,7 +28,7 @@
 }
 
 #text-result span {
-    color: var(--rougesang);
+    color: var(--red);
     font-size: 1.5rem;
     text-decoration: underline;
     text-decoration-thickness: 4px;
@@ -43,7 +43,7 @@
 
 #text-result li {
     list-style: none;
-    color: var(--rougesang);
+    color: var(--red);
 }
 
 /* text img to remind user to note his completion time before ending the run */
