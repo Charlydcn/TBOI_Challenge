@@ -78,6 +78,14 @@ class UserController extends AbstractController
         $user = $security->getUser();
 
         if($user) {
+            if($user->getDiscordId()) {
+                $this->addFlash('error', 'As a Discord user, you can\'t edit your profile');
+
+                return $this->redirectToRoute('show_user', [
+                    'id' => $user->getId(),
+                ]);
+            }
+
             $form = $this->createForm(EditProfileType::class, $user);
             $form->handleRequest($request);
     

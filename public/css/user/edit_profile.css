@@ -1,0 +1,11 @@
+main {
+    margin-left: 1rem;
+}
+h1 {
+    font-size: 2rem;
+    text-decoration: underline;
+}
+
+#edit_profile > div:not(:last-of-type) {
+    margin-bottom:.75rem;
+}

@@ -19,8 +19,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class VersusController extends AbstractController
 {
     #[Route('/versus', name: 'app_versus')]
-    public function index(VersusRepository $versusRepository): Response
+    public function index(VersusRepository $versusRepository, Security $security): Response
     {
+        $user = $security->getUser();
+
+        if(!$user) {
+            $this->addFlash('error', 'You have to be logged in to play Versus !');
+
+            return $this->redirectToRoute('app_home');
+        }
+
         $versus = $versusRepository->findAll();
 
         return $this->render('versus/index.html.twig', [
@@ -99,8 +107,16 @@ class VersusController extends AbstractController
     }
 
     #[Route('/versus/{id}', name: 'show_versus')]
-    public function show(Versus $versus = null): Response
+    public function show(Versus $versus = null, Security $security): Response
     {
+
+        $user = $security->getUser();
+
+        if(!$user) {
+            $this->addFlash('error', 'You have to be logged in to play Versus !');
+
+            return $this->redirectToRoute('app_home');
+        }
 
         if (!$versus) {
             $this->addFlash('error', 'This versus doesn\'t exist (error #00004)');

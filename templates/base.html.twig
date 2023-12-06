@@ -40,7 +40,9 @@
                         Browse
                         <ul class="sub-menu">
                             <li class="href-element" data-href="{{ path('challenges') }}">Challenges</li>
-                            <li class="href-element" data-href="{{ path('app_versus') }}">Versus</li>
+                            {% if app.user %}
+                                <li class="href-element" data-href="{{ path('app_versus') }}">Versus</li>
+                            {% endif %}
                         </ul>
                     </li>
         
@@ -84,7 +86,9 @@
 
             <li class="text-shadow href-element" data-href="{{ path('challenges') }}">Challenges</li>
 
-            <li class="text-shadow href-element" data-href="{{ path('app_versus') }}">Versus</li>
+            {% if app.user %}
+                <li class="text-shadow href-element" data-href="{{ path('app_versus') }}">Versus</li>
+            {% endif %}
 
             {% if app.user %}
                     {# if a user is logged in #}
