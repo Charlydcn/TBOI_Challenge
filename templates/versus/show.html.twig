@@ -10,9 +10,13 @@
 
 {% block body %}
 
-        {% set v = versus %}
+    {% set v = versus %}
 
-        {% set c = v.challenge %}
+    {% set c = v.challenge %}
+
+        {% if v.creator is same as(app.user) or is_granted('ROLE_ADMIN') %}
+            <a class="delete-btn" href="{{ path('delete_versus', {'id': v.id}) }}"><i class="fa-solid fa-trash-can"></i></a>
+        {% endif %}
 
         <ul>
             <h1>Versus #{{ v.id }} <a href="{{ path('show_user', {'id': v.creator.id}) }}">by {{ v.creator.username }}</a></h1>
@@ -48,7 +52,7 @@
             <li>Current winner : <span>{{ v.winner ? v.winner : "No winner yet" }}</span></li>       
         </ul>
 
-        {% if (v.players|length - v.slots) <= 0 or %}    
+        {% if (v.players|length - v.slots) <= 0 %}    
             <img 
                 src="{{ asset('/img/text/join.webp')}}"
                 class="href-element"

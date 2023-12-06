@@ -74,9 +74,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: PlayVersus::class, orphanRemoval: true)]
     private Collection $versusPlayed;
-    
-    #[ORM\OneToMany(mappedBy: 'winner', targetEntity: Versus::class)]
-    private Collection $versusWon;
 
     // ----------------------------------------------------------------------------
     // ----- other ----------------------------------------------------------------
@@ -106,6 +103,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $accessToken = null;
 
+    #[ORM\OneToMany(mappedBy: 'winner', targetEntity: Versus::class)]
+    private Collection $versusWons;
+
 
     // ----------------------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -120,6 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->challengesPlayed = new ArrayCollection();
         $this->versusPlayed = new ArrayCollection();
         $this->versusWon = new ArrayCollection();
+        $this->versusWons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -455,36 +456,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Versus>
-     */
-    public function getVersusWon(): Collection
-    {
-        return $this->versusWon;
-    }
-
-    public function addVersusWon(Versus $versusWon): static
-    {
-        if (!$this->versusWon->contains($versusWon)) {
-            $this->versusWon->add($versusWon);
-            $versusWon->setWinner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVersusWon(Versus $versusWon): static
-    {
-        if ($this->versusWon->removeElement($versusWon)) {
-            // set the owning side to null (unless already changed)
-            if ($versusWon->getWinner() === $this) {
-                $versusWon->setWinner(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getWinStreak(): ?int
     {
         return $this->winStreak;
@@ -553,6 +524,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAccessToken(?string $accessToken): static
     {
         $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Versus>
+     */
+    public function getVersusWons(): Collection
+    {
+        return $this->versusWons;
+    }
+
+    public function addVersusWon(Versus $versusWon): static
+    {
+        if (!$this->versusWons->contains($versusWon)) {
+            $this->versusWons->add($versusWon);
+            $versusWon->setWinner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVersusWon(Versus $versusWon): static
+    {
+        if ($this->versusWons->removeElement($versusWon)) {
+            // set the owning side to null (unless already changed)
+            if ($versusWon->getWinner() === $this) {
+                $versusWon->setWinner(null);
+            }
+        }
 
         return $this;
     }

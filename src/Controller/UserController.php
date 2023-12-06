@@ -96,4 +96,24 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
     }
+
+    #[Route('/user/{id}/delete', name: 'delete_user')]
+    public function deleteUser(
+        User $user,
+        Security $security,
+        EntityManagerInterface $em): Response
+    {
+        if($user) {
+            $em->remove($user);
+            $em->flush();
+    
+            $this->addFlash('success', 'Account deleted successfully');
+            
+            return $this->redirectToRoute('app_home');    
+        } else {
+            $this->addFlash('error', 'This user doesn\'t exist (error #00002)');
+
+            return $this->redirectToRoute('app_home');
+        }
+    }
 }

@@ -465,4 +465,35 @@ class ChallengeController extends AbstractController
         ]);
     }
 
+    #[Route('/challenge/{id}/delete', name: 'delete_challenge')]
+    public function deleteChallenge(
+        Challenge $challenge,
+        Security $security,
+        EntityManagerInterface $em): Response
+    {
+        if($challenge) {
+            $user = $security->getUser();
+
+            if($challenge->getCreator() === $user || $security->isGranted('ROLE_ADMIN', $user)) {
+                $em->remove($challenge);
+                $em->flush();
+        
+                $this->addFlash('success', 'Challenge deleted successfully');
+                
+                return $this->redirectToRoute('app_home');
+        } else {
+            $this->addFlash('error', 'You can\'t delete a Challenge if you\'re not the creator or an administrator');
+
+            return $this->redirectToRoute('show_challenge', [
+                'id' => $challenge->getId(),
+            ]);
+            }
+    
+        } else {
+            $this->addFlash('error', 'This challenge doesn\'t exist (error #00003)');
+
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
 }

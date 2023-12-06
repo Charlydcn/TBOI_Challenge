@@ -21,17 +21,11 @@ class Versus
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
-    #[ORM\OneToMany(mappedBy: 'versus', targetEntity: PlayVersus::class, orphanRemoval: true)]
-    private Collection $players;
-
     #[ORM\Column]
     private ?bool $public = null;
 
     #[ORM\Column]
     private ?bool $closed = null;
-
-    #[ORM\ManyToOne(inversedBy: 'versusWon')]
-    private ?User $winner = null;
 
     #[ORM\ManyToOne(inversedBy: 'versus')]
     #[ORM\JoinColumn(nullable: false)]
@@ -48,6 +42,13 @@ class Versus
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $endDate = null;
+
+    #[ORM\OneToMany(mappedBy: 'versus', targetEntity: PlayVersus::class, orphanRemoval: true)]
+    private Collection $players;
+
+    #[ORM\ManyToOne(inversedBy: 'versusWons')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    private ?User $winner = null;
 
     public function __construct()
     {
@@ -67,36 +68,6 @@ class Versus
     public function setCreator(?User $creator): static
     {
         $this->creator = $creator;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, PlayVersus>
-     */
-    public function getPlayers(): Collection
-    {
-        return $this->players;
-    }
-
-    public function addPlayer(PlayVersus $player): static
-    {
-        if (!$this->players->contains($player)) {
-            $this->players->add($player);
-            $player->setVersus($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlayer(PlayVersus $player): static
-    {
-        if ($this->players->removeElement($player)) {
-            // set the owning side to null (unless already changed)
-            if ($player->getVersus() === $this) {
-                $player->setVersus(null);
-            }
-        }
 
         return $this;
     }
@@ -128,18 +99,6 @@ class Versus
     public function __toString(): string
     {
         return $this->id;
-    }
-
-    public function getWinner(): ?User
-    {
-        return $this->winner;
-    }
-
-    public function setWinner(?User $winner): static
-    {
-        $this->winner = $winner;
-
-        return $this;
     }
 
     public function getChallenge(): ?Challenge
@@ -198,6 +157,48 @@ class Versus
     public function setEndDate(?\DateTimeInterface $endDate): static
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayVersus>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
+    public function addPlayer(PlayVersus $player): static
+    {
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->setVersus($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(PlayVersus $player): static
+    {
+        if ($this->players->removeElement($player)) {
+            // set the owning side to null (unless already changed)
+            if ($player->getVersus() === $this) {
+                $player->setVersus(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getWinner(): ?User
+    {
+        return $this->winner;
+    }
+
+    public function setWinner(?User $winner): static
+    {
+        $this->winner = $winner;
 
         return $this;
     }

@@ -20,10 +20,6 @@ class PlayVersus
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $playDate = null;
 
-    #[ORM\ManyToOne(inversedBy: 'players')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Versus $versus = null;
-
     #[ORM\ManyToOne(inversedBy: 'versusPlayed')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -33,6 +29,10 @@ class PlayVersus
 
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $comment = null;
+
+    #[ORM\ManyToOne(inversedBy: 'players')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    private ?Versus $versus = null;
 
     public function getId(): ?int
     {
@@ -59,18 +59,6 @@ class PlayVersus
     public function setPlayDate(\DateTimeInterface $playDate): static
     {
         $this->playDate = $playDate;
-
-        return $this;
-    }
-
-    public function getVersus(): ?Versus
-    {
-        return $this->versus;
-    }
-
-    public function setVersus(?Versus $versus): static
-    {
-        $this->versus = $versus;
 
         return $this;
     }
@@ -112,6 +100,18 @@ class PlayVersus
     public function setComment(?string $comment): static
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getVersus(): ?Versus
+    {
+        return $this->versus;
+    }
+
+    public function setVersus(?Versus $versus): static
+    {
+        $this->versus = $versus;
 
         return $this;
     }

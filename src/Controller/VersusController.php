@@ -102,49 +102,6 @@ class VersusController extends AbstractController
     public function show(Versus $versus): Response
     {
 
-        // -----------------------------------------------------------------------------
-        // ------------ END DATE VERIFICATION ------------------------------------------
-
-        $now = new DateTime();
-
-        if($versus->getEndDate() && $versus->getEndDate() < $now) {
-            $this->addFlash('error', 'Sorry, this versus already ended.');
-    
-            return $this->redirectToRoute('show_challenge_versus', [
-                'id' => $versus->getChallenge()->getId(),
-            ]);
-        }
-        // -----------------------------------------------------------------------------
-
-        // -----------------------------------------------------------------------------
-        // ------------ STILL SLOTS AVAILABLE VERIFICATION -----------------------------
-        
-        // if($versus->getSlots()) {
-        //     if(count($versus->getPlayers()) > 0) {
-        //         $slotsAvailable = $versus->getSlots() - count($versus->getPlayers());
-        
-        //         if($slotsAvailable <= 0) {
-        //             $this->addFlash('error', 'Sorry, this versus is full.');
-            
-        //             return $this->redirectToRoute('show_challenge_versus', [
-        //                 'id' => $versus->getChallenge()->getId(),
-        //             ]);
-        //         }
-        //     }
-        // }
-
-        // -----------------------------------------------------------------------------
-        // --------- CLOSED VERIFICATION -----------------------------------------------
-
-        // if($versus->isClosed()) {
-        //     $this->addFlash('error', 'Sorry, this versus has been closed.');
-    
-        //     return $this->redirectToRoute('show_challenge_versus', [
-        //         'id' => $versus->getChallenge()->getId(),
-        //     ]);
-        // }
-        // -----------------------------------------------------------------------------
-
         return $this->render('versus/show.html.twig', [
             'versus' => $versus,
         ]);
@@ -161,6 +118,37 @@ class VersusController extends AbstractController
             'versus' => $versus,
             'challenge' => $challenge,
         ]);
+    }
+
+    #[Route('/versus/{id}/delete', name: 'delete_versus')]
+    public function deleteVersus(
+        Versus $versus,
+        Security $security,
+        EntityManagerInterface $em): Response
+    {
+        if($versus) {
+            $user = $security->getUser();
+
+            if($versus->getCreator() === $user || $security->isGranted('ROLE_ADMIN', $user)) {
+                $em->remove($versus);
+                $em->flush();
+        
+                $this->addFlash('success', 'Versus deleted successfully');
+                
+                return $this->redirectToRoute('app_home');
+        } else {
+            $this->addFlash('error', 'You can\'t delete a Versus if you\'re not the creator or an administrator');
+
+            return $this->redirectToRoute('show_versus', [
+                'id' => $versus->getId(),
+            ]);
+            }
+    
+        } else {
+            $this->addFlash('error', 'This versus doesn\'t exist (error #00001)');
+
+            return $this->redirectToRoute('app_home');
+        }
     }
     
 }

@@ -49,7 +49,8 @@ $(document).on('click', function(event) {
     }
 })
 
-// start a game (isaac's appId : 250900)
+// ---------------------------------------------------------------------------------------
+// ------------- start a game (isaac's appId : 250900) -----------------------------------
 function launchSteamGame(appId) {
     var steamLink = "steam://run/" + appId;
 
@@ -73,3 +74,11 @@ $(document).on('click', function(event) {
 $('#close-btn').on('click', function(event) {
     $(responsiveMenu).removeClass('active')
 })
+
+// -------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------
+// ----------- confirmation delete btns ------------------------------------
+$(".delete-btn").on("click", function() {
+    return confirm("Are you sure you want to delete this ?");
+});
