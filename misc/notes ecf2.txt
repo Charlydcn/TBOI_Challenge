@@ -1,0 +1,31 @@
+NOTES ECF 2:
+mettre le bouton ouvrir le jeu sur détail d'un challenge
+démonstration du jeu sous forme d'histoire en ouvrant le jeu etc
+pagination sur les challenges
+channel discord input dans le versus
+footer dans la maquette
+parler UX/UI et règle des trois clics lors de la maquette
+préfixes CSS : c'est pour la compatibilité pas pour l'accessibilité
+diapo sur la faille upload: expliquer le type Mime, comment ça me protège, limiter taille image, stocker image dossier séparé, hachage du nom
+diapo RGPD : consentement (cgu checkbox), transparence (privacy policy)
+DOM : Document Object Model : représente la structure d'un document sous forme d'un arbres d'objets, chaque éléments dans le doc est représenté par un noeud dans cet arbre
+Jointure sql : https://cartman34.fr/wp-content/uploads/2017/01/sql_joins.jpg
+changer schéma mvp : peut-être celui là : http://igm.univ-mlv.fr/~dr/XPOSE2014/Symfony/structure.html
+!! Révision back SQL !! surtout le CRUD
+Relire 'Notions HTML CSS', 'Manipulation du DOM' et 'Progammation orientée objet' dans support de cours Teams
+
+démonstration : 2 parties :
+1 partie démo challenge avec le jeu d'ouvert : scénario d'un joueur
+1 partie démo versus avec discord et le jeu, lien du channel vocal
+
+REQUETES
+cherche le nombre de challenge par utilisateur en affichant le nom d'utilisateur:
+    SELECT user.username AS "Nom d'utilisateur", COUNT(challenge.id) AS "Nombre de challenge créé(e)"
+    FROM challenge
+    INNER JOIN user ON  challenge.creator_id = user.id
+    WHERE user.username = "Charly76"
+
+
+insérer un challenge
+afficher le nombre des personnes inscrites à un versus en particulier
+
