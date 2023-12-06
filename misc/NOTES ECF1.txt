@@ -1,0 +1,25 @@
+NOTES ECF1
+
+Expliquer SEO rapidement
+Expliquer liens internes/externes 
+Validator W3C
+Expliquer Semantique
+Développer un peu les pseudo-classes
+Lorsque je parle de js ou autre, dire pourquoi (ux/ui)
+Justifier les choix
+Symfony -> MVP pas MVC car Présentateur et pas de communication directe entre vue et modèle : identifier les couches
+Diapo 27 = montrer quel couche sur chaque élément
+Faire disparaitre le bouton join si on peut pas join en twig (mais laisser la vérif dans le ctrl aussi)
+L’association de ces deux méthodes peut générer une chaîne qui peut servir de token:
+Random_byte() = fonction php regarder la doc
+Bin2hex() = fonction php regarder la doc
+Symfony typage : filter_input() en php les filtres de validation et les filtres assainissement
+SQL en PHP Natif : classe PDO : prepare() execute(), requête préparée permet de séparer la requête et ses valeurs
+1.2.3.4 de l'intro du projet : en 1 diapo ou 2
+Axes d'améliorations : vérifications du completion time par screen
+les technos : on s'en fout un peu : parler plutôt de chaque technos lorsqu'on en parle concrètement
+Expliquer Merise
+MCD/MLD couleur différente pour les trucs pas encore 
+Faille CSRF : pertinent uniquement si il y a une connexion, faille = soumettre un formulaire en se faisant passer par un user
+
+On hydrate un objet !!!! 

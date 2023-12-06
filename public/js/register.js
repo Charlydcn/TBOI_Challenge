@@ -1,4 +1,4 @@
-const form = document.querySelector('form:last-of-type')
+const form = document.querySelector('form:first-of-type')
 const passwordInput = document.querySelector('#registration_form_password_first')
 
 form.addEventListener('submit', (event) => {

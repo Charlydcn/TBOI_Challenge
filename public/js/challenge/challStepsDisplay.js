@@ -1,21 +1,24 @@
-const closeBtn = document.querySelector('#close-btn')
 const overlay = document.querySelector('#overlay')
 const nextBtn = document.querySelector('#next-btn')
 const step1 = document.querySelector('#step1')
 const step2 = document.querySelector('#step2')
 const previousBtn = step2.querySelector('#restrictions h2')
 const endBtns = document.querySelector('#end-btns')
-const howToPlayBtn = document.querySelector('#howtoplay-btn')
+const howToPlayBtns = document.querySelectorAll('.howtoplay-btn')
 const howToPlay = document.querySelector('#howtoplay')
+const closeBtn = document.querySelector('#howtoplay figcaption p')
 
 // display tutorial on how to play btn click
-howToPlayBtn.addEventListener('click', () => {
-    howToPlay.classList.remove('hidden')
-    overlay.classList.remove('hidden')
+howToPlayBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        howToPlay.classList.remove('hidden')
+        overlay.classList.remove('hidden')
+    })
 })
 
 // close on X btn click
 closeBtn.addEventListener('click', () => {
+    console.log('test')
     howToPlay.classList.add('hidden')
     overlay.classList.add('hidden')
 })

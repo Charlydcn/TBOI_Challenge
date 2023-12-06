@@ -191,6 +191,10 @@
     height: 100px;
 }
 
+.character img:last-of-type {
+    height: 1.5rem;
+}
+
 /* ---------------------------------------------------------------------------------------- */
 /*                                                                                          */
 /* BOSS RESULT ---------------------------------------------------------------------------- */
@@ -202,7 +206,7 @@
 
 /* text img */
 .boss img:first-of-type {
-    height: 25px;
+    height: 1.25rem;
 }
 
 .boss img:last-of-type {
@@ -216,4 +220,33 @@
 /* when imgs are upscaled by client navigator, pixelise instead of blur effect */
 .pixelated {
     image-rendering: pixelated;
+}
+
+@media screen and (max-width: 991px) {
+    #text-result {
+        margin: auto auto 3rem auto;
+        width: 80%;
+    }
+
+    #text-result p {
+        text-align: center;
+    }
+
+    #result ~ img {
+        width: 80%;
+        margin: 3rem auto auto 1rem;
+        opacity: .666;
+    }
+
+    .boss img:last-of-type {
+        height:3rem;
+    }
+
+    .character img:last-of-type {
+        height: 1.5rem
+    }
+
+    .character img:first-of-type:not(figure img) {
+        height: 130px;
+    }
 }

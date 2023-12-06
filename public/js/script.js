@@ -55,3 +55,21 @@ function launchSteamGame(appId) {
 
     window.open(steamLink);
 }
+
+var responsiveMenu = $('#responsive-menu')
+
+$('nav #responsive img:last-of-type').on('click', function(event) {
+    responsiveMenu.addClass('active')
+
+    event.stopPropagation()
+})
+
+$(document).on('click', function(event) {
+    if (!$(event.target).is(responsiveMenu)) {
+        $(responsiveMenu).removeClass('active')
+}
+})
+
+$('#close-btn').on('click', function(event) {
+    $(responsiveMenu).removeClass('active')
+})

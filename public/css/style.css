@@ -21,8 +21,12 @@ button {
 body {
     background:#cbbeba url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEUAAADMurzMwrzEurTMurTMvrzEtrSsJ8L9AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAulJREFUOI0VVEGW4zoI1BV+90vv24q0H2HYTzLxPiKwjzDc/wifeOHnZ5uiqCpUeGyghCIy9DzwMN2uvC5UwtBM7gRCEuK6x+h1G1iU7sAsAIJWm1Rq6ATtUn4quE+U6JfxbSExuyO8rASNGGIIboqilH/v0lEKN52qWW04kgEqsD7P31XQXcXAhYxDxotAo9M2C1jtQ5CQjbsmLUZ1QCgjp/BZ384xuOKo2uLxemrR2vyeyBZzSwooZtDU8gMNcg9TUfND6Qf0D0ir5VuEX5hzgPOM8bSe3V8XKG0OzhE+tz0p2z2AkzyVKXtF8a7YrZs9yZMfDC7MjHmlXD7D2RlppdpbaXpXtPPiKS0FiLK6/3BCQYLa4ok4SOBqVNf0qoUuBjAH7mxPoT3eoHc7lEt75nTI43QU9JiisYQvUa7vRvA6drrBT1V7xSnTCWtBHfBvKnuQ9C+t8vYaj+5ltuW3eOhfh96RmOSQ4O/0HKMmrbkGMIKebxVaUVtOnkaPOzbGin1XWY89fZFiLIHKpqqCkp25gZk/Chop0wMf8TA3kZXyyFyQPZBdsomxIv2iXIN8ZEr6TZ8i8GXyEOIjBfNtrh8oSzcA+g9lq8S64STvI8sLH579YbPzcTbIioa/6RqWzJHNkXmIlMblEyCYOVDZBTIJWM1lLIZUUINOs5IadA2BFOMf3VzP9sfFEyoDPJASh4ESUh2tScuKT46J25RMz0KyFhaInoH7Bame4KkTtua4ztYtHXxh5WlxjMnHS/2S7xqpZto/lnI1Bk4hJgyTi/ltFpla7X7M5ZBhjfnpDolcvIOPTBA/QVhBczt4UbLyIeEBsIIwOeQmA9mk9KNdlXexGqMuvG8m9IAWmZIXRY6U+48+Et0Dedn8LE4uUP+6N5jWXGDEa5exY9L9yiS+HVhaQ5pZs6RNT0m6jafHX43jjLFJk88iJVQeLjosT5B3mm+jWpXsmqxCZj7XK3uFlecAwXHPjfwfvhdEmnsrj0YAAAAASUVORK5CYII=);
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
+main {
+    min-height: 100dvh;
+}
 
 /* flash messages */
 #flash-messages {
@@ -47,7 +51,7 @@ body {
 }
 
 .flash-success {
-    background-color: #8e9c93;
+    background-color: #a4c7b0;
     color: #2b4032;
 }
 
@@ -138,7 +142,7 @@ body {
 }
 
 /* user win-streak in navbar */
-#user-winstreak {
+.user-winstreak {
     position: absolute;
     right: 0;
     top: -1rem;
@@ -167,7 +171,6 @@ nav {
 nav #desktop {
     display: flex;
     list-style: none;
-    color: unset;
     justify-content: space-between;
     width: 100%;
     align-items: center;
@@ -187,6 +190,65 @@ nav > img {
     width: 112.5%;
     min-height: 100%;
     z-index: -1;
+}
+
+nav > img:nth-of-type(2) {
+    display: none;
+    height: 15dvh;
+}
+
+#responsive-menu {
+    position: absolute;
+    width: 275px;
+    right: 0;
+    top: 0;
+    height: 100dvh;
+    background-color: #c7b8be;
+    z-index: 2;
+    box-shadow: -5px 1px 10px 0px #3d3d3d;
+    list-style: none;
+    padding: 7rem 0 0 2rem;
+    transform: translateX(110%);
+    transition: transform .5s;
+    border-left: 3px solid #756e6c;
+}
+
+#responsive-menu #close-btn {
+    position: absolute;
+    top: 1rem;
+    font-size: 3rem;
+    right: 1rem;
+    cursor: pointer;
+}
+
+#responsive-menu.active {
+    transform: unset;
+}
+
+#responsive-menu li {
+    font-size: 2rem;
+}
+
+#responsive-menu > :not(:last-of-type) {
+    margin-bottom: 1rem;
+}
+
+nav #responsive {
+    display: none;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+/* logo */
+nav #responsive img:first-of-type {
+    height:66px;
+}
+
+/* burger btn */
+nav #responsive img:last-of-type {
+    width: 45px;
+    cursor: pointer;
 }
 
 #nav-left,
@@ -248,6 +310,30 @@ nav > img {
     color:#ded5d0;
 }
 
+footer {
+    min-height: 10vh;
+    background-color: #ada3a0;
+    border-top: 3px solid #736e6e;
+    margin-top: 10rem;
+}
+
+footer ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem 2rem;
+    padding: 3rem 0;
+}
+
+footer ul li {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
 
 /* --------------------------------------------------------------------------------------------------------- */
 /* --------------------------------------------------------------------------------------------------------- */
@@ -274,4 +360,35 @@ input::-webkit-inner-spin-button {
         min-width: 30%;
     }
 
+}
+
+
+
+@media screen and (max-width: 991px) {
+    nav > img:first-of-type {
+        display: none;
+    }
+
+    nav > img:nth-of-type(2) {
+        display:unset;
+    }
+
+    nav #desktop {
+        display: none;
+    }
+
+    nav #responsive {
+        display: flex;
+    }
+
+    #responsive-menu {
+        display:unset;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    nav #responsive img:first-of-type,
+    nav #responsive img:last-of-type {
+        height: 2rem;
+    }
 }

@@ -1,3 +1,7 @@
+main {
+    margin-left: 1rem;
+}
+
 h1 {
     font-size: 2rem;
     display: flex;
@@ -10,13 +14,13 @@ h1 {
 h2 {
     font-size: 1.5rem;
     text-decoration: underline;
-    margin-left: 1rem;
+    margin-bottom: 1rem;
 }
 
 #challs-container {
     display: flex;
     gap: 2rem;
-    margin: 2rem 1rem;
+    margin: 2rem auto;
 }
 
 .challenge {
@@ -55,4 +59,33 @@ h2 ~ ul li {
 .challenge li:first-of-type span {
     font-size: 1.2rem;
     color: black;
+}
+
+table {
+    width: 20rem;
+    border: 1px solid #858585;
+    border-collapse: collapse;
+}
+
+td {
+    border-bottom: 1px solid #858585;
+    border-right: 1px solid #858585;
+    padding: .5rem;
+    background-color: var(--beige);
+}
+
+.social {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    width: fit-content;
+}
+
+.social img {
+    height:2rem;
+}
+
+.social figpcation {
+    font-size: 1.25rem;
 }

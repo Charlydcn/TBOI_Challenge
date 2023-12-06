@@ -28,4 +28,22 @@ class HomeController extends AbstractController
             'restrictions' => $restrictions,
         ]);
     }
+
+    #[Route('/terms-of-services', name: 'terms')]
+    public function renderTermsOfServiceView(): Response
+    {
+        return $this->render('terms_of_service.html.twig');
+    }
+
+    #[Route('/privacy-policy', name: 'privacy_policy')]
+    public function renderPrivacyPolicyView(): Response
+    {
+        return $this->render('privacy_policy.html.twig');
+    }
+
+    #[Route('/contact', name: 'contact')]
+    public function renderContactView(): Response
+    {
+        return $this->render('contact.html.twig');
+    }
 }

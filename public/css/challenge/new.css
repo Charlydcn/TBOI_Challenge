@@ -4,10 +4,35 @@
     left: 50%;
     top: 2rem;
     transform: translateX(-50%);
+    width: min(650px, 95%);
 }
 
 #howtoplay img {
-    width: 650px;
+    width: 100%;
+}
+
+/* desktop howtoplay btn */
+.howtoplay-btn:not(i) {
+    cursor: pointer;
+    font-size: 2rem;
+    opacity: .5;
+    cursor: pointer;
+    font-size: 2rem;
+    opacity: .5;
+    display: flex;
+    justify-content: center;
+}
+
+/* mobile howtoplay btn (i from fontawesome) */
+.howtoplay-btn:not(a) {
+    display: none;
+    position: fixed;
+    right: 1rem;
+    z-index: 1;
+    font-size: 4rem;
+    color: #4d080b;
+    bottom: 2rem;
+    opacity: .8y;
 }
 
 /* <div id="form"> : <img> ~ <form> */
@@ -45,8 +70,7 @@
     z-index: 1;
 }
 
-#step1,
-#step2 {
+section {
     display: flex;
     position: relative;
     flex-direction: row;
@@ -130,13 +154,14 @@
     z-index:2;
 }
 
-#close-btn {
+#howtoplay figcaption p {
     text-decoration: none;
     color: #504546;
     font-size: 2.5rem;
     position: absolute;
     top: 1%;
     right: 3%;
+    cursor: pointer;
 }
 
 /* <div id="characters"> -> <h2> ~ <div class="btns"> ~ <div class="list"> */
@@ -278,4 +303,98 @@ label img {
 
 h2 span {
     font-size: 2rem;
+}
+
+@media screen and (max-width: 991px) {
+
+    /* desktop howtoplay btn */
+    .howtoplay-btn:not(i) {
+        display: none;
+    }
+
+    /* mobile howtoplay btn (i from fontawesome) */
+    .howtoplay-btn:not(a) {
+        display: unset;
+    }
+
+    #howtoplay {
+        position: fixed;
+    }
+
+    #form {
+        width: 90%;
+    }
+
+    #form > img {
+        display: none;
+    }
+
+    #form form {
+        height: unset;
+        background-color: #e1d5da;
+        border: 2px solid #756f6c99;
+        border-radius: 5px;
+        box-shadow: inset 0px 0px 20px 10px #0000002e;
+    }
+
+    #characters {
+        width: 100%;
+        height: unset;
+    }
+
+    .btns {
+        gap: 1rem 2rem;
+        flex-wrap: wrap;
+    }
+
+    #step1,
+    #step2 {
+        padding: 2rem 1rem;
+    }
+
+    #characters .btns .check-none {
+        margin-right: 3rem;
+    }
+
+    #characters .list {
+        max-height:unset;
+    }
+
+    #characters .list label:nth-of-type(17) {
+        margin-bottom: 1rem;
+    }
+
+    #bosses {
+        width: 100%;
+        margin-bottom: 5rem;
+    }
+
+    .check-btn {
+        font-size: 1.25rem;
+    }
+
+    #next-btn {
+        bottom: 1rem;
+        right: 4rem;
+        font-size: 4rem;
+    }
+
+    #step1,
+    #step2 {
+        height:unset;
+    }
+
+    #restrictions .list {
+        margin-bottom: 7rem;
+    }
+
+    #restrictions .list label:not(:last-of-type) {
+        margin-bottom: .66rem;
+    }
+
+    #end-btns {
+        right:unset;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }

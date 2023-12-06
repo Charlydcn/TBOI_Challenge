@@ -15,6 +15,12 @@ figure:nth-of-type(2) img {
     width: 45%;
 }
 
+#tuto ~ img:first-of-type {
+    display: none;
+    max-width: 95%;
+    margin:auto;
+}
+
 #tuto {
     display: flex;
     width: 85%;
@@ -33,4 +39,15 @@ figure:nth-of-type(2) img {
 
 #tuto > :last-child {
     width:400px;
+}
+
+@media screen and (max-width: 991px) {
+    #tuto,
+    figure:nth-of-type(2) {
+        display: none;
+    }
+
+    #tuto ~ img:first-of-type {
+        display: block;
+    }
 }

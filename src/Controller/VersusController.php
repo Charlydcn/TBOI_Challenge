@@ -119,30 +119,30 @@ class VersusController extends AbstractController
         // -----------------------------------------------------------------------------
         // ------------ STILL SLOTS AVAILABLE VERIFICATION -----------------------------
         
-        if($versus->getSlots()) {
-            if(count($versus->getPlayers()) > 0) {
-                $slotsAvailable = $versus->getSlots() - count($versus->getPlayers());
+        // if($versus->getSlots()) {
+        //     if(count($versus->getPlayers()) > 0) {
+        //         $slotsAvailable = $versus->getSlots() - count($versus->getPlayers());
         
-                if($slotsAvailable <= 0) {
-                    $this->addFlash('error', 'Sorry, this versus is full.');
+        //         if($slotsAvailable <= 0) {
+        //             $this->addFlash('error', 'Sorry, this versus is full.');
             
-                    return $this->redirectToRoute('show_challenge_versus', [
-                        'id' => $versus->getChallenge()->getId(),
-                    ]);
-                }
-            }
-        }
+        //             return $this->redirectToRoute('show_challenge_versus', [
+        //                 'id' => $versus->getChallenge()->getId(),
+        //             ]);
+        //         }
+        //     }
+        // }
 
         // -----------------------------------------------------------------------------
         // --------- CLOSED VERIFICATION -----------------------------------------------
 
-        if($versus->isClosed()) {
-            $this->addFlash('error', 'Sorry, this versus has been closed.');
+        // if($versus->isClosed()) {
+        //     $this->addFlash('error', 'Sorry, this versus has been closed.');
     
-            return $this->redirectToRoute('show_challenge_versus', [
-                'id' => $versus->getChallenge()->getId(),
-            ]);
-        }
+        //     return $this->redirectToRoute('show_challenge_versus', [
+        //         'id' => $versus->getChallenge()->getId(),
+        //     ]);
+        // }
         // -----------------------------------------------------------------------------
 
         return $this->render('versus/show.html.twig', [

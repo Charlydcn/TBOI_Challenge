@@ -5,46 +5,52 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
-class RegistrationFormType extends AbstractType
+class EditProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email', EmailType::class, [
-                "label" => "E-Mail : ",
-                "attr" => [
-                    "placeholder" => "john.doe@example.fr",
-                ],
-            ])
-            ->add('username', TextType::class, [
-                "label" => "Username : ",
-                "attr" => [
-                    "placeholder" => "McMillen1337",
+                'label' => 'E-Mail : ',
+                'attr' => [
+                    'placeholder' => 'john.doe@mail.com',
                 ],
                 'constraints' => [
                     new Length([
-                        'min' => 3,
-                        'minMessage' => 'Usernames have to be atleast 3 characters',
-                        'max' => 20,
-                        'maxMessage' => 'Usernames can\'t exceed 20 characters',
+                        'max' => 180,
+                        'maxMessage' => 'E-Mail addresses cannot exceed 180 characters',
                     ])
-                ]
+                    ],
+                'required' => false,
             ])
+            ->add('username', TextType::class, [
+                'label' => 'Username : ',
+                
+                'attr' => [
+                    'placeholder' => 'johnDoe67',
+                ],
+
+                'constraints' => [
+                    new Length([
+                        'max' => 20,
+                        'maxMessage' => 'Usernames cannot exceed 20 characters',
+                    ])
+                    ],
+                    'required' => false,
+            ])
+
             ->add('password', RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'invalid_message' => 'Passwords don\'t match',
-                'required' => true,
+                'required' => false,
                 'first_options'  => [
                     'label' => 'Password : ',
                     "attr" => [
@@ -66,17 +72,41 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
+            
+            // à faire, changement d'icône parmis les icônes existants
+            // ->add('icon')
 
-            ->add('agreeTerms', CheckboxType::class, [
-                "label" => "I have read and agree to the terms of service",
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => "Merci d'accepter les règles générales d'utilisation",
-                        ]
-                    ),
+            ->add('discord', TextType::class, [
+                'label' => 'Discord username : ',
+                'attr' => [
+                    'placeholder' => 'Edmund67',
                 ],
-            ]);
+
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => 'Discord link cannot exceed 255 characters',
+                    ])
+                    ],
+                    'required' => false,
+            ])
+
+            ->add('twitch', TextType::class, [
+                'label' => 'Twitch username : ',
+                'attr' => [
+                    'placeholder' => 'Edmund67',
+                ],
+                
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => 'Twitch link cannot exceed 255 characters',
+                    ])
+                    ],
+                    'required' => false,
+            ])
+
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

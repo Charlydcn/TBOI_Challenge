@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EditProfileType;
 use App\Repository\LikeRepository;
 use App\Repository\VersusRepository;
 use App\Repository\ChallengeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PlayChallengeRepository;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,5 +65,35 @@ class UserController extends AbstractController
             'challengesLiked' => $challengesLiked,
             'challengesCreated' => $challengesCreated,
         ]);
+    }
+
+    #[Route('/edit-profile', name: 'edit_profile')]
+    public function edit(
+        Request $request,
+        Security $security,
+        EntityManagerInterface $entityManager,
+    ): Response
+    {
+        
+        $user = $security->getUser();
+
+        if($user) {
+            $form = $this->createForm(EditProfileType::class, $user);
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('show_user', [
+                    'id' => $user->getId(),
+                ]);
+            }
+    
+            return $this->render('user/edit_profile.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 }

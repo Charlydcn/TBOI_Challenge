@@ -1,13 +1,15 @@
-main {
-    margin-left: 2rem;
-}
-
 p {
     font-size: 1.25rem;
 }
 
 h1 {
     font-size: 3rem;
+}
+
+h1,
+h2 {
+    text-align: center;
+    color: var(--brown);
 }
 
 h2,
@@ -20,22 +22,19 @@ h2 a {
     color: #66080a;
 }
 
-#stats ul {
-    list-style: none;
+h3 {
+    font-size: 1.5rem;
 }
 
-#stats ul > :not(:last-of-type) {
-    margin-bottom: 1rem;
-}
-
-#stats ul li span {
+h3 i {
     font-size: 2rem;
-    margin-right: 1rem;
 }
 
 .like {
-    width: 45px;
     image-rendering: pixelated;
+    height: 2rem;
+    display: flex;
+    margin: auto;
 }
 
 #challenge {
@@ -99,38 +98,47 @@ h2 a {
     height: 30px;
 }
 
-
-/* ---------------------------------------------------------------------------------------------- */
-/* Infos ----------------------------------------------------------------------------------------
-
-/* div with 3 divs : characters + bosses + restrictions
-#infos {
-    /* display: none;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width:36.66%;
-}
-
-/* 3 divs : characters + bosses + restrictions
-#characters,
-#bosses,
-#restrictions {
+#btns {
     display: flex;
-    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem auto;
+    background-color: #8b003514;
+    width: fit-content;
+    padding: 1rem;
+    box-shadow: 1px 1px 12px black;
+    flex-direction: column;
     align-items: center;
-    /* position:relative;
 }
 
-/* #infos > #characters > div(img + text)
-#characters div,
-#bosses div,
-#restrictions div {
+#leaderboard {
     display: flex;
-    position: relative;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
-#characters div:hover .onclick-infos,
-#bosses div:hover .onclick-infos,
-#restrictions div:hover .onclick-infos {
-    opacity:66%;
+#leaderboard ul {
+    list-style: none;
+}
+
+#leaderboard ul li {
+    padding: 1rem 2rem;
+}
+
+#leaderboard ul li span {
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+#leaderboard ul li:first-of-type {
+    background-color: #e3da9c;
+}
+
+#leaderboard ul li:nth-of-type(2) {
+    background-color: #d3d3d3;;
+}
+
+#leaderboard ul li:nth-of-type(3) {
+    background-color: #cba164;
 }

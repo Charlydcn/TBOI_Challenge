@@ -6,13 +6,9 @@ supression d'un user: ses challenges: set null le creator
 
 supression d'un user: supprime ses versus mais pas ses challenges
 
-axe d'améliroation: notifications pour les versus (mercure)
-
 ajouter les roles
 
-bouton CGU et Politique de confidentialité et contact
-
-symfony regex pour le mdp
+case à cocher pour les CGU
 
 mettre en place un captcha (pas prioritaire)
 

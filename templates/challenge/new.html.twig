@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Challenge creation{% endblock %}
+{% block title %}TBOI Challenge - <strong>Randomizer</strong>{% endblock %}
 
-{% block meta %}
-    <meta name="description" 
-        content="Create your custom challenge : choose from 34 characters, 12 bosses, and up to 15 unique restrictions.
-                Test your skills in unique challenges and share them with the community!">
-{% endblock meta %}
+{% block metaDescription %}
+    Create your <strong>custom challenge</strong> with the <strong>Randomizer</strong> ! Choose from 34 characters,
+    12 bosses, and up to 15 unique restrictions 
+{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/challenge/new.css')}}">
@@ -14,12 +13,13 @@
 
 {% block body %}
 
-    <a id="howtoplay-btn">How to play ?</a>
+    <a class="howtoplay-btn">How to play ?</a>
+    <i class="fa-solid fa-circle-question howtoplay-btn"></i>
     
     <figure class="hidden" id="howtoplay">
         <img src="{{ asset('/img/tuto/tutorial.webp')}}" alt="">
         <figcaption>
-            <p id="close-btn">X</p>
+            <p class="prevent-select">X</p>
         </figcaption>
     </figure>
 
@@ -34,7 +34,7 @@
             {{ form_errors(newChallengeForm) }}
 
             {# step 1 (characters selection + boss selection + next btn) #}
-            <div id="step1">
+            <section id="step1">
 
                 {# characters #}
                 <div id="characters">
@@ -74,7 +74,11 @@
                                 {# div.check-btn containing everything that's clickable for the checkbox (img and label text) #}
                                 <div class="check-btn">
                                     <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.webp') }}" alt="{{ character.name }}'s head">
-                                    {{ character.name }}
+                                    {% if character.name == "Isaac" %}
+                                        <strong>{{ character.name }}</strong>
+                                        {% else %}
+                                        {{ character.name }}
+                                    {% endif %}
                                 </div>
                                 
                             </label>
@@ -127,14 +131,14 @@
 
                 {# next btn that display step 2 and hide step 1 #}
                 <a id="next-btn" class="prevent-select">Next</a>
-            </div>
+            </section>
     
             {# step 2 (restrictions + restrictions chance selection + submit) #}
-            <div id="step2" class="hidden">
+            <section id="step2" class="hidden">
 
                 {# restrictions #}
                 <div id="restrictions">
-                    <h2 class="prevent-select"><span>&lt;</span>Restrictions</h2>
+                    <h2 class="prevent-select"><span>&lt;</span>Restrictions (optionnal)</h2>
 
                     {# btns to check all checkboxes, none checkboxes, etc. #}
                     <div class="btns">
@@ -208,7 +212,7 @@
                     </div>
                     
                 </div>
-            </div>
+            </section>
 
             <div id="end-btns" class="hidden">
                 {#

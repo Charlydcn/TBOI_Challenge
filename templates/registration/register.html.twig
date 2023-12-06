@@ -2,48 +2,62 @@
 
 {% block title %}Register{% endblock %}
 
+{% block metaDescription %}Join TBOI Challenge's community now to be able to create your own challenge, and challenge your friends with
+Versus !{% endblock %}
+
+
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('/css/login.css')}}">
+    <link rel="stylesheet" href="{{ asset('/css/register.css')}}">
 {% endblock %}
 
 {% block body %}
 
-<form action="{{ path('oauth_discord')}}" method="POST">
-    <input type="hidden" name="token" value="{{ csrf_token('discord-auth') }}"/>
-    <button type="submit">
-        <i class="fa-brands fa-discord"></i>
-        Log in with Discord
-    </button>
-</form>
-
+<div id="register">
     {{ form_start(registrationForm) }}
         
         <h1>Register</h1>
-
+    
         <div>
             {{ form_label(registrationForm.email) }}
             <div class="error">{{ form_errors(registrationForm.email) }}</div>
             {{ form_widget(registrationForm.email) }}
         </div>
-
+    
         <div>
             {{ form_label(registrationForm.username) }}
             <div class="error">{{ form_errors(registrationForm.username) }}</div>
             {{ form_widget(registrationForm.username) }}
         </div>
-
+    
         <div>
-            <p>*1 uppercase, 1 lowercase, 1 digit, 1 special character and at least 12 characters long.</p>
             <div class="error">{{ form_errors(registrationForm.password) }}</div>
             {{ form_widget(registrationForm.password) }}
         </div>
 
+        <div>
+            {{ form_label(registrationForm.agreeTerms) }}
+            <div class="error">{{ form_errors(registrationForm.agreeTerms) }}</div>
+            {{ form_widget(registrationForm.agreeTerms) }}
+        </div>
+    
         <button type="submit">Register</button>
-
-        <p>Already registered ?<a href="{{path('app_login')}}">Sign in</a></p>
-
+    
+        <p>Already registered ?&nbsp;<a href="{{path('app_login')}}">Sign in</a></p>
+    
         
     {{ form_end(registrationForm) }}
+    
+    
+    
+    <form action="{{ path('oauth_discord')}}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('discord-auth') }}"/>
+        <button type="submit">
+            <i class="fa-brands fa-discord"></i>
+            Log in with Discord
+        </button>
+    </form>
+</div>
+
 
 {% endblock %}
 

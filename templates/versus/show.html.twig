@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Versus {{ versus.id }}{% endblock %}
+{% block title %}Versus #{{ versus.id }}{% endblock %}
+
+{% block metaDescription %}Versus #{{ versus.id }}, play now and join your friends or the community !{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/versus/show.css')}}">
@@ -46,13 +48,17 @@
             <li>Current winner : <span>{{ v.winner ? v.winner : "No winner yet" }}</span></li>       
         </ul>
 
-        <img 
-            src="{{ asset('/img/text/join.webp')}}"
-            class="href-element"
-            data-href="{{ path('play_challenge', {'challengeId': c.id, 'versusId': v.id})}}"
-            alt="Text saying JOIN">
-
-        <h3>! You only get 1 try at the Versus' Challenge !</h3>
+        {% if (v.players|length - v.slots) <= 0 or %}    
+            <img 
+                src="{{ asset('/img/text/join.webp')}}"
+                class="href-element"
+                data-href="{{ path('play_challenge', {'challengeId': c.id, 'versusId': v.id})}}"
+                alt="Text saying JOIN">
+    
+            <h3>! You only get 1 try at the Versus' Challenge !</h3>
+            {% else %}
+            
+        {% endif %}
 
 
         {% if v.players and v.players|length > 0%}

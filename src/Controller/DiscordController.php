@@ -47,6 +47,8 @@ class DiscordController extends AbstractController
     #[Route('/discord/auth', name: 'oauth_discord_auth')]
     public function auth(): Response
     {
+        $this->addFlash('success', 'You are now logged in');
+
         return $this->redirectToRoute('app_home');
     }
 

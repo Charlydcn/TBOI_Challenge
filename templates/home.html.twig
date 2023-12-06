@@ -2,6 +2,9 @@
 
 {% block title %}Home{% endblock %}
 
+{% block metaDescription %}Welcome to TBOI Challenge ! The Binding of Isaac Randomizer, use the Randomizer now to play the game
+or create a Challenge to save your selection !{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/home.css')}}">
 {% endblock stylesheets %}
@@ -24,6 +27,8 @@
         <img src="{{ asset('/img/tuto/step5.webp')}}" alt="">
         <img src="{{ asset('/img/tuto/bonus.webp')}}" alt="">
     </div>
+    <img src="{{ asset('/img/tuto/tutorial.webp')}}" alt="">
+
 {% endblock %}
 
 {% block javascripts %}

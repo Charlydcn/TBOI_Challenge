@@ -256,8 +256,47 @@ class ChallengeController extends AbstractController
                 $user->setBestWinStreak($user->getWinStreak());
             }
 
-            // if user came from a versus, create playVersus object
+            // if user came from a versus :
             if ($versus) {
+
+                // -----------------------------------------------------------------------------
+                // ------------ STILL SLOTS AVAILABLE VERIFICATION -----------------------------
+                if($versus->getSlots()) {
+                    if(count($versus->getPlayers()) > 0) {
+                        $slotsAvailable = $versus->getSlots() - count($versus->getPlayers());
+                
+                        if($slotsAvailable <= 0) {
+                            $this->addFlash('error', 'Sorry, this versus is full.');
+                    
+                            return $this->redirectToRoute('show_versus', [
+                                'id' => $versus->getId(),
+                            ]);
+                        }
+                    }
+                }
+
+                // -----------------------------------------------------------------------------
+                // ------------ END DATE VERIFICATION ------------------------------------------
+                $now = new DateTime();
+
+                if($versus->getEndDate() && $versus->getEndDate() < $now) {
+                    $this->addFlash('error', 'Sorry, this versus already ended.');
+            
+                    return $this->redirectToRoute('show_versus', [
+                        'id' => $versus->getId(),
+                    ]);
+                }
+
+                // -----------------------------------------------------------------------------
+                // --------- CLOSED VERIFICATION -----------------------------------------------
+
+                if($versus->isClosed()) {
+                    $this->addFlash('error', 'Sorry, this versus has been closed.');
+            
+                    return $this->redirectToRoute('show_versus', [
+                        'id' => $versus->getId(),
+                    ]);
+                }
 
                 $playVersus = new PlayVersus;
 

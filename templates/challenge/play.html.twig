@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Play a challenge{% endblock %}
+{% block title %}TBOI Challenge - Play a challenge{% endblock %}
 
-{% block metaTag %}
-{% endblock %}
+{% block metaDescription %}Play the challenge #{{ challenge.id }} and beat the best run !{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/challenge/play.css')}}">
@@ -31,7 +30,7 @@
     {% if character is defined and boss is defined %}
         <p>
             You have to play
-            <span><strong></strong>{{ character.name|capitalize }}</span>
+            <span>{{ character.name|capitalize }}</span>
             and beat
             <span>{{ boss.name|capitalize }}</span>
             {{ c.streak ? c.streak ~ " times in a row" : ""}}

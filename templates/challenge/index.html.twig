@@ -2,6 +2,8 @@
 
 {% block title %}Challenges{% endblock %}
 
+{% block metaDescription %}All TBOI Challenge's community's challenges, Play one now !{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/challenge/index.css')}}">
 {% endblock stylesheets %}
@@ -21,9 +23,6 @@
 
                 {# details #}
                 <div>
-                    {# top left ID #}
-                    <p>{{ challenge.id }}</p>
-
                     {# top right creator username #}
                     <p>{{ challenge.creator.username}}</p>
 

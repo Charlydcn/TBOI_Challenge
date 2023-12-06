@@ -1,21 +1,35 @@
 {% extends 'base.html.twig' %}
 
+{% block metaDescription %}Join a Versus now or create your own on the Challenge of your choice !{% endblock %}
+
 {% block title %}Versus list{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/challenge/show_challenge_versus.css')}}">
+{% endblock %}
 
 {% block body %}
 
-    {% for v in versus %}
-        <div class="href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
-            <p>Challenge id : <a href="{{ path('show_challenge', {'id': v.challenge.id})}}">{{ v.challenge.id }}</a></p>
-            <p>Creator : {{ v.creator.username }}</p>
-            <p>Public : {{ v.public ? 'Yes' : 'No' }}</p>
-            <p>Closed : {{ v.closed ? 'Yes' : 'No'  }}</p>
-            <p>Players : {{ v.players ? v.players|length : 0 ~ v.slots ? "/" ~ v.slots : "666"}}</p>
-            <p>Current winner : {{ v.winner ? v.winner : "No winner yet" }}</p>
-        </div>
+    <h1>Community Versus</h1>
 
-        <br>
-        <br>
-    {% endfor %}
+    <div class="versus-container">
+        {% for v in versus %}
+            <div class="versus href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
+                <ul>
+                    <li>Versus #{{ v.id }}</li>
+                    <li><span>Creator : </span>{{ v.creator.username }}</li>
+                    <li><span>Starting : </span><span class="date" data-date="{{ v.startDate|date('d:m:Y H:i') }}">{{v.startDate|date('d:m:Y H:i')}}</span></li>
+                    <li><span>Ends in : </span><span class="date" data-date="{{ v.endDate|date('d:m:Y H:i') }}">{{v.endDate|date('d:m:Y H:i')}}</span></li>
+                    {% if v.slots %}
+                        <li class="slots"><span>Slots : </span>{{ v.players|length }} / {{ v.slots }}</li>
+                    {% endif %}
+                    {% if v.winner %}
+                        <li><span>Winner : </span>{{ v.winner.username }}</li>
+                    {% endif %}
+                </ul>
+                <img src="{{ asset('/img/misc/swords_versus.png')}}" alt="">
+            </div>
+        {% endfor %}
+    </div>
 
 {% endblock %}

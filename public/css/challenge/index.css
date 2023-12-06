@@ -88,6 +88,10 @@
     height: 14px;
 }
 
+.restrictions {
+    display: flex;
+}
+
 .boss,
 .restriction {
     flex-direction: row;

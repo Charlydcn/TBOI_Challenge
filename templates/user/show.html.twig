@@ -2,11 +2,15 @@
 
 {% block title %}{{ user.username }}'s profile{% endblock %}
 
+{% block metaDescription %}{{ user.username }}'s profile, member since {{ user.registrationDate|date('d/m/Y') }}{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/user_profile.css')}}">
 {% endblock %}
 
 {% block body %}
+
+    <a href="{{ path('edit_profile')}}">edit profile</a>
 
     <h1>
         <img src="{{ asset('/img/user_icons/' ~ user.icon) }}" alt="">
@@ -15,41 +19,64 @@
     
     <h2>Member since {{ user.registrationDate|date('d/m/Y') }}</h2>
 
-    <ul>
-        <li>Challenge played : {{ user.challengesPlayed|length }}</li>
-
+    <table>
+        <tr>
+            <td>Challenge played :</td>
+            <td>{{ user.challengesPlayed|length }}</td>
+        </tr>
+    
         {% if user.challengesPlayed|length > 0 %}
-            <li>Win rate : {{ challengeWinRate }}%</li>
+            <tr>
+                <td>Win rate :</td>
+                <td>{{ challengeWinRate }}%</td>
+            </tr>
         {% endif %}
-
-        <li id="user-challenges">Challenges created ({{ user.challengesCreated|length }})</li>
-        <li>Versus played : {{ user.versusPlayed|length }}</li>
-
+    
+        <tr>
+            <td>Versus played :</td>
+            <td>{{ user.versusPlayed|length }}</td>
+        </tr>
+    
         {% if user.versusPlayed|length > 0 %}
-            <li>Versus Win rate : {{ versusWinRate }}%</li>
+            <tr>
+                <td>Versus Win rate :</td>
+                <td>{{ versusWinRate }}%</td>
+            </tr>
         {% endif %}
-
+    
         {% if user.winStreak and user.winStreak > 0 %}
-            <li>Current win streak : {{ user.winStreak }}</li>
+            <tr>
+                <td>Current win streak :</td>
+                <td>{{ user.winStreak }}</td>
+            </tr>
         {% endif %}
-
+    
         {% if user.bestWinStreak and user.bestWinStreak > 0 %}
-            <li>Best win streak : {{ user.bestWinStreak }}</li>
+            <tr>
+                <td>Best win streak :</td>
+                <td>{{ user.bestWinStreak }}</td>
+            </tr>
         {% endif %}
-    </ul>
+    </table>
 
     {% if user.discord %}
-        <img src="{{ asset('/img/misc/discord_logo.webp')}}" class="href-element" data-href="" alt="Discord logo">
+        <figure class="social">
+            <img src="{{ asset('/img/misc/discord_logo.webp')}}" class="href-element" data-href="" alt="Discord logo">
+            <figcaption>@{{ user.discord }}</figcaption>
+        </figure>
     {% endif %}
 
     {% if user.twitch %}
-        <img src="{{ asset('/img/misc/twitch_logo.webp')}}" class="href-element" data-href="" alt="Twitch logo">
+        <figure class="social">
+            <img src="{{ asset('/img/misc/twitch_logo.webp')}}" class="href-element" data-href="" alt="Twitch logo">
+            <figcaption>@{{ user.twitch }}</figcaption>
+        </figure>
     {% endif %}
 
     <div id="challs-container">
         {% if challengesCreated|length > 0 %}
             <div id="chall-created">
-                <h2>Challenges created : </h2>
+                <h2>Challenges created : (&nbsp;{{ challengesCreated|length }}&nbsp;)</h2>
                 {% for c in challengesCreated %}
                     <ul class="challenge href-element" data-href="{{ path('show_challenge', {'id': c.id}) }}">
                         <li>Challenge #{{ c.id }}</li>
@@ -65,7 +92,7 @@
         {% if user == app.user %}
             {% if challengesLiked|length > 0 %}
                 <div id="chall-liked">
-                    <h2>Challenges liked : </h2>
+                    <h2>Challenges liked : (&nbsp;{{ challengesLiked|length }}&nbsp;)</h2>
                     {% for c in challengesLiked %}
                         <ul class="challenge href-element" data-href="{{ path('show_challenge', {'id': c.id}) }}">
                             <li>Challenge #{{ c.id }} <span>by {{ c.creator.username }}</span></li>
