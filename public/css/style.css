@@ -36,7 +36,7 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    z-index: 2;
+    z-index: 1;
     top: 10%;
 }
 
@@ -287,7 +287,7 @@ nav #responsive img:last-of-type {
     background-color: #e9dbe0;
     min-width: 160px;
     box-shadow: 8px 7px 1.5px rgba(0, 0, 0, 0.26);
-    z-index: 1;
+    z-index: 2;
 }
 
 /* show .sub-menu when li:hover */

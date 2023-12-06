@@ -120,6 +120,7 @@ h3 i {
 
 #leaderboard ul {
     list-style: none;
+    background-color: #e1e1e1;
 }
 
 #leaderboard ul li {

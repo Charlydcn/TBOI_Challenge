@@ -5,6 +5,10 @@ h1 {
     margin: 3rem auto 2rem auto;
 }
 
+h2 {
+    text-align: center;
+}
+
 .versus-container {
     display: flex;
     flex-direction: row;

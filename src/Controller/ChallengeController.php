@@ -115,11 +115,17 @@ class ChallengeController extends AbstractController
 
     #[Route('/challenge/{id}', name: 'show_challenge')]
     public function show(
-        Challenge $challenge,
+        Challenge $challenge = null,
         Security $security,
         PlayChallengeRepository $playChallengeRepository,
         LikeRepository $likeRepository): Response
     {
+
+        if(!$challenge) {
+            $this->addFlash('error', 'This challenge doesn\'t exist (error #00004)');
+
+            return $this->redirectToRoute('app_home');
+        }
 
         // find current user with Security's method getUser()
         $user = $security->getUser();
@@ -133,7 +139,6 @@ class ChallengeController extends AbstractController
 
         $winners = $playChallengeRepository->findBy(['challenge' => $challenge->getId(), 'completed' => true]);
         $bestsRuns = $playChallengeRepository->findBestRuns($challenge->getId(), 10);
-
 
         return $this->render('challenge/show.html.twig', [
             'challenge' => $challenge,

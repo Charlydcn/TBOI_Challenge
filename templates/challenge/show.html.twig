@@ -12,6 +12,8 @@ by creating a <strong>versus</strong> !{% endblock %}
 
 {% block body %}
 
+    <a href="{{ path('challenges')}}">&lt; Community Challenges</a>    
+
     {% if challenge.creator is same as(app.user) or is_granted('ROLE_ADMIN') %}
         <a class="delete-btn" href="{{ path('delete_challenge', {'id': challenge.id}) }}"><i class="fa-solid fa-trash-can"></i></a>
     {% endif %}

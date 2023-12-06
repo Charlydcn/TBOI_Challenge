@@ -14,6 +14,10 @@
 
     {% set c = v.challenge %}
 
+    {% if versus %}
+        <a href="{{ path('show_challenge', {'id': c.id})}}">&lt; Challenge</a>    
+    {% endif %}
+
         {% if v.creator is same as(app.user) or is_granted('ROLE_ADMIN') %}
             <a class="delete-btn" href="{{ path('delete_versus', {'id': v.id}) }}"><i class="fa-solid fa-trash-can"></i></a>
         {% endif %}

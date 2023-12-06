@@ -9,165 +9,171 @@
 {% endblock stylesheets %}
 
 {% block body %}
-    {# container #}
-    <div id="challenges">
+    {% if challenges|length > 0 %}
+        {# container #}
+        <div id="challenges">
 
-        {% for challenge in challenges %}
+            {% for challenge in challenges %}
 
-            {# card #}
-            <div class="challenge href-element" data-href="{{ path('show_challenge', {'id': challenge.id})}}">
+                {# card #}
+                <div class="challenge href-element" data-href="{{ path('show_challenge', {'id': challenge.id})}}">
 
-                {# bg image (page blood) #}
-                <img src="{{ asset('/img/misc/page_alt_blood.webp')}}" alt="Page with blood on it">
+                    {# bg image (page blood) #}
+                    <img src="{{ asset('/img/misc/page_alt_blood.webp')}}" alt="Page with blood on it">
 
 
-                {# details #}
-                <div>
-                    {# top right creator username #}
-                    <p>{{ challenge.creator.username}}</p>
+                    {# details #}
+                    <div>
+                        {# top right creator username #}
+                        <p>{{ challenge.creator.username}}</p>
 
-                    {# top right win-streak objective #}
-                    {% if challenge.streak %}
-                        <figure class="streak">
-                            <img src="{{ asset('/img/misc/fire.webp')}}" alt="Fire image">
-                            <figcaption>{{ challenge.streak }}</figcaption>
-                        </figure>                        
-                    {% endif %}
-
-                    {# --------------------------------------------------------------------------------------------- #}
-                    {# characters ---------------------------------------------------------------------------------- #}
-
-                        {# if challenge only has 1 character #}
-                        {% if challenge.characters|length == 1 %}
-    
-                            {# display character's image #}
-                            {% for character in challenge.characters %}
-                            <figure class="character">
-                                <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="Image of {{character.name}}'s head">
-                                <figcaption>
-                                    {# and his name with custom font #}
-                                    <img
-                                        src="{{ asset('/img/characters/text/' ~ character.img)}}"
-                                        alt="{{ character.name }}'s name">
-                                </figcaption>
-                            </figure>
-                            {% endfor %}
-    
-                        {# if challenge has 34 (all) characters or more #}
-                        {% elseif challenge.characters|length >= 34 %}
-                            {# display random character img #}
-                            <figure class="character">
-                                <img src="{{ asset('/img/characters/missing.webp')}}" alt="Mystery character image with question mark in it">
-                                <figcaption>
-                                    {# and text saying ALL CHARACTERS #}
-                                    <img src="{{ asset('/img/text/all_characters.webp')}}" alt='Text saying "All characters"'>
-                                </figcaption>
-                            </figure>
-    
-                        {# if challenge have more than 1 character (or 0) but not all #}
-                        {% else %}
-                            <figure class="character">
-                                {# mystery character img #}
-                                <img src="{{ asset('/img/characters/missing.webp')}}" alt="Mystery character image with question mark in it">
-                                {# and number of characters #}
-                                <figcaption>{{ challenge.characters|length }} characters</figcaption>
-                            </figure>
+                        {# top right win-streak objective #}
+                        {% if challenge.streak %}
+                            <figure class="streak">
+                                <img src="{{ asset('/img/misc/fire.webp')}}" alt="Fire image">
+                                <figcaption>{{ challenge.streak }}</figcaption>
+                            </figure>                        
                         {% endif %}
-                    {# --------------------------------------------------------------------------------------------- #}
 
-                    {# --------------------------------------------------------------------------------------------- #}
-                    {# bosses -------------------------------------------------------------------------------------- #}
-                    
-                        {# if challenge only has 1 boss #}
-                        {% if challenge.bosses|length == 1 %}
+                        {# --------------------------------------------------------------------------------------------- #}
+                        {# characters ---------------------------------------------------------------------------------- #}
 
-                            {# display boss's image #}
-                            {% for boss in challenge.bosses %}
-                            <figure class="boss">
-                                <figcaption>
-                                    {# and his name with custom font #}
-                                    <img src="{{ asset('/img/bosses/text/' ~ boss.img)}}" alt="{{ boss.name }}'s name">
-                                </figcaption>
-                                <img src="{{ asset('/img/bosses/' ~ boss.img)}}" alt="{{boss.name}}'s image">
-                            </figure>
-                            {% endfor %}
-
-                        {# if challenge has 13 (all) bosses or more #}
-                        {% elseif challenge.bosses|length >= 13 %}
-                            {# display random boss img #}
-                            <figure class="boss">
-                                <figcaption>
-                                    {# and text saying ALL BOSSES #}
-                                    <img src="{{ asset('/img/text/all_bosses.webp')}}" alt='Text saying "All bosses"'>
-                                </figcaption>
-                                <img src="{{ asset('/img/bosses/missing.webp')}}" alt="Mystery boss image with question mark in it">
-                            </figure>
-
-                        {# if challenge have more than 1 boss (or 0) but not all #}
-                        {% else %}
-                            <figure class="boss">
-                                {# number of bosses #}
-                                <figcaption>{{ challenge.bosses|length }} bosses</figcaption>
-                                {# mystery boss img #}
-                                <img src="{{ asset('/img/bosses/missing.webp')}}" alt="Mystery boss image with question mark in it">
-                            </figure>
-
-                        {% endif %}
-                    {# --------------------------------------------------------------------------------------------- #}
-
-                    {# --------------------------------------------------------------------------------------------- #}
-                    {# restrictions -------------------------------------------------------------------------------- #}
-
-                    {# if challenge has atleast 1 restriction #}
-                    {% if challenge.restrictions|length > 0 %}
-                        <div class="restrictions">
-                            {% if challenge.restrictions|length == 1 %}
-                                {# display restriction's image #}
-                                {% for restriction in challenge.restrictions %}
-                                <figure class="restriction">
-                                    <img src="{{ asset('/img/restrictions/' ~ restriction.img)}}" alt="{{restriction.name}}'s image">
-                                    <figcaption>{{restriction.name}}</figcaption>
-                                </figure>
-                                {% endfor %}
-
-                            {# else if challenge has 16 (all) restrictions or more #}
-                            {% elseif challenge.restrictions|length >= 16 %}
-                                {# display random restriction img #}
-                                <figure class="restriction">
-                                    <img src="{{ asset('/img/restrictions/random.webp')}}" alt="Mystery restriction image with question mark in it">
+                            {# if challenge only has 1 character #}
+                            {% if challenge.characters|length == 1 %}
+        
+                                {# display character's image #}
+                                {% for character in challenge.characters %}
+                                <figure class="character">
+                                    <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="Image of {{character.name}}'s head">
                                     <figcaption>
-                                        <img src="{{ asset('/img/text/all_restrictions.webp')}}" alt='Text saying "All restrictions"'>
+                                        {# and his name with custom font #}
+                                        <img
+                                            src="{{ asset('/img/characters/text/' ~ character.img)}}"
+                                            alt="{{ character.name }}'s name">
                                     </figcaption>
                                 </figure>
+                                {% endfor %}
+        
+                            {# if challenge has 34 (all) characters or more #}
+                            {% elseif challenge.characters|length >= 34 %}
+                                {# display random character img #}
+                                <figure class="character">
+                                    <img src="{{ asset('/img/characters/missing.webp')}}" alt="Mystery character image with question mark in it">
+                                    <figcaption>
+                                        {# and text saying ALL CHARACTERS #}
+                                        <img src="{{ asset('/img/text/all_characters.webp')}}" alt='Text saying "All characters"'>
+                                    </figcaption>
+                                </figure>
+        
+                            {# if challenge have more than 1 character (or 0) but not all #}
+                            {% else %}
+                                <figure class="character">
+                                    {# mystery character img #}
+                                    <img src="{{ asset('/img/characters/missing.webp')}}" alt="Mystery character image with question mark in it">
+                                    {# and number of characters #}
+                                    <figcaption>{{ challenge.characters|length }} characters</figcaption>
+                                </figure>
+                            {% endif %}
+                        {# --------------------------------------------------------------------------------------------- #}
 
-                            {% elseif challenge.restrictions|length <= 3 %}
-                                {% for restriction in challenge.restrictions %}
-                                <figure class="restriction">
-                                    <img class="restriction-img" src="{{ asset('/img/restrictions/' ~ restriction.img)}}" alt="{{restriction.name}}'s image">
-                                    <figcaption class="onclick-infos hidden prevent-select">{{ restriction.name }}</figcaption>
+                        {# --------------------------------------------------------------------------------------------- #}
+                        {# bosses -------------------------------------------------------------------------------------- #}
+                        
+                            {# if challenge only has 1 boss #}
+                            {% if challenge.bosses|length == 1 %}
+
+                                {# display boss's image #}
+                                {% for boss in challenge.bosses %}
+                                <figure class="boss">
+                                    <figcaption>
+                                        {# and his name with custom font #}
+                                        <img src="{{ asset('/img/bosses/text/' ~ boss.img)}}" alt="{{ boss.name }}'s name">
+                                    </figcaption>
+                                    <img src="{{ asset('/img/bosses/' ~ boss.img)}}" alt="{{boss.name}}'s image">
                                 </figure>
                                 {% endfor %}
 
-                            {# if challenge have more than 1 restriction (or 0) but not all #}
-                            {% else %}
-                                <figure class="restriction">
-                                    {# mystery restriction img #}
-                                    <img src="{{ asset('/img/restrictions/random.webp')}}" alt="Mystery restriction image with question mark in it">
-                                    {# and number of restrictions #}
-                                    <figcaption>{{ challenge.restrictions|length }} restrictions</figcaption>
+                            {# if challenge has 13 (all) bosses or more #}
+                            {% elseif challenge.bosses|length >= 13 %}
+                                {# display random boss img #}
+                                <figure class="boss">
+                                    <figcaption>
+                                        {# and text saying ALL BOSSES #}
+                                        <img src="{{ asset('/img/text/all_bosses.webp')}}" alt='Text saying "All bosses"'>
+                                    </figcaption>
+                                    <img src="{{ asset('/img/bosses/missing.webp')}}" alt="Mystery boss image with question mark in it">
                                 </figure>
+
+                            {# if challenge have more than 1 boss (or 0) but not all #}
+                            {% else %}
+                                <figure class="boss">
+                                    {# number of bosses #}
+                                    <figcaption>{{ challenge.bosses|length }} bosses</figcaption>
+                                    {# mystery boss img #}
+                                    <img src="{{ asset('/img/bosses/missing.webp')}}" alt="Mystery boss image with question mark in it">
+                                </figure>
+
                             {% endif %}
-                        </div>
-                    {% endif %}
+                        {# --------------------------------------------------------------------------------------------- #}
 
-                    {# --------------------------------------------------------------------------------------------- #}
+                        {# --------------------------------------------------------------------------------------------- #}
+                        {# restrictions -------------------------------------------------------------------------------- #}
 
+                        {# if challenge has atleast 1 restriction #}
+                        {% if challenge.restrictions|length > 0 %}
+                            <div class="restrictions">
+                                {% if challenge.restrictions|length == 1 %}
+                                    {# display restriction's image #}
+                                    {% for restriction in challenge.restrictions %}
+                                    <figure class="restriction">
+                                        <img src="{{ asset('/img/restrictions/' ~ restriction.img)}}" alt="{{restriction.name}}'s image">
+                                        <figcaption>{{restriction.name}}</figcaption>
+                                    </figure>
+                                    {% endfor %}
+
+                                {# else if challenge has 16 (all) restrictions or more #}
+                                {% elseif challenge.restrictions|length >= 16 %}
+                                    {# display random restriction img #}
+                                    <figure class="restriction">
+                                        <img src="{{ asset('/img/restrictions/random.webp')}}" alt="Mystery restriction image with question mark in it">
+                                        <figcaption>
+                                            <img src="{{ asset('/img/text/all_restrictions.webp')}}" alt='Text saying "All restrictions"'>
+                                        </figcaption>
+                                    </figure>
+
+                                {% elseif challenge.restrictions|length <= 3 %}
+                                    {% for restriction in challenge.restrictions %}
+                                    <figure class="restriction">
+                                        <img class="restriction-img" src="{{ asset('/img/restrictions/' ~ restriction.img)}}" alt="{{restriction.name}}'s image">
+                                        <figcaption class="onclick-infos hidden prevent-select">{{ restriction.name }}</figcaption>
+                                    </figure>
+                                    {% endfor %}
+
+                                {# if challenge have more than 1 restriction (or 0) but not all #}
+                                {% else %}
+                                    <figure class="restriction">
+                                        {# mystery restriction img #}
+                                        <img src="{{ asset('/img/restrictions/random.webp')}}" alt="Mystery restriction image with question mark in it">
+                                        {# and number of restrictions #}
+                                        <figcaption>{{ challenge.restrictions|length }} restrictions</figcaption>
+                                    </figure>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        {# --------------------------------------------------------------------------------------------- #}
+
+
+                    </div>
 
                 </div>
+            {% endfor %}
 
-            </div>
-        {% endfor %}
+        </div>
+        {% else %}
+        <h2>No challenge created yet, <a href="{{ path('new_challenge')}}">Create yours now !</a></h2>
+    {% endif %}
 
-    </div>
+    
 
 {% endblock %}

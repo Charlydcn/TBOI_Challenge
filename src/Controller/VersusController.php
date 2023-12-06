@@ -99,8 +99,14 @@ class VersusController extends AbstractController
     }
 
     #[Route('/versus/{id}', name: 'show_versus')]
-    public function show(Versus $versus): Response
+    public function show(Versus $versus = null): Response
     {
+
+        if (!$versus) {
+            $this->addFlash('error', 'This versus doesn\'t exist (error #00004)');
+
+            return $this->redirectToRoute('app_home');
+        }
 
         return $this->render('versus/show.html.twig', [
             'versus' => $versus,
