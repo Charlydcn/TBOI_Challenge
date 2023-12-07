@@ -3,6 +3,22 @@ h2 {
     font-size: 1.25rem;
 }
 
+h2 a {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--red);
+    width: fit-content;
+    width: -moz-fit-content;
+    margin: auto;
+}
+
+h2 ~ img:first-of-type {
+    height: 5rem;
+    image-rendering: pixelated;
+    display: block;
+    margin: 1rem auto;
+}
+
 #challenges {
     display: flex;
     flex-wrap: wrap;

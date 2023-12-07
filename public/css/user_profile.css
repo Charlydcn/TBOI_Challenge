@@ -80,6 +80,7 @@ td {
     gap: 1rem;
     margin: 1rem 0;
     width: fit-content;
+    width: -moz-fit-content;
 }
 
 .social img {

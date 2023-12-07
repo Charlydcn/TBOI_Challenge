@@ -12,6 +12,11 @@
     font-weight: unset;
 }
 
+html, body {
+    overflow-x: hidden;
+    position: relative;
+}
+
 html,
 input,
 button {
@@ -20,12 +25,10 @@ button {
 
 body {
     background:#cbbeba url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAFVBMVEUAAADMurzMwrzEurTMurTMvrzEtrSsJ8L9AAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAulJREFUOI0VVEGW4zoI1BV+90vv24q0H2HYTzLxPiKwjzDc/wifeOHnZ5uiqCpUeGyghCIy9DzwMN2uvC5UwtBM7gRCEuK6x+h1G1iU7sAsAIJWm1Rq6ATtUn4quE+U6JfxbSExuyO8rASNGGIIboqilH/v0lEKN52qWW04kgEqsD7P31XQXcXAhYxDxotAo9M2C1jtQ5CQjbsmLUZ1QCgjp/BZ384xuOKo2uLxemrR2vyeyBZzSwooZtDU8gMNcg9TUfND6Qf0D0ir5VuEX5hzgPOM8bSe3V8XKG0OzhE+tz0p2z2AkzyVKXtF8a7YrZs9yZMfDC7MjHmlXD7D2RlppdpbaXpXtPPiKS0FiLK6/3BCQYLa4ok4SOBqVNf0qoUuBjAH7mxPoT3eoHc7lEt75nTI43QU9JiisYQvUa7vRvA6drrBT1V7xSnTCWtBHfBvKnuQ9C+t8vYaj+5ltuW3eOhfh96RmOSQ4O/0HKMmrbkGMIKebxVaUVtOnkaPOzbGin1XWY89fZFiLIHKpqqCkp25gZk/Chop0wMf8TA3kZXyyFyQPZBdsomxIv2iXIN8ZEr6TZ8i8GXyEOIjBfNtrh8oSzcA+g9lq8S64STvI8sLH579YbPzcTbIioa/6RqWzJHNkXmIlMblEyCYOVDZBTIJWM1lLIZUUINOs5IadA2BFOMf3VzP9sfFEyoDPJASh4ESUh2tScuKT46J25RMz0KyFhaInoH7Bame4KkTtua4ztYtHXxh5WlxjMnHS/2S7xqpZto/lnI1Bk4hJgyTi/ltFpla7X7M5ZBhjfnpDolcvIOPTBA/QVhBczt4UbLyIeEBsIIwOeQmA9mk9KNdlXexGqMuvG8m9IAWmZIXRY6U+48+Et0Dedn8LE4uUP+6N5jWXGDEa5exY9L9yiS+HVhaQ5pZs6RNT0m6jafHX43jjLFJk88iJVQeLjosT5B3mm+jWpXsmqxCZj7XK3uFlecAwXHPjfwfvhdEmnsrj0YAAAAASUVORK5CYII=);
-    min-height: 100vh;
-    overflow-x: hidden;
 }
 
 main {
-    min-height: 100dvh;
+    min-height: 100svh;
 }
 
 /* flash messages */
@@ -145,12 +148,20 @@ main {
 .user-winstreak {
     position: absolute;
     right: 0;
-    top: -1rem;
+    top: -.75rem;
     color: #b13100;
     text-shadow: none;
     font-size: .9rem;
-    user-select: none;
-    pointer-events: none;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 40%);
+    top: 0;
+    z-index:-1;
 }
 
 /* --------------------------------------------------------------------------------------------------------- */
@@ -187,8 +198,7 @@ nav #desktop {
 /* nav bg image */
 nav > img {
     position: absolute;
-    width: 112.5%;
-    min-height: 100%;
+    width: 105%;
     z-index: -1;
 }
 
@@ -199,18 +209,23 @@ nav > img:nth-of-type(2) {
 
 #responsive-menu {
     position: absolute;
-    width: 275px;
+    width: min(275px, 100%);
     right: 0;
     top: 0;
-    height: 100dvh;
-    background-color: #c7b8be;
-    z-index: 2;
-    box-shadow: -5px 1px 10px 0px #3d3d3d;
+    height: 100svh;
+    z-index: 4;
     list-style: none;
     padding: 7rem 0 0 2rem;
     transform: translateX(110%);
     transition: transform .5s;
     border-left: 3px solid #756e6c;
+}
+
+#responsive-menu > img:first-of-type {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: -1rem;
 }
 
 #responsive-menu #close-btn {
@@ -237,7 +252,8 @@ nav #responsive {
     display: none;
     width: 100%;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
+    padding: 0 2rem;
 }
 
 /* logo */
@@ -262,20 +278,24 @@ nav #responsive img:last-of-type {
 #nav-left li,
 #nav-right li {
     font-size: 1.4rem;
-    /* already position: relative because of class text-shadow */
+}
+
+#nav-right li {
+    align-items: center;
+    display: flex;
 }
 
 #nav-right li:first-of-type {
-    position: relative;
-    min-width: 25%;
     text-align: center;
+    gap: .5rem;
+    position: relative;
+}
+
+#nav-right li:first-of-type span {
+    font-size: 1.4rem;
 }
 
 #nav-right li:first-of-type img {
-    position: absolute;
-    top: 50%;
-    left: -15%;
-    transform: translate(-50%, -50%);
     width: 30px;
     image-rendering: pixelated;
 }
@@ -353,18 +373,37 @@ input::-webkit-inner-spin-button {
 @media screen and (max-width: 1300px) {
 
     nav {
-        width:85%;
-    }
-
-    #nav-right li:first-of-type {
-        min-width: 30%;
+        width:90%;
     }
 
 }
 
+@media screen and (max-width: 1100px) {
+    nav {
+        width: 95%;
+    }
 
+    #nav-left + a {
+        font-size:1.66rem;
+    }
+
+    #nav-right li:first-of-type span,
+    #nav-right li,
+    #nav-left li {
+        font-size: 1.2rem;
+    }
+}
 
 @media screen and (max-width: 991px) {
+    nav {
+        width: 85%;
+    }
+
+    nav #responsive img:first-of-type,
+    nav #responsive img:last-of-type {
+        object-fit: contain;
+    }
+
     nav > img:first-of-type {
         display: none;
     }
@@ -389,6 +428,6 @@ input::-webkit-inner-spin-button {
 @media screen and (max-width: 480px) {
     nav #responsive img:first-of-type,
     nav #responsive img:last-of-type {
-        height: 2rem;
+        height: 3rem;
     }
 }

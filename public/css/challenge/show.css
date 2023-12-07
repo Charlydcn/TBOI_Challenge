@@ -105,6 +105,7 @@ h3 i {
     margin: 2rem auto;
     background-color: #8b003514;
     width: fit-content;
+    width: -moz-fit-content;
     padding: 1rem;
     box-shadow: 1px 1px 12px black;
     flex-direction: column;

@@ -1,12 +1,21 @@
 #register {
-    width: 25rem;
+    width: min(25rem, 100%);
     display: flex;
     flex-direction: column;
     margin: auto;
-    background-color: var(--beige);
     padding: 2rem 3rem;
-    box-shadow: 1px 7px 15px 2px #898888;
-    margin-top: 20px;
+    margin-top: 3rem;
+    position: relative;
+}
+
+#register > img:first-of-type {
+    position: absolute;
+    z-index: -1;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 100%;
+    height: 110%;
+    top: 0;
 }
 
 h1 {
@@ -27,6 +36,7 @@ input {
     border-radius: 2px;
     width: 100%;
     margin-top: .25rem;
+    background-color: #f2eded;
 }
 
 input::placeholder {
@@ -92,4 +102,36 @@ button:hover {
 #registration_form_agreeTerms {
     height: 1rem;
     width: 2rem;
+}
+
+
+@media screen and (max-width: 568px) {
+
+    #register {
+        padding: 5% 10%
+    }
+
+    #register > img:first-of-type {
+        top: -1rem;
+    }
+
+    form:first-of-type {
+        padding: 0 5%;
+    }
+
+    form:first-of-type button ~ p a {
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+
+    form:first-of-type button ~ p {
+        text-align: center;
+    }
+
+    form:last-of-type {
+        margin: 1rem auto 0 auto;
+        width: max(66%, 200px);
+    }
+    
 }

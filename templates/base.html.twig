@@ -28,7 +28,7 @@
                     data-href="{{ path('app_home')}}">
 
                 {% if app.user and app.user.winStreak > 0 %}
-                    <p class="user-winstreak">streak: {{ app.user.winStreak }}</p>                       
+                    <p class="user-winstreak prevent-select">streak: {{ app.user.winStreak }}</p>                       
                 {% endif %}
 
                 <img src="{{ asset('/img/misc/menu_burger.webp')}}" alt="Mobile navigation menu icon">
@@ -60,7 +60,7 @@
                             <img src="{{ asset('/img/user_icons/' ~ app.user.icon)}}" alt="{{ app.user.icon|replace({'.webp': ''})}} user icon">
                             <span class="underline-hover">{{ app.user.username }}</span>
                                 {% if app.user.winStreak > 0 %}
-                                    <p class="user-winstreak">streak: {{ app.user.winStreak }}</p>
+                                    <p class="user-winstreak prevent-select">streak: {{ app.user.winStreak }}</p>
                                 {% endif %}
                         </li>
                         <li class="text-shadow underline-hover href-element" data-href="{{ path('app_logout') }}">
@@ -80,6 +80,8 @@
         </nav>
 
         <ul id="responsive-menu">
+            <img src="{{ asset('/img/misc/save_png/ancient_page_mobile.png')}}" alt="">
+
             <span id="close-btn">X</span>
 
             <li class="text-shadow href-element" data-href="{{ path('new_challenge') }}">Randomizer</li>
@@ -142,6 +144,8 @@
                 <li class="text-shadow underline-hover href-element" data-href="{{ path('contact')}}">Contact</li>
             </ul>            
         </footer>
+
+        <div class="overlay"></div>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="{{ asset('/js/script.js')}}"></script>

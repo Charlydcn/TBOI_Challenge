@@ -4,8 +4,11 @@ figure {
     margin-bottom: 3rem;
 }
 
+figure:first-of-type img {
+    height: 1.5rem;
+}
+
 figure:nth-of-type(2) {
-    opacity: 40%;
     width: 85%;
     justify-content: start;
     margin: auto auto 3rem auto;
@@ -13,32 +16,29 @@ figure:nth-of-type(2) {
 
 figure:nth-of-type(2) img {
     width: 45%;
+    margin: auto;
 }
 
 #tuto ~ img:first-of-type {
     display: none;
-    max-width: 95%;
+    width: min(500px, 95%);
     margin:auto;
 }
 
 #tuto {
     display: flex;
-    width: 85%;
-    max-height: 700px;
+    width: 95%;
+    gap: 2rem;
     margin: auto auto 10% auto;
-    opacity: .4;
-    flex-direction: column;
-    gap: 4rem 0;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 #tuto > img {
     object-fit: scale-down;
-    object-position: left;
-}
-
-#tuto > :last-child {
-    width:400px;
+    transform: scale(.9);
 }
 
 @media screen and (max-width: 991px) {

@@ -57,24 +57,35 @@ function launchSteamGame(appId) {
     window.open(steamLink);
 }
 
+// -------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------
+// ----------- confirmation delete btns ------------------------------------
 var responsiveMenu = $('#responsive-menu')
 
 $('nav #responsive img:last-of-type').on('click', function(event) {
     responsiveMenu.addClass('active')
+    $('.overlay').css('display', 'unset')
+    $('.overlay').css('z-index', '2')
 
     event.stopPropagation()
 })
 
 $(document).on('click', function(event) {
-    if (!$(event.target).is(responsiveMenu)) {
+    if (!responsiveMenu.is(event.target) && responsiveMenu.has(event.target).length === 0) {
         $(responsiveMenu).removeClass('active')
-}
+        $('.overlay').css('display', 'none')
+        $('.overlay').css('z-index', '-1')
+    }
 })
 
 $('#close-btn').on('click', function(event) {
     $(responsiveMenu).removeClass('active')
+        $('.overlay').css('display', 'none')
+        $('.overlay').css('z-index', '-1')
 })
 
+// -------------------------------------------------------------------------
 // -------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------

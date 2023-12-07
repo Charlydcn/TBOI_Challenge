@@ -175,5 +175,30 @@ $.each(checkboxes, function() {
     event.preventDefault()
 })
 
+// -----------------------------------------------------------------------------------------------------
+// -------------- navigation buttons on mobile ---------------------------------------------------------
+$(document).ready(function() {
+    var sections = ["#characters", "#bosses", "#restrictions", "#end-btns"];
+    var currentIndex = 0;
+  
+    $(".scroll-btn").on("click", function() {
+      var direction = $(this).hasClass("up") ? -1 : 1;
+      currentIndex = (currentIndex + direction + sections.length) % sections.length;
+      scrollToSection();
+    });
+  
+    function scrollToSection() {
+      var targetSection = sections[currentIndex];
+      $("html, body").animate({
+        scrollTop: $(targetSection).offset().top
+      }, 500);
+    }
+  });
+  
+
+
+
+
+
 
 

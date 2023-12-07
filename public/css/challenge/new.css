@@ -7,8 +7,36 @@
     width: min(650px, 95%);
 }
 
+h1 {
+    font-size: 2.25rem;
+    text-decoration: underline;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
 #howtoplay img {
     width: 100%;
+}
+
+/* mobile scroll up btn */
+.scroll-btns {
+    position: fixed;
+    right: 1rem;
+    z-index: 3;
+    font-size: 3rem;
+    color: var(--beige);
+    bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #35292b87;
+    padding: .5rem;
+    gap: 1rem;
+    border-radius: 2rem;
+}
+
+.scroll-btn {
+    font-size: 3rem;
 }
 
 /* desktop howtoplay btn */
@@ -27,12 +55,12 @@
 .howtoplay-btn:not(a) {
     display: none;
     position: fixed;
-    right: 1rem;
-    z-index: 1;
-    font-size: 4rem;
-    color: #4d080b;
+    left: 1rem;
+    z-index: 3;
+    font-size: 3rem;
+    color: var(--red);
     bottom: 2rem;
-    opacity: .8y;
+    opacity: .8;
 }
 
 /* <div id="form"> : <img> ~ <form> */
@@ -57,6 +85,10 @@
 
 #form h2 {
     font-size: 2rem;
+}
+
+.scroll-btn {
+    display: none;
 }
 
 /* background when options menu is visible */
@@ -85,6 +117,7 @@ section {
 #step2 {
     flex-direction: column;
     justify-content: unset;
+    display: none;
 }
 
 /* unset cursor for #restr-chance label and win-streak label that is next to it */
@@ -191,6 +224,7 @@ section {
     position: absolute;
     bottom: 5%;
     right: 5%;
+    display: none;
 }
 
 #end-btns button {
@@ -290,8 +324,9 @@ label img {
 #restrictions .list label img {
     width: 30px;
     object-fit: scale-down;
-
 }
+
+
 
 /* checkboxes */
 .checkbox,
@@ -306,6 +341,50 @@ h2 span {
 }
 
 @media screen and (max-width: 991px) {
+    
+    .scroll-btn {
+        display: unset;
+    }
+
+    #step2 {
+        display:flex;
+    }
+
+    #end-btns {
+        display: unset;
+        bottom: 2rem;
+    }
+
+    #form h2 {
+        text-align: center;
+        width: 100%;
+        background-color: var(--red);
+        color: var(--beige);
+    }
+
+    #characters .list label img,
+    #bosses .list label img,
+    #restrictions .list label img {
+        height: 2.5rem;
+        object-fit: unset;
+        image-rendering: pixelated;
+        width: unset;
+    }
+
+    #characters .list,
+    #bosses .list {
+        align-items: center;
+        gap: 1rem;
+
+    }
+
+    .check-btn {
+        gap: .5rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     /* desktop howtoplay btn */
     .howtoplay-btn:not(i) {
@@ -331,10 +410,9 @@ h2 span {
 
     #form form {
         height: unset;
-        background-color: #e1d5da;
-        border: 2px solid #756f6c99;
+        background-color: #c3bebf;
         border-radius: 5px;
-        box-shadow: inset 0px 0px 20px 10px #0000002e;
+        box-shadow: 0px 7px 13px 6px #0000002e;
     }
 
     #characters {
@@ -345,15 +423,12 @@ h2 span {
     .btns {
         gap: 1rem 2rem;
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     #step1,
     #step2 {
         padding: 2rem 1rem;
-    }
-
-    #characters .btns .check-none {
-        margin-right: 3rem;
     }
 
     #characters .list {
@@ -370,13 +445,17 @@ h2 span {
     }
 
     .check-btn {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
+    }
+
+    .check-btn strong {
+        font-size: 1.5rem;
     }
 
     #next-btn {
         bottom: 1rem;
-        right: 4rem;
-        font-size: 4rem;
+        right: 2rem;
+        font-size: 3rem;
     }
 
     #step1,

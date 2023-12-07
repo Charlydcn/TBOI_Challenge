@@ -51,14 +51,21 @@ nextBtn.addEventListener('click', (event) => {
         // if user selected atleast 1 boss and 1 character, hide step 1, show step 2 and endBtns
         } else {
             step1.classList.add('hidden')
-            step2.classList.remove('hidden')
-            endBtns.classList.remove('hidden')
+            step2.style.display = "flex";
+            endBtns.style.display = "flex";
         }
 })
 
-// GO BACK TO STEP 1 FROM STEP 2 (previousBtn on click : show step1 and hide step2)
-previousBtn.addEventListener('click', () => {
+if (window.innerWidth >= 991) {
+    // GO BACK TO STEP 1 FROM STEP 2 (previousBtn on click : show step1 and hide step2)
+    // (only if on mobile)
+    previousBtn.addEventListener('click', () => {
+    
     step1.classList.remove('hidden')
     step2.classList.add('hidden')
     endBtns.classList.add('hidden')
-})
+    })      
+} else {
+    previousBtn.style.cursor = "unset"
+    previousBtn.firstElementChild.style.display = "none"
+}

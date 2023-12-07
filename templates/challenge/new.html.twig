@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TBOI Challenge - <strong>Randomizer</strong>{% endblock %}
+{% block title %}TBOI Challenge - Randomizer{% endblock %}
 
 {% block metaDescription %}
     Create your <strong>custom challenge</strong> with the <strong>Randomizer</strong> ! Choose from 34 characters,
@@ -11,7 +11,14 @@
     <link rel="stylesheet" href="{{ asset('/css/challenge/new.css')}}">
 {% endblock stylesheets %}
 
-{% block body %}
+    {% block body %}
+
+    <h1>Randomizer</h1>
+
+    <div class="scroll-btns">
+        <i class="scroll-btn up fa-solid fa-chevron-up"></i>
+        <i class="scroll-btn down fa-solid fa-chevron-down"></i>
+    </div>
 
     <a class="howtoplay-btn">How to play ?</a>
     <i class="fa-solid fa-circle-question howtoplay-btn"></i>
@@ -134,7 +141,7 @@
             </section>
     
             {# step 2 (restrictions + restrictions chance selection + submit) #}
-            <section id="step2" class="hidden">
+            <section id="step2">
 
                 {# restrictions #}
                 <div id="restrictions">
@@ -214,7 +221,7 @@
                 </div>
             </section>
 
-            <div id="end-btns" class="hidden">
+            <div id="end-btns">
                 {#
                     display checkbox to save the challenge if user is logged in (if user checks it, it will create
                     a challenge, else, it will just randomize his selection)
