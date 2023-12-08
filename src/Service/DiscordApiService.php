@@ -31,6 +31,7 @@ class DiscordApiService
             'redirect_uri' => $this->redirectUri,    // URL de redirection après l'autorisation
             'response_type' => 'token',              // Type de réponse (un token OAuth2)
             'scope' => implode(' ', $scope),         // Les autorisations demandées (identité, email, etc.)
+            'prompt' => 'none'                       // Permet de ne pas afficher de page de
                                                      // connexion et d'automatiquement connecter l'utilisation si son
                                                      // ordinateur est déjà connecté à Discord 
         ]);
