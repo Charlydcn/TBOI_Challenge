@@ -7,14 +7,101 @@ const endBtns = document.querySelector('#end-btns')
 const howToPlayBtns = document.querySelectorAll('.howtoplay-btn')
 const howToPlay = document.querySelector('#howtoplay')
 const closeBtn = document.querySelector('#howtoplay figcaption p')
+const randomizerForm = document.querySelector('#form form')
 
-// display tutorial on how to play btn click
-howToPlayBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-        howToPlay.classList.remove('hidden')
-        overlay.classList.remove('hidden')
+// for mobile, howToPlay btn behavior changes, and nextBtn too
+if (window.innerWidth <= 991) {
+    // ----------------------------------------------------------------------------------------
+    // --------- howToPlayBtn -----------------------------------------------------------------
+    howToPlayBtns.forEach((btn) => {
+        // hide howToPlay btn
+        btn.style.display = "none"
+
+        // but if user scroll 200px down, make them appear
+        window.addEventListener('scroll', () => {
+            if (window.scrollY >= 200) {
+                howToPlayBtns.forEach((btn) => {
+                    // check
+                    if (btn !== howToPlayBtns[0]) {
+                        btn.style.display = "block";
+                    }
+                });
+                
+            } else {
+                howToPlayBtns.forEach((btn) => {
+                    btn.style.display = "none"
+                })
+            }
+        })
+
+        btn.addEventListener('click', () => {
+            howToPlay.classList.remove('hidden')
+            overlay.classList.remove('hidden')
+
+            // Positionner l'élément howToPlay au centre du viewport
+            const viewportWidth = window.innerWidth
+            const viewportHeight = window.innerHeight
+
+            const howToPlayWidth = howToPlay.offsetWidth
+            const howToPlayHeight = howToPlay.offsetHeight
+
+            const topPosition = (viewportHeight - howToPlayHeight) / 2 + window.scrollY
+            const leftPosition = (viewportWidth - howToPlayWidth) / 2
+
+            howToPlay.style.top = `${topPosition}px`
+            howToPlay.style.left = `${leftPosition}px`
+        })
     })
-})
+    // ----------------------------------------------------------------------------------------
+
+    // ----------------------------------------------------------------------------------------
+    // --------- nextBtn/endBtns submission prevention ----------------------------------------
+    // SHOW STEP 2 on nextBtn click IF user selected atleast 1 character and 1 boss
+    randomizerForm.addEventListener('submit', (event) => {
+        // get the amount of characters input checked
+        var charactersCount = form.querySelectorAll('#characters .list label input:checked').length
+        // get the amount of bosses input checked
+        var bossesCount = form.querySelectorAll('#bosses .list label input:checked').length
+    
+        // if user selected less than 1 character or 1 boss, don't submit the form and show an alert
+        if (charactersCount < 1 || bossesCount < 1) {
+            event.preventDefault()
+            alert('You have to select at least 1 character and 1 boss')
+    
+            // Redirect to the #characters section
+            window.location.hash = ''
+            window.location.hash = '#characters'
+        }
+    })
+
+
+} else {
+    console.log(1)
+    nextBtn.addEventListener('click', (event) => {
+        // get the amount of characters input checked
+        var charactersCount = form.querySelectorAll('#characters .list label input:checked').length
+        // get the amount of bosses input checked
+        var bossesCount = form.querySelectorAll('#bosses .list label input:checked').length
+
+        // if user selected less than 1 character, don't show step 2 and alert()
+        if (charactersCount < 1 || bossesCount < 1) {
+            event.preventDefault()
+            alert('You have to select at least 1 character and 1 boss')
+        } else {
+            step1.classList.add('hidden')
+            step2.style.display = "flex"
+            endBtns.style.display = "flex"
+        }
+    })
+
+    howToPlayBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            howToPlay.classList.remove('hidden')
+            overlay.classList.remove('hidden')
+        })
+    })
+}
+
 
 // close on X btn click
 closeBtn.addEventListener('click', () => {
@@ -30,42 +117,3 @@ overlay.addEventListener('click', (event) => {
         overlay.classList.add('hidden')
     }
 })
-
-// SHOW STEP 2 on nextBtn click IF user selected atleast 1 character and 1 boss
-nextBtn.addEventListener('click', (event) => {
-        // get the amount of characters input checked
-        var charactersCount = form.querySelectorAll('#characters .list label input:checked').length
-        // get the amount of bosses input checked
-        var bossesCount = form.querySelectorAll('#bosses .list label input:checked').length
-
-        // if user selected less than 1 character, don't show step 2 and alert()
-        if (charactersCount < 1) {
-            event.preventDefault()
-            alert('You have to select at least 1 character')
-
-        // if user selected less than 1 boss, don't show step 2 and alert()
-        } else if (bossesCount < 1) {
-            event.preventDefault()
-            alert('You have to select at least 1 boss')
-
-        // if user selected atleast 1 boss and 1 character, hide step 1, show step 2 and endBtns
-        } else {
-            step1.classList.add('hidden')
-            step2.style.display = "flex";
-            endBtns.style.display = "flex";
-        }
-})
-
-if (window.innerWidth >= 991) {
-    // GO BACK TO STEP 1 FROM STEP 2 (previousBtn on click : show step1 and hide step2)
-    // (only if on mobile)
-    previousBtn.addEventListener('click', () => {
-    
-    step1.classList.remove('hidden')
-    step2.classList.add('hidden')
-    endBtns.classList.add('hidden')
-    })      
-} else {
-    previousBtn.style.cursor = "unset"
-    previousBtn.firstElementChild.style.display = "none"
-}

@@ -44,7 +44,7 @@
                                 {# display character's image #}
                                 {% for character in challenge.characters %}
                                 <figure class="character">
-                                    <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="Image of {{character.name}}'s head">
+                                    <img src="{{ asset('/img/characters/' ~ character.img)}}" alt="Image of {{character.name}}">
                                     <figcaption>
                                         {# and his name with custom font #}
                                         <img
@@ -172,7 +172,7 @@
         </div>
         {% else %}
         <h2>No challenge created yet, <a href="{{ path('new_challenge')}}">Create yours now !</a></h2>
-        <img src="{{ asset('/img/misc/isaac_thumbsup.png')}}" alt="">
+        <img src="{{ asset('/img/misc/isaac_thumbsup.webp')}}" alt="">
     {% endif %}
 
     

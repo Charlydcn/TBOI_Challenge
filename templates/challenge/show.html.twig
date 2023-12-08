@@ -14,41 +14,41 @@ by creating a <strong>versus</strong> !{% endblock %}
 
     <a href="{{ path('challenges')}}">&lt; Community Challenges</a>    
 
-    {% if challenge.creator is same as(app.user) or is_granted('ROLE_ADMIN') %}
-        <a class="delete-btn" href="{{ path('delete_challenge', {'id': challenge.id}) }}"><i class="fa-solid fa-trash-can"></i></a>
-    {% endif %}
+    <div id="challenge">
+        <img src="{{ asset('/img/misc/page_blood_empty.webp')}}" alt="">
 
-    <h1>Challenge #{{ challenge.id }}</h1>
-    <h2>By <a href="{{ path('show_user', {'id': challenge.creator.id})}}">{{ challenge.creator.username }}</a></h2>
-
-    {% if app.user %}
-        {% if liked %}
-            <img class="like href-element"
-            data-href="{{ path('like_challenge', {'id': challenge.id}) }}"
-            src="{{ asset('/img/misc/heart.png')}}"
-            alt="">   
-
-            {% else %}
-            <img class="like href-element"
-            data-href="{{ path('like_challenge', {'id': challenge.id}) }}"
-            src="{{ asset('/img/misc/empty_heart.png')}}"
-            alt="">            
-
+        {% if challenge.creator is same as(app.user) or is_granted('ROLE_ADMIN') %}
+            <i class="fa-solid fa-trash-can delete-btn href-element" data-href="{{ path('delete_challenge', {'id': challenge.id}) }}"></i>
         {% endif %}
-    {% endif %}
-
-    <div id="btns">
-        <img src="{{ asset('img/text/play.webp')}}"
-            class="href-element" 
-            data-href="{{ path('play_challenge', {'challengeId': challenge.id}) }}"
-            alt="The word PLAY">
 
         {% if app.user %}
-            <img src="{{ asset('img/text/versus.webp')}}"
-                class="href-element" 
-                data-href="{{ path('show_challenge_versus', {'id': challenge.id})}}"
-                alt="The word VERSUS">
+            {% if liked %}
+                <img class="like href-element"
+                data-href="{{ path('like_challenge', {'id': challenge.id}) }}"
+                src="{{ asset('/img/misc/heart.png')}}"
+                alt="Red heart">   
+
+            {% else %}
+                <img class="like href-element"
+                data-href="{{ path('like_challenge', {'id': challenge.id}) }}"
+                src="{{ asset('/img/misc/empty_heart.png')}}"
+                alt="Empty heart">
+
+            {% endif %}
         {% endif %}
+
+        <div id="title">
+            <h1>Challenge #{{ challenge.id }}</h1>
+            <h2>By <a href="{{ path('show_user', {'id': challenge.creator.id})}}">{{ challenge.creator.username }}</a></h2>
+        </div>
+
+        <div id="btns">
+            <a href="{{ path('play_challenge', {'challengeId': challenge.id}) }}">Play</a>
+    
+            {% if app.user %}
+                <a href="{{ path('show_challenge_versus', {'id': challenge.id})}}">Versus</a>
+            {% endif %}
+        </div>
     </div>
 
     {% if challenge.players|length > 0 %}
@@ -69,62 +69,44 @@ by creating a <strong>versus</strong> !{% endblock %}
         </div>
     {% endif %}
 
-    {% set c = challenge %}
+    <div id="chall-details">
+        {% set c = challenge %}
+            
+        {% if c.streak %}
+            <p>Win-streak : {{ c.streak }}</p>
+        {% endif %}
 
-    <div id="challenge">
-        {# characters #}
-        <div class="container">
-            {# CHARACTERS text #}
-            <span class="length-span">{{ c.characters|length }}</span> &nbsp;
-            <img src="{{ asset('/img/text/characters.webp')}}" class="onclick-infos-element" alt="Text saying characters">
-            {# characters list #}
-            <div id="characters" class="onclick-infos hidden">
-                {% for character in c.characters %}
-                    <figure class="character">
-                        <img src="{{ asset('/img/characters/heads/' ~ character.name|replace({" ": "", "&": ""}) ~ '.webp') }}" alt="{{ character.name }}'s head">
-                        <figcaption>{{ character.name }}</figcaption>
-                    </figure>
-                {% endfor %} 
-            </div>
+        <div id="characters">
+            <h4>Characters :</h4>
+            {% for character in c.characters %}
+                <img 
+                    src="{{ asset('/img/characters/' ~ character.img)}}"
+                    alt="Image of {{character.name}}"
+                    class="character">
+            {% endfor %}
+        </div>
+    
+        <div id="bosses">
+            <h4>Bosses :</h4>
+            {% for boss in c.bosses %}
+                <img
+                    src="{{ asset('/img/bosses/' ~ boss.img) }}"
+                    alt="{{ boss.name }}'s completion mark"
+                    class="boss">
+            {% endfor %}
         </div>
 
-        {# bosses #}
-        <div class="container">
-            {# BOSSES text #}
-            <span class="length-span">{{ c.bosses|length }}</span>&nbsp;
-            <img src="{{ asset('/img/text/bosses.webp')}}" class="onclick-infos-element" alt="Text saying bosses">
-            {# bosses list #}
-            <div id="bosses" class="onclick-infos hidden">
-                {% for boss in c.bosses %}
-                    <figure class="boss">
-                        <img src="{{ asset('/img/completion_marks/' ~ boss.name|replace({" ": "", "'": ""}) ~ '.webp') }}" alt="{{ boss.name }}'s completion mark">
-                        <figcaption>{{ boss.name }}</figcaption>
-                    </figure>
-                {% endfor %}
-            </div>
-        </div>
-
-        {# restrictions #}
-        <div class="container">
-            {# RESTRICTIONS text #}
-            <span class="length-span">{{ c.restrictions|length }}</span>&nbsp;
-            <img src="{{ asset('/img/text/restrictions.webp')}}" class="onclick-infos-element" alt="Text saying restrictions">
-            {# restrictions list #}
-            <div id="restrictions" class="onclick-infos hidden">
-                <p>Chances of occuring : {{c.restrictionsChance}}%</p>
-                {% for restriction in c.restrictions %}
-                    <figure class="restriction">
-                        <img src="{{ asset('/img/restrictions/' ~ restriction.img) }}" alt="{{ restriction.name }}'s image">
-                        {{ restriction.name }}
-                    </figure>
-                {% endfor %} 
-            </div>
+        <div id="restrictions">
+            <h4>Restrictions :</h4>
+            {% for restriction in c.restrictions %}
+                <img
+                    src="{{ asset('/img/restrictions/' ~ restriction.img) }}"
+                    alt="{{ restriction.name }}'s image"
+                    class="restriction">
+            {% endfor %}
         </div>
     </div>
-        
-    {% if c.streak %}
-        <p>Win-streak : {{ c.streak }}</p>
-    {% endif %}
+
 
 
 {% endblock %}

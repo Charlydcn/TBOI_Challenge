@@ -2,16 +2,55 @@
 // FLASH MSG DISAPPEARANCE ---------------------------------------------------------------------------
 $(document).ready(function() {
     var i = 5000
+
+    // Delay before starting the animation
     $(this).delay(1000)
+
+    // Loop through each flash message
     $(".flash").each(function() {
         if ($(this).text().length > 0) {
-            $(this).slideDown(500, function() {
-                $(this).delay(i).slideUp(500)
-                i += 625
+            var currentFlash = $(this)
+
+            // Slide down animation
+            currentFlash.slideDown(500, function() {
+                // Slide up animation after a delay
+                currentFlash.delay(i).slideUp(500)
             })
+
+            // Remove the flash message on click
+            currentFlash.click(function() {
+                currentFlash.remove(500)
+            })
+
+            i += 625
         }
     })
 })
+
+// make header appear/disappear on scroll
+if ($(window).width() <= 991) {
+    var previousScroll = 0;
+    var header = $('header');
+
+    $(window).on('scroll', function() {
+        if ($(window).width() <= 991) {
+            var currentScroll = $(this).scrollTop();
+
+            if (currentScroll > previousScroll && currentScroll > 100) {
+                header.css('transform', 'translateY(-10rem)');
+            } else {
+                header.css('transform', 'unset');
+            }
+
+            previousScroll = currentScroll;
+        }
+    });
+}
+
+
+
+
+
 
 // ---------------------------------------------------------------------------------------------------
 // HREF REDIRECTION ON ELEMENTS ----------------------------------------------------------------------
@@ -52,9 +91,9 @@ $(document).on('click', function(event) {
 // ---------------------------------------------------------------------------------------
 // ------------- start a game (isaac's appId : 250900) -----------------------------------
 function launchSteamGame(appId) {
-    var steamLink = "steam://run/" + appId;
+    var steamLink = "steam://run/" + appId
 
-    window.open(steamLink);
+    window.open(steamLink)
 }
 
 // -------------------------------------------------------------------------
@@ -66,7 +105,7 @@ var responsiveMenu = $('#responsive-menu')
 $('nav #responsive img:last-of-type').on('click', function(event) {
     responsiveMenu.addClass('active')
     $('.overlay').css('display', 'unset')
-    $('.overlay').css('z-index', '2')
+    $('.overlay').css('z-index', '3')
 
     event.stopPropagation()
 })
@@ -91,5 +130,5 @@ $('#close-btn').on('click', function(event) {
 // -------------------------------------------------------------------------
 // ----------- confirmation delete btns ------------------------------------
 $(".delete-btn").on("click", function() {
-    return confirm("Are you sure you want to delete this ?");
-});
+    return confirm("Are you sure you want to delete this ?")
+})

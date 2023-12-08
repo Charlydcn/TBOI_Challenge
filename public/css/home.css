@@ -1,20 +1,20 @@
-figure {
+main figure {
     display: flex;
     justify-content: center;
     margin-bottom: 3rem;
 }
 
-figure:first-of-type img {
+main figure:first-of-type img {
     height: 1.5rem;
 }
 
-figure:nth-of-type(2) {
+main figure:nth-of-type(2) {
     width: 85%;
     justify-content: start;
     margin: auto auto 3rem auto;
 }
 
-figure:nth-of-type(2) img {
+main figure:nth-of-type(2) img {
     width: 45%;
     margin: auto;
 }

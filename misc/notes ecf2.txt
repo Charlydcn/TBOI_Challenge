@@ -1,8 +1,11 @@
 NOTES ECF 2:
-mettre le bouton ouvrir le jeu sur détail d'un challenge
-démonstration du jeu sous forme d'histoire en ouvrant le jeu etc
-pagination sur les challenges
+
+code :
+pagination sur les challenges (liste des challenges)
 channel discord input dans le versus
+mettre le bouton ouvrir le jeu sur détail d'un challenge aussi
+
+démonstration du jeu sous forme d'histoire en ouvrant le jeu etc
 footer dans la maquette
 parler UX/UI et règle des trois clics lors de la maquette
 préfixes CSS : c'est pour la compatibilité pas pour l'accessibilité

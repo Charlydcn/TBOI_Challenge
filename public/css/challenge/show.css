@@ -3,7 +3,7 @@ p {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2.25rem;
 }
 
 h1,
@@ -14,7 +14,7 @@ h2 {
 
 h2,
 h2 a {
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-decoration: none;
 }
 
@@ -30,86 +30,59 @@ h3 i {
     font-size: 2rem;
 }
 
-.like {
-    image-rendering: pixelated;
-    height: 2rem;
-    display: flex;
-    margin: auto;
+h4 {
+    font-size: 1.5rem;
+    width: 100%;
+    text-decoration: underline;
 }
 
 #challenge {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin: 2rem 0 1rem 1rem;
-    justify-content: flex-start;
-    width: 25%;
-}
-
-.container {
     position: relative;
-}
-
-#characters,
-#bosses,
-#restrictions {
-    gap: 0.2rem 1rem;
-    margin: .75rem auto;
-    width: max-content;
-}
-
-#characters {
-    max-height: 600px;
-    flex-wrap: wrap;
-    width: 550px;
-}
-
-#restrictions > p:first-of-type {
-    opacity: 50%;
-    margin: .75rem 0;
-}
-
-.character,
-.boss,
-.restriction {
     display: flex;
+    gap: 26%;
+    flex-direction: column;
+    justify-content: flex-end;
     align-items: center;
-    gap: .5rem;
+    width: min(65svh, 90%);
+    height: 65svh;
+    margin: auto;
+    padding: 2rem 2rem 4rem 2rem;
 }
 
-.character img,
-.restriction img {
-    width: 30px;
-    object-fit: scale-down;
-    height: 30px;
-}
-
-.boss img {
-    width: 25px;
-    height: 25px;
-}
-
-.length-span {
-    color: #372b2d;
-    font-size: 3.5rem;
-}
-
-.onclick-infos-element {
-    height: 30px;
+#challenge > img:first-of-type {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: -1;
 }
 
 #btns {
     display: flex;
-    gap: 1rem;
+    gap: 30%;
     justify-content: center;
-    margin: 2rem auto;
-    background-color: #8b003514;
-    width: fit-content;
-    width: -moz-fit-content;
-    padding: 1rem;
-    box-shadow: 1px 1px 12px black;
-    flex-direction: column;
-    align-items: center;
+}
+
+#btns a {
+    font-size: clamp(2rem, 7rem - 25vh, 2.5rem);
+    color: var(--brown);
+}
+
+.like {
+    image-rendering: pixelated;
+    height: 2rem;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+}
+
+.delete-btn {
+    image-rendering: pixelated;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    color: var(--red);
 }
 
 #leaderboard {
@@ -143,4 +116,34 @@ h3 i {
 
 #leaderboard ul li:nth-of-type(3) {
     background-color: #cba164;
+}
+
+#chall-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 3rem;
+    align-items: flex-start;
+    gap: 7%;
+}
+
+#characters,
+#bosses,
+#restrictions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 25%;
+    gap: .5rem;
+}
+
+.character,
+.boss,
+.restriction {
+    height: 2.5rem;
+}
+
+.restriction {
+    height:1.5rem;
 }

@@ -3,8 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <meta name="description" content="{% block metaDescription %}{% endblock %}">
+
         <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="{% block metaDescription %}{% endblock %}">
+
         <link rel="icon" href="{{ asset('/img/misc/save_png/icon.png')}}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
         <link href="https://fonts.cdnfonts.com/css/upheaval" rel="stylesheet">
@@ -15,72 +17,74 @@
 
     </head>
     <body>
-        <nav>
-            <img src="{{ asset('/img/misc/navbar.webp')}}" alt="Navigation background image for desktops">
-
-            <img src="{{ asset('/img/misc/navbar_mobile.webp')}}" alt="Navigation background image for smartphones">
-
-            <ul id="responsive">
-                <img
-                    src="{{ asset('/img/misc/logo.webp')}}"
-                    alt="Text saying 'TBOI Challenge' : website's logo"                    
-                    class="href-element"
-                    data-href="{{ path('app_home')}}">
-
-                {% if app.user and app.user.winStreak > 0 %}
-                    <p class="user-winstreak prevent-select">streak: {{ app.user.winStreak }}</p>                       
-                {% endif %}
-
-                <img src="{{ asset('/img/misc/menu_burger.webp')}}" alt="Mobile navigation menu icon">
-            </ul>
-            
-            <ul id="desktop">
-                <div id="nav-left">
-                    <li class="text-shadow underline-hover href-element" data-href="{{ path('challenges') }}">
-                        Browse
-                        <ul class="sub-menu">
-                            <li class="href-element" data-href="{{ path('challenges') }}">Challenges</li>
-                            {% if app.user %}
-                                <li class="href-element" data-href="{{ path('app_versus') }}">Versus</li>
-                            {% endif %}
-                        </ul>
-                    </li>
-        
-                    <li class="text-shadow underline-hover href-element" data-href="{{ path('new_challenge') }}">
-                        Randomizer
-                    </li>
-                </div>
-        
-                <a class="text-shadow" href="{{ path('app_home') }}">TBOI Challenge</a>
-        
-                <div id="nav-right">
-                    {% if app.user %}
-                        {# if a user is logged in #}
-                        <li class="text-shadow href-element" data-href="{{ path('show_user', {'id': app.user.id})}}">
-                            <img src="{{ asset('/img/user_icons/' ~ app.user.icon)}}" alt="{{ app.user.icon|replace({'.webp': ''})}} user icon">
-                            <span class="underline-hover">{{ app.user.username }}</span>
-                                {% if app.user.winStreak > 0 %}
-                                    <p class="user-winstreak prevent-select">streak: {{ app.user.winStreak }}</p>
-                                {% endif %}
-                        </li>
-                        <li class="text-shadow underline-hover href-element" data-href="{{ path('app_logout') }}">
-                            Log off
-                        </li>
-                    {% else %}
-                        {# if no one is logged in #}
-                        <li class="text-shadow underline-hover href-element" data-href="{{ path('app_login') }}">
-                            Log in
-                        </li>
-                        <li class="text-shadow underline-hover href-element" data-href="{{ path('app_register') }}">
-                            Register
-                        </li>
+        <header>
+            <nav>
+                <img src="{{ asset('/img/misc/navbar.webp')}}" alt="Navigation background image for desktops">
+    
+                <img src="{{ asset('/img/misc/navbar_mobile_test.png')}}" alt="Navigation background image for smartphones">
+    
+                <ul id="responsive">
+                    <img
+                        src="{{ asset('/img/misc/logo.webp')}}"
+                        alt="Text saying 'TBOI Challenge' : website's logo"                    
+                        class="href-element"
+                        data-href="{{ path('app_home')}}">
+    
+                    {% if app.user and app.user.winStreak > 0 %}
+                        <p class="user-winstreak prevent-select">streak: {{ app.user.winStreak }}</p>                       
                     {% endif %}
-                </div>
-            </ul>
-        </nav>
+    
+                    <img src="{{ asset('/img/misc/menu_burger.webp')}}" alt="Mobile navigation menu icon">
+                </ul>
+                
+                <ul id="desktop">
+                    <div id="nav-left">
+                        <li class="text-shadow underline-hover href-element" data-href="{{ path('challenges') }}">
+                            Browse
+                            <ul class="sub-menu">
+                                <li class="href-element" data-href="{{ path('challenges') }}">Challenges</li>
+                                {% if app.user %}
+                                    <li class="href-element" data-href="{{ path('app_versus') }}">Versus</li>
+                                {% endif %}
+                            </ul>
+                        </li>
+            
+                        <li class="text-shadow underline-hover href-element" data-href="{{ path('new_challenge') }}">
+                            Randomizer
+                        </li>
+                    </div>
+            
+                    <a class="text-shadow" href="{{ path('app_home') }}">TBOI Challenge</a>
+            
+                    <div id="nav-right">
+                        {% if app.user %}
+                            {# if a user is logged in #}
+                            <li class="text-shadow href-element" data-href="{{ path('show_user', {'id': app.user.id})}}">
+                                <img src="{{ asset('/img/user_icons/' ~ app.user.icon)}}" alt="{{ app.user.icon|replace({'.webp': ''})}} user icon">
+                                <span class="underline-hover">{{ app.user.username }}</span>
+                                    {% if app.user.winStreak > 0 %}
+                                        <p class="user-winstreak prevent-select">streak: {{ app.user.winStreak }}</p>
+                                    {% endif %}
+                            </li>
+                            <li class="text-shadow underline-hover href-element" data-href="{{ path('app_logout') }}">
+                                Log off
+                            </li>
+                        {% else %}
+                            {# if no one is logged in #}
+                            <li class="text-shadow underline-hover href-element" data-href="{{ path('app_login') }}">
+                                Log in
+                            </li>
+                            <li class="text-shadow underline-hover href-element" data-href="{{ path('app_register') }}">
+                                Register
+                            </li>
+                        {% endif %}
+                    </div>
+                </ul>
+            </nav>
+        </header>
 
         <ul id="responsive-menu">
-            <img src="{{ asset('/img/misc/save_png/ancient_page_mobile.png')}}" alt="">
+            <img src="{{ asset('/img/misc/ancient_page_mobile.webp')}}" alt="">
 
             <span id="close-btn">X</span>
 
@@ -140,9 +144,16 @@
         <footer>
             <ul>
                 <li class="text-shadow underline-hover href-element" data-href="{{ path('terms')}}">Terms of Service</li>
+                <li>&ndash;</li>
                 <li class="text-shadow underline-hover href-element" data-href="{{ path('privacy_policy')}}">Privacy Policy</li>
+                <li>&ndash;</li>
                 <li class="text-shadow underline-hover href-element" data-href="{{ path('contact')}}">Contact</li>
-            </ul>            
+            </ul>
+            
+            <figure>
+                <img src="{{ asset('/img/misc/icon_big.png')}}" alt="">
+                <figcaption>&#169;&nbsp;2023 - TBOI Challenge</figcaption>
+            </figure>         
         </footer>
 
         <div class="overlay"></div>

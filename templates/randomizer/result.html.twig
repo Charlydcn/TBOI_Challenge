@@ -12,8 +12,6 @@
     <p>Launch the game on Steam</p>
 </div>
 
-<img src="{{ asset('/img/misc/reset.png')}}" alt="reset icon" onClick="window.location.reload();">
-
 <div id="text-result">
     {% if character is defined and boss is defined %}
         <p>You have to play <span>{{ character.name|capitalize }}</span> and beat <span>{{ boss.name|capitalize }}</span></p>
