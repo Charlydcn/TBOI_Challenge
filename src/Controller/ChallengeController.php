@@ -37,7 +37,6 @@ class ChallengeController extends AbstractController
     }
 
     #[Route('/challenge/new', name: 'new_challenge')]
-    #[Route('/challenge/{id}/edit', name: 'edit_challenge')]
     public function new(
         Challenge $challenge = null,
         Request $request,
@@ -66,6 +65,12 @@ class ChallengeController extends AbstractController
 
             // hydrate new challenge with form data
             $challenge = $form->getData();
+
+            if(count($challenge->getCharacters()) < 1 || count($challenge->getBosses()) < 1) {
+                $this->addFlash('error', 'You have to select atleast 1 character and 1 boss');
+
+                return $this->redirectToRoute('new_challenge');
+            }
 
             // if winstreak checkbox isn't checked, set challenge winstreak attribute to 0
             // (because you can check winstreak, put a value, then uncheck it, but the value of the input still remains)
@@ -97,11 +102,15 @@ class ChallengeController extends AbstractController
             } else {
                 $r = $randomizerController->randomize($challenge);
 
-                return $this->render('randomizer/result.html.twig', [
+                $response = $this->render('randomizer/result.html.twig', [
                     'character' => $r['character'],
                     'boss' => $r['boss'],
                     'restrictions' => $r['restrictions'],
                 ]);
+
+                $response->headers->set('Cache-Control', 'public, max-age=3600');
+
+                return $response;
             }
 
         }
@@ -138,13 +147,13 @@ class ChallengeController extends AbstractController
         }
 
         $winners = $playChallengeRepository->findBy(['challenge' => $challenge->getId(), 'completed' => true]);
-        $bestsRuns = $playChallengeRepository->findBestRuns($challenge->getId(), 10);
+        $bestRuns = $playChallengeRepository->findBestRuns($challenge->getId(), 10);
 
         return $this->render('challenge/show.html.twig', [
             'challenge' => $challenge,
             'winners' => $winners,
             'liked' => $liked,
-            'bestsRuns' => $bestsRuns,
+            'bestRuns' => $bestRuns,
         ]);
     }
     

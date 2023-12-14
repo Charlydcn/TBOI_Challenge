@@ -3,48 +3,41 @@
 $(document).ready(function() {
     var i = 5000
 
-    // Delay before starting the animation
     $(this).delay(1000)
 
-    // Loop through each flash message
     $(".flash").each(function() {
         if ($(this).text().length > 0) {
-            var currentFlash = $(this)
-
-            // Slide down animation
-            currentFlash.slideDown(500, function() {
-                // Slide up animation after a delay
-                currentFlash.delay(i).slideUp(500)
-            })
-
-            // Remove the flash message on click
-            currentFlash.click(function() {
-                currentFlash.remove(500)
+            $(this).slideDown(500, function() {
+                $(this).delay(i).slideUp(500)
             })
 
             i += 625
         }
     })
+
+    $(".flash").on('click', function() {
+        $(this).remove()
+    })
 })
 
 // make header appear/disappear on scroll
 if ($(window).width() <= 991) {
-    var previousScroll = 0;
-    var header = $('header');
+    var previousScroll = 0
+    var header = $('header')
 
     $(window).on('scroll', function() {
         if ($(window).width() <= 991) {
-            var currentScroll = $(this).scrollTop();
+            var currentScroll = $(this).scrollTop()
 
             if (currentScroll > previousScroll && currentScroll > 100) {
-                header.css('transform', 'translateY(-10rem)');
+                header.css('transform', 'translateY(-10rem)')
             } else {
-                header.css('transform', 'unset');
+                header.css('transform', 'unset')
             }
 
-            previousScroll = currentScroll;
+            previousScroll = currentScroll
         }
-    });
+    })
 }
 
 
@@ -54,18 +47,23 @@ if ($(window).width() <= 991) {
 
 // ---------------------------------------------------------------------------------------------------
 // HREF REDIRECTION ON ELEMENTS ----------------------------------------------------------------------
-var hrefElements = document.querySelectorAll('.href-element')
+var hrefElements = document.querySelectorAll('.href-element');
 
 hrefElements.forEach(function (hrefElement) {
     hrefElement.addEventListener('click', function(event) {
-        // get data-href attribute which is : <div class="href-element" data-href="example/route...">
-        var url = this.getAttribute('data-href')
-        window.location.href = url
+        var url = this.getAttribute('data-href');
+        var target = this.getAttribute('data-target');
 
+        if (target && target === '_blank') {
+            window.open(url, '_blank');
+        } else {
+            window.location.href = url;
+        }
 
-        event.stopPropagation()
-    })
-})
+        event.stopPropagation();
+    });
+});
+
 
 // ---------------------------------------------------------------------------------------------------
 // INFOS BOX ON CLICK --------------------------------------------------------------------------------
@@ -99,7 +97,7 @@ function launchSteamGame(appId) {
 // -------------------------------------------------------------------------
 
 // -------------------------------------------------------------------------
-// ----------- confirmation delete btns ------------------------------------
+// ----------- open responsive menu on click burger menu icon --------------
 var responsiveMenu = $('#responsive-menu')
 
 $('nav #responsive img:last-of-type').on('click', function(event) {
@@ -132,3 +130,18 @@ $('#close-btn').on('click', function(event) {
 $(".delete-btn").on("click", function() {
     return confirm("Are you sure you want to delete this ?")
 })
+
+// -----------------------------------------------------------------------------------------
+// ----- prevent start date to be prior to today's date ------------------------------------
+
+var today = new Date().toISOString().slice(0, new Date().toISOString().lastIndexOf(":"));
+var dateInputs = document.querySelectorAll('.date-input');
+
+dateInputs.forEach(function(dateInput) {
+    dateInput.setAttribute('min', today)
+});
+
+
+
+
+// -----------------------------------------------------------------------------------------

@@ -34,17 +34,19 @@ h4 {
     font-size: 1.5rem;
     width: 100%;
     text-decoration: underline;
+    margin-bottom: .75rem;
+    text-align: center;
 }
 
 #challenge {
     position: relative;
     display: flex;
-    gap: 26%;
+    gap: 35%;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    width: min(65svh, 90%);
-    height: 65svh;
+    width: min(90vw, 500px);
+    height: min(100vw, 500px);
     margin: auto;
     padding: 2rem 2rem 4rem 2rem;
 }
@@ -57,6 +59,14 @@ h4 {
     z-index: -1;
 }
 
+#title {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+}
+
 #btns {
     display: flex;
     gap: 30%;
@@ -64,7 +74,7 @@ h4 {
 }
 
 #btns a {
-    font-size: clamp(2rem, 7rem - 25vh, 2.5rem);
+    font-size: clamp(2rem, 18vw - 11rem, 2.5rem);
     color: var(--brown);
 }
 
@@ -122,9 +132,10 @@ h4 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 3rem;
     align-items: flex-start;
-    gap: 7%;
+    gap: 5rem 7%;
+    width: 90%;
+    margin: 3rem auto auto;
 }
 
 #characters,
@@ -134,8 +145,13 @@ h4 {
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
-    max-width: 25%;
+    width: min(10rem, 90%);
     gap: .5rem;
+    justify-content: center;
+}
+
+#restrictions {
+    width: min(12.5rem, 90%);
 }
 
 .character,
@@ -144,6 +160,8 @@ h4 {
     height: 2.5rem;
 }
 
-.restriction {
-    height:1.5rem;
+@media screen and (max-width: 480px) {
+    #challenge {
+        gap: 20%;
+    }
 }

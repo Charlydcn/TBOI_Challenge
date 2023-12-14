@@ -10,30 +10,45 @@
 
 {% block body %}
 
-    <a href="{{ path('new_versus', {'id': challenge.id})}}">Create new Versus</a>
+<a class="back-link" href="{{ path('show_challenge', {'id': challenge.id})}}">&lt; Challenge</a>
 
     {% if versus|length > 0 %}
-        <p>Current versus : </p>
-        {% for v in versus %}
-        <div class="versus href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
-            <ul>
-                <li>Versus #{{ v.id }}</li>
-                <li><span>Creator : </span>{{ v.creator.username }}</li>
-                <li><span>Starting : </span><span class="date" data-date="{{ v.startDate|date('d:m:Y H:i') }}">{{v.startDate|date('d:m:Y H:i')}}</span></li>
-                <li><span>Ends in : </span><span class="date" data-date="{{ v.endDate|date('d:m:Y H:i') }}">{{v.endDate|date('d:m:Y H:i')}}</span></li>
-                {% if v.slots %}
-                    <li class="slots"><span>Slots : </span>{{ v.players|length }} / {{ v.slots }}</li>
-                {% endif %}
-                {% if v.winner %}
-                    <li><span>Winner : </span>{{ v.winner.username }}</li>
-                {% endif %}
-            </ul>
-            <img src="{{ asset('/img/misc/swords_versus.png')}}" alt="">
-        </div>
-        {% endfor %}
+        <h2>Ongoing versus : </h2>
 
-        {% else %}
-        <p>No versus for this challenge yet</p>
+        <a class="new-versus" href="{{ path('new_versus', {'id': challenge.id})}}">
+            <i class="fa-solid fa-circle-plus"></i>
+            Create new Versus
+        </a>
+
+        <div id="versus-container">
+            {% for v in versus %}
+            <div class="versus href-element" data-href="{{ path('show_versus', {'id': v.id})}}">
+                <ul>
+                    <li>Versus #{{ v.id }}</li>
+                    <li><span>Creator : </span>{{ v.creator.username }}</li>
+                    <li><span>Starting : </span><span class="date" data-date="{{ v.startDate|date('d:m:Y H:i') }}">{{v.startDate|date('d:m:Y H:i')}}</span></li>
+                    <li><span>Ends in : </span><span class="date" data-date="{{ v.endDate|date('d:m:Y H:i') }}">{{v.endDate|date('d:m:Y H:i')}}</span></li>
+                    {% if v.slots %}
+                        <li class="slots"><span>Slots : </span>{{ v.players|length }} / {{ v.slots }}</li>
+                    {% endif %}
+                    {% if v.winner %}
+                        <li><span>Winner : </span>{{ v.winner.username }}</li>
+                    {% endif %}
+                </ul>
+                <img src="{{ asset('/img/misc/swords_versus.png')}}" alt="">
+            </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+
+        <h2>No versus created yet,
+            <a href="{{ path('new_versus', {'id': challenge.id})}}">
+                <i class="fa-solid fa-circle-plus"></i>
+                Create yours now !
+            </a>
+        </h2>
+        <img src="{{ asset('/img/misc/isaac_handsup.webp')}}" alt="Isaac thumbs up">
 
     {% endif %}
 

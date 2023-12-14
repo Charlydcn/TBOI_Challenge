@@ -59,6 +59,7 @@ class RegistrationController extends AbstractController
             );
             $user->setRegistrationDate(new DateTime);
             $user->setIcon('bean.webp');
+            $user->setRoles(['ROLE_USER']);
 
             $entityManager->persist($user);
             $entityManager->flush();

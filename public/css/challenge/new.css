@@ -281,7 +281,7 @@ section {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: .5rem;
     align-content: stretch;
 }
 
@@ -386,6 +386,10 @@ h2 span {
         object-fit: unset;
         image-rendering: pixelated;
         width: unset;
+    }
+
+    #bosses .list {
+        gap: 1.5rem;
     }
 
     .list {

@@ -3,7 +3,10 @@
     position: relative;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    width: min(27.5rem, 90vw);
+    height: min(27.5rem, 90vw);
+    margin:auto;
+    padding: 10%;
 }
 
 #launchgame {
@@ -12,8 +15,15 @@
     align-items: center;
     gap: 1rem;
     background-color: #d2d6ee;
-    width: max-content;
+    width: min(15rem, 90%);
     padding: 5px 1.5rem;
+    margin: 1rem auto;
+    box-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
+    transition: box-shadow .3s;
+}
+
+#launchgame:hover {
+    box-shadow:unset;
 }
 
 #launchgame img {
@@ -24,7 +34,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 1rem;
+    text-align: center;
+    background-color: var(--beige);
+    padding: 1rem;
+    width: min(20rem, 90%);
+    margin: 1rem auto;
+    box-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
 }
 
 #text-result span {
@@ -48,35 +63,35 @@
 
 /* text img to remind user to note his completion time before ending the run */
 #protip {
-    position: absolute;
-    top: 5rem;
-    left: 3rem;
-    rotate: -4deg;
-    width: 250px;
+    width: min(30rem, 90%);
     opacity: .5;
+    margin: 2rem auto;
+    display: block;
 }
 
 /* set fixed width/height top bg img, step1 and step2 */
-#page > img:first-of-type,
 #step1,
 #step2 {
-    width: 500px;
-    height: 500px;
+    width: 100%;
+    height: 100%;
 }
 
 /* bg image (page with blood) */
 #page > img:first-of-type {
     position: absolute;
     z-index: -1;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
 }
-
-/* step 1 (hide result and show challenge characters, bosses, restrictions */
 
 #step1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 10%;
     justify-content: center;
 }
 
@@ -90,7 +105,7 @@
     display: flex;
     padding: 3rem 0;
     justify-content: space-around;
-    position: relative;
+    gap:10%;
 }
 
 /* reset btn */
@@ -106,9 +121,13 @@
     cursor: pointer;
 }
 
+#randomize-btn {
+    height:2rem;
+}
+
 /* back */
 #completion-time .back-btn {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
 }
 
 .back-btn:not(#completion-time .back-btn) {
@@ -148,14 +167,43 @@
     justify-content: space-around;
 }
 
-#completion-time {
-    justify-content: center;
+#btns {
     gap:1rem;
-    align-items: center;;
+}
+
+#completion-time {
+    gap: 1rem;
+    width: 135%;
+}
+
+#completion-time form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+}
+
+#completion-time form div:not(:last-of-type) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border:none;
+}
+
+#completion-time form div:nth-of-type(2) input {
+    padding: .5rem;
+    outline: none;
+}
+
+#completion-time form button {
+    color: var(--eggshell);
+    background-color: var(--brown);
+    border: none;
+    padding: .5rem;
 }
 
 #btns img {
-    height:35px;
+    height: min(7vw, 2rem);
     cursor:pointer;
 }
 
@@ -188,7 +236,7 @@
 
 /* text img */
 .character img:first-of-type:not(figure img) {
-    height: 100px;
+    height: min(18vw, 5rem);
 }
 
 .character img:last-of-type {
@@ -210,7 +258,7 @@
 }
 
 .boss img:last-of-type {
-    height: 80px;
+    height: min(9vw, 3rem);
 }
 
 /* ---------------------------------------------------------------------------------------- */
@@ -223,30 +271,7 @@
 }
 
 @media screen and (max-width: 991px) {
-    #text-result {
-        margin: auto auto 3rem auto;
-        width: 80%;
-    }
-
-    #text-result p {
-        text-align: center;
-    }
-
-    #result ~ img {
-        width: 80%;
-        margin: 3rem auto auto 1rem;
-        opacity: .666;
-    }
-
-    .boss img:last-of-type {
-        height:3rem;
-    }
-
-    .character img:last-of-type {
-        height: 1.5rem
-    }
-
-    .character img:first-of-type:not(figure img) {
-        height: 130px;
+    #launchgame {
+        display: none;
     }
 }

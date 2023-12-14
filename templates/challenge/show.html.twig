@@ -12,13 +12,13 @@ by creating a <strong>versus</strong> !{% endblock %}
 
 {% block body %}
 
-    <a href="{{ path('challenges')}}">&lt; Community Challenges</a>    
+    <a class="back-link" href="{{ path('challenges')}}">&lt; Community Challenges</a>    
 
     <div id="challenge">
         <img src="{{ asset('/img/misc/page_blood_empty.webp')}}" alt="">
 
         {% if challenge.creator is same as(app.user) or is_granted('ROLE_ADMIN') %}
-            <i class="fa-solid fa-trash-can delete-btn href-element" data-href="{{ path('delete_challenge', {'id': challenge.id}) }}"></i>
+            <a class="fa-solid fa-trash-can delete-btn" href="{{ path('delete_challenge', {'id': challenge.id}) }}"></a>
         {% endif %}
 
         {% if app.user %}
@@ -57,7 +57,7 @@ by creating a <strong>versus</strong> !{% endblock %}
             <ul>
                 {% set nb = 1 %}
 
-                {% for run in bestsRuns %}
+                {% for run in bestRuns %}
                     <li><span>{{ nb }}</span>
                         {{ run.completionTime|date('H:i:s') }} : {{ run.username ? run.username : "Unknown"}}<br>
                         Comment : {{ run.comment ? run.comment : 'None' }}
@@ -96,15 +96,22 @@ by creating a <strong>versus</strong> !{% endblock %}
             {% endfor %}
         </div>
 
-        <div id="restrictions">
-            <h4>Restrictions :</h4>
-            {% for restriction in c.restrictions %}
-                <img
-                    src="{{ asset('/img/restrictions/' ~ restriction.img) }}"
-                    alt="{{ restriction.name }}'s image"
-                    class="restriction">
-            {% endfor %}
-        </div>
+            <div id="restrictions">
+                <h4>Restrictions :</h4>
+
+                {% if c.restrictions|length < 1 %}
+                    <h5>None</h5>
+
+                    {% else %}
+
+                    {% for restriction in c.restrictions %}
+                    <img
+                        src="{{ asset('/img/restrictions/' ~ restriction.img) }}"
+                        alt="{{ restriction.name }}'s image"
+                        class="restriction">
+                    {% endfor %}
+                {% endif %}
+            </div>
     </div>
 
 

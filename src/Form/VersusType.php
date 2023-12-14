@@ -6,7 +6,9 @@ use DateTime;
 use App\Entity\Versus;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -19,10 +21,10 @@ class VersusType extends AbstractType
     {
         $builder
             ->add('startDate', DateTimeType::class, [
-                'label' => 'Starting date',
                 'widget' => 'single_text',
                 'attr' => [
-                    'placeholder' => 'dd-MM-yyyy HH:mm'
+                    'placeholder' => 'dd-MM-yyyy HH:mm',
+                    'class' => 'date-input',
                 ],
                 'data' => new DateTime(),
             ])
@@ -30,25 +32,42 @@ class VersusType extends AbstractType
         
 
             ->add('endDate', DateTimeType::class, [
-                'label' => 'Ending date (leave empty for none)',
                 'widget' => 'single_text',
                 'attr' => [
-                    'placeholder' => 'dd-MM-yyyy HH:mm'
+                    'placeholder' => 'dd-MM-yyyy HH:mm',
+                    'class' => 'date-input',
                 ],
                 'required' => false,
             ])
 
             ->add('slots', IntegerType::class, [
-                'label' => 'Slots (leave empty for unlimited)',
                 'required' => false,
+                'attr' => [
+                    'placeholder' => 'Leave empty for unlimited',
+                ],
             ])
 
-            ->add('public', CheckboxType::class, [
+            // ->add('public', CheckboxType::class, [
+            //     'required' => false,
+            //     'data' => true,
+            // ])
+
+            ->add('discordChannel', TextType::class, [
                 'required' => false,
-                'data' => true,
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => 'Discord channel URL can\'t exceed 255 characters',
+                    ])
+                ],
+                'attr' => [
+                    'placeholder' => 'https://discord.com/channels/example/example',
+                ],
             ])
 
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Create Versus',
+            ])
         ;
     }
 

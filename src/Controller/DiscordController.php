@@ -75,8 +75,10 @@ class DiscordController extends AbstractController
 
         $user->setAccessToken($accessToken);
         $user->setUsername($discordUser->username);
+        $user->setRoles(['ROLE_USER']);
         $user->setEmail($discordUser->email);
         $user->setDiscordId($discordUser->id);
+        $user->setDiscord($discordUser->username);
         $user->setRegistrationDate(new DateTime);
         $user->setIcon('bean.webp');
 

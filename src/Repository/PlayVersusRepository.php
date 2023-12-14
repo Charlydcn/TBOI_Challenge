@@ -21,6 +21,20 @@ class PlayVersusRepository extends ServiceEntityRepository
         parent::__construct($registry, PlayVersus::class);
     }
 
+    public function findBestRuns($versusId, $limit): array
+    {
+        return $this->createQueryBuilder('pv')
+            ->select('pv.completionTime', 'u.username', 'pv.playDate', 'pv.comment')
+            ->leftJoin('pv.user', 'u')
+            ->where('pv.versus = :versusId')
+            ->andWhere('pv.completionTime IS NOT NULL')
+            ->setParameter('versusId', $versusId)
+            ->orderBy('pv.completionTime', 'ASC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return PlayVersus[] Returns an array of PlayVersus objects
 //     */

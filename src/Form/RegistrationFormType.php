@@ -67,6 +67,34 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
 
+            ->add('discord', TextType::class, [
+                'label' => 'Discord Username : (optionnal)',
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 50,
+                        'maxMessage' => 'Discord username can\'t exceed 50 characters',
+                    ])
+                ],
+                'attr' => [
+                    'placeholder' => 'jdoDiscord65',
+                ],
+            ])
+
+            ->add('twitch', TextType::class, [
+                'label' => 'Twitch Username : (optionnal)',
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 50,
+                        'maxMessage' => 'Twitch Username can\'t exceed 50 characters',
+                    ])
+                ],
+                'attr' => [
+                    'placeholder' => 'jdoeTwitch82',
+                ],
+            ])
+
             ->add('agreeTerms', CheckboxType::class, [
                 "label" => "I have read and agree to the terms of service",
                 'mapped' => false,

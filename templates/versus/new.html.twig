@@ -1,13 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New versus{% endblock %}
+{% block title %}Create your Versus{% endblock %}
 
 {% block metaDescription %}Create a new Versus now to have fun and challenge all your friends ! From 2 to unlimited number
 of player, schedule the start date and/or the end date if you want !{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/versus/new.css')}}">
+{% endblock stylesheets %}
+
 {% block body %}
 
-    {{ form(newVersusForm) }}
+    <a class="back-link" href="{{ path('show_challenge', {'id': challenge.id})}}">&lt; Challenge</a>    
+
+    <h1>Create your versus</h1>
+
+    {{ form_start(newVersusForm) }}
+
+        <img src="{{ asset('/img/misc/deathnote3.png')}}" alt="">
+
+        <label>
+            Start date : 
+            {{ form_widget(newVersusForm.startDate)}}
+        </label>
+
+        <label>
+            End date : (empty for none) 
+            {{ form_widget(newVersusForm.endDate)}}
+        </label>
+
+        <label>
+            Slots : 
+            {{ form_widget(newVersusForm.slots)}}
+        </label>
+
+        <label>
+            Discord Channel link : 
+            {{ form_widget(newVersusForm.discordChannel)}}
+        </label>
+{# 
+        <label>
+            Public : 
+            {{ form_widget(newVersusForm.startDate)}}
+        </label> #}
+
+
+    {{ form_end(newVersusForm) }}
 
 {% endblock %}
 

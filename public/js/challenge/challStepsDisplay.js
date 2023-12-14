@@ -90,7 +90,7 @@ if (window.innerWidth <= 991) {
         } else {
             step1.classList.add('hidden')
             step2.style.display = "flex"
-            endBtns.style.display = "flex"
+            endBtns.style.display = "unset"
         }
     })
 

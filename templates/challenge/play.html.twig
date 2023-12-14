@@ -13,18 +13,11 @@
 {% set c = challenge %}
 
 
-<a href="{{ path('show_challenge', {'id': challenge.id})}}">&lt; Challenge</a>
-
-<br>
+<a class="back-link" href="{{ path('show_challenge', {'id': challenge.id})}}">&lt; Challenge</a>
 
 {% if versus %}
-    <a href="{{ path('show_versus', {'id': versus.id})}}">&lt; Versus</a>    
+    <a class="back-link" href="{{ path('show_versus', {'id': versus.id})}}">&lt; Versus</a>    
 {% endif %}
-
-<div id="launchgame">
-    <img src="{{ asset('/img/misc/steam_logo.webp')}}" onclick="launchSteamGame(250900)" alt="Steam logo">
-    <p>Launch the game on <strong>Steam</strong></p>
-</div>
 
 <div id="text-result" class="hidden">
     {% if character is defined and boss is defined %}
@@ -50,7 +43,6 @@
         
         <img src="{{ asset('/img/misc/page_blood_empty.webp')}}" alt="image of a notebook page with blood on it">
 
-        <img id="protip" src="{{ asset('/img/tuto/completiontime_protip.webp')}}" alt="">
         
         <div id="step1">
             <div class="character">
@@ -205,9 +197,17 @@
 
         </div>
     </div>
+    
 
-    <div id="overlay" class="hidden"></div>
-    <p class="hidden" id="challenge-streak">{{ c.streak }}</p>
+<div id="launchgame">
+    <img src="{{ asset('/img/misc/steam_logo.webp')}}" onclick="launchSteamGame(250900)" alt="Steam logo">
+    <p>Launch the game on <strong>Steam</strong></p>
+</div>
+
+<img id="protip" src="{{ asset('/img/tuto/completiontime_protip.webp')}}" alt="">
+
+<div id="overlay" class="hidden"></div>
+<p class="hidden" id="challenge-streak">{{ c.streak }}</p>
 
 {% endblock %}
 

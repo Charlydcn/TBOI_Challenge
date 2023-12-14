@@ -1,66 +1,132 @@
 main {
-    margin: auto 1rem;
-}
-
-#challenge {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: space-between;
-    margin: 2rem 0;
+    margin-left: 1rem;
 }
 
 h1 {
-    font-size: 2rem;
-    color: var(--red);
-    margin: 1rem auto;
+    font-size: 2.5rem;
+    color: var(--brown);
+    text-align: center;
 }
 
 h1 a {
     text-decoration: none;
     color: black;
     font-size: 1.5rem;
+    text-align: center;
+    display:block;
 }
 
 h2 {
     font-size: 1.5rem;
-    text-decoration: underline;
-    margin: 1rem auto;
+    text-align: center;
+}
+
+h2 a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--red);
 }
 
 h3 {
-    color: var(--red);
-    font-size: 1.25rem;
-}
-
-ul:first-of-type {
-    list-style: none;
-    line-height: 2rem;
-}
-
-ul:first-of-type li {
     font-size: 1.5rem;
 }
 
-ul:first-of-type li:last-of-type span {
+h3 i {
+    font-size: 2rem;
+}
+
+main > div:first-of-type #title {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+
+main > div:first-of-type #title ~ a {
+    font-size: 2.5rem;
+    color: var(--brown);
+}
+
+main > div:first-of-type #title ~ a ~ p {
+    text-align: center;
+    opacity: .5;
+}
+
+main > div:first-of-type {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: min(90vw, 500px);
+    height: min(100vw, 500px);
+    margin: auto;
+    padding: 2rem 2rem 4rem 2rem;
+}
+
+main > div:first-of-type > img:first-of-type {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: -1;
+}
+
+.delete-btn {
+    font-size: 1.5rem;
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    color: var(--red);
+}
+
+main ul:first-of-type:not(#leaderboard ul) {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+main ul:first-of-type:not(#leaderboard ul) li {
+    font-size: 1.5rem;
+}
+
+main ul:first-of-type:not(#leaderboard ul) li:last-of-type span {
     text-decoration: underline;
     font-size: 2rem;
     color: var(--red);
 }
 
-ul:first-of-type i {
+main ul:first-of-type:not(#leaderboard ul) li:nth-of-type(2) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--beige);
+    padding: 0.25rem .5rem;
+    border-radius: 5px;
+    box-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
+    transition: box-shadow .3s;
+}
+
+main ul:first-of-type:not(#leaderboard ul) li:nth-of-type(2):hover {
+    box-shadow:unset;
+}
+
+main ul:first-of-type:not(#leaderboard ul) li:nth-of-type(2) img {
+    height: 2.5rem;
+}
+
+main ul:first-of-type:not(#leaderboard ul) i {
     color: var(--red);
     font-size: 1.5rem;
     vertical-align: middle;
 }
 
-h1 + img {
-    width: 100px;
-}
-
 h2 ~ ul {
     background-color: #bca7a4;
-    width: 500px;
     list-style: none;
     padding: 1rem;
     box-shadow: 5px 5px 0px #00000024;
@@ -69,40 +135,62 @@ h2 ~ ul {
     line-height: 1.25rem;
 }
 
+h2 ~ ul li span:first-of-type {
+    font-size: 1rem;
+    opacity: .5;
+}
+
 h2 ~ ul:not(:last-of-type) {
     margin-bottom: 1rem;
 }
 
-#characters,
-#bosses,
-#restrictions {
+.start-date span:nth-of-type(odd) {
+    font-size: 2rem;
+    color: var(--red);
+}
+
+.start-date span:nth-of-type(even) {
+    font-size: 1rem;
+    opacity: .66;
+}
+
+.start-date span:nth-of-type(even):not(:last-of-type) {
+    margin-right:1rem;
+}
+
+#leaderboard {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    gap: 0.2rem 1rem;
-    align-content: stretch;
-    max-height: 500px;
-    width: -moz-fit-content;
-    width: fit-content;
-}
-
-.character,
-.boss,
-.restriction {
-    display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: 1rem;
+    width: min(20rem, 90%);
+    margin: 2rem auto auto;
 }
 
-.character img,
-.restriction img {
-    width: 30px;
-    object-fit: scale-down;
-    height: 25px;
+#leaderboard ul {
+    list-style: none;
+    background-color: #e1e1e1;
 }
 
-.boss img {
-    width: 25px;
+#leaderboard ul li {
+    padding: 1rem 2rem;
+}
+
+#leaderboard ul li span {
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+#leaderboard ul li:first-of-type {
+    background-color: #e3da9c;
+}
+
+#leaderboard ul li:nth-of-type(2) {
+    background-color: #d3d3d3;;
+}
+
+#leaderboard ul li:nth-of-type(3) {
+    background-color: #cba164;
 }
 
 

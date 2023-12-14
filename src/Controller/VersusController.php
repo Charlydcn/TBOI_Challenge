@@ -103,11 +103,15 @@ class VersusController extends AbstractController
         
         return $this->render('versus/new.html.twig', [
             'newVersusForm' => $form,
+            'challenge' => $challenge,
         ]);
     }
 
     #[Route('/versus/{id}', name: 'show_versus')]
-    public function show(Versus $versus = null, Security $security): Response
+    public function show(
+        Versus $versus = null,
+        Security $security,
+        PlayVersusRepository $playVersusRepository): Response
     {
 
         $user = $security->getUser();
@@ -124,8 +128,12 @@ class VersusController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+        $winners = $playVersusRepository->findBy(['versus' => $versus->getId(), 'completed' => true]);
+        $bestRuns = $playVersusRepository->findBestRuns($versus->getId(), 10);
+
         return $this->render('versus/show.html.twig', [
             'versus' => $versus,
+            'bestRuns' => $bestRuns,
         ]);
     }
 

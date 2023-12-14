@@ -37,6 +37,18 @@ Versus !{% endblock %}
         </div>
 
         <div>
+            {{ form_label(registrationForm.discord) }}
+            <div class="error">{{ form_errors(registrationForm.discord) }}</div>
+            {{ form_widget(registrationForm.discord) }}
+        </div>
+
+        <div>
+            {{ form_label(registrationForm.twitch) }}
+            <div class="error">{{ form_errors(registrationForm.twitch) }}</div>
+            {{ form_widget(registrationForm.twitch) }}
+        </div>
+
+        <div>
             {{ form_label(registrationForm.agreeTerms) }}
             <div class="error">{{ form_errors(registrationForm.agreeTerms) }}</div>
             {{ form_widget(registrationForm.agreeTerms) }}

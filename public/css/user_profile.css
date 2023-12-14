@@ -62,7 +62,7 @@ h2 ~ ul li {
 }
 
 table {
-    width: 20rem;
+    width: min(20rem, 90%);
     border: 1px solid #858585;
     border-collapse: collapse;
 }

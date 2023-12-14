@@ -25,44 +25,52 @@
     {% endif %}
 </div>
 
-<div id="result">
-
-    <div class="character">
-        {% if character is defined %}
-            {# img #}
-            <img class="pixelated" src="{{ asset('/img/characters/' ~ character.img )}}" alt="{{ character.name }}'s image">
-            {# text img #}
-            <img src="{{ asset('/img/characters/text/' ~ character.img)}}" alt="{{ character.name }}'s name">
-        {% endif %}
-    </div>
-
-    <div class="boss">
-
-        {% if boss is defined %}
-            {# text img #}
-            <img src="{{ asset('/img/bosses/text/' ~ boss.img)}}" alt="{{ boss.name }}'s name">
-            {# img #}
-            <img src="{{ asset('/img/bosses/' ~ boss.img )}}" alt="{{ boss.name }}'s image">
-        {% endif %}
-    </div>
-
-    <div class="restrictions">
-        {% if restrictions is defined %}
-            {% for restriction in restrictions %}
-            <div>
-                {# img #}
-                <img class="onclick-infos-element" src="{{ asset('/img/restrictions/' ~ restriction.img )}}" alt="{{ restriction.name }}'s image">
-                {# infos box on click #}
-                <p class="onclick-infos hidden prevent-select">{{ restriction.name }}</p>
+<div id="page">
+    <img src="{{ asset('/img/misc/page_blood_empty.webp')}}" alt="image of a notebook page with blood on it">
+    <div id="step2">
+        <img src="{{ asset('/img/misc/reset.png')}}" alt="reset icon" onClick="window.location.reload();">
+    
+        <div id="result">
+    
+            <div class="character">
+                {% if character is defined %}
+                    {# img #}
+                    <img class="pixelated" src="{{ asset('/img/characters/' ~ character.img )}}" alt="{{ character.name }}'s image">
+                    {# text img #}
+                    <img src="{{ asset('/img/characters/text/' ~ character.img)}}" alt="{{ character.name }}'s name">
+                {% endif %}
             </div>
-            {% endfor %}
-        {% endif %}
+        
+            <div class="boss">
+        
+                {% if boss is defined %}
+                    {# text img #}
+                    <img src="{{ asset('/img/bosses/text/' ~ boss.img)}}" alt="{{ boss.name }}'s name">
+                    {# img #}
+                    <img src="{{ asset('/img/bosses/' ~ boss.img )}}" alt="{{ boss.name }}'s image">
+                {% endif %}
+            </div>
+        
+            <div class="restrictions">
+                {% if restrictions is defined %}
+                    {% for restriction in restrictions %}
+                    <div>
+                        {# img #}
+                        <img class="onclick-infos-element" src="{{ asset('/img/restrictions/' ~ restriction.img )}}" alt="{{ restriction.name }}'s image">
+                        {# infos box on click #}
+                        <p class="onclick-infos hidden prevent-select">{{ restriction.name }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        
+            <img id="randomize-btn" src="{{ asset('/img/text/randomize.webp')}}" alt="reset icon" onClick="window.location.reload();">
+        </div>
     </div>
-
-    <img id="randomize-btn" src="{{ asset('/img/text/randomize.webp')}}" alt="reset icon" onClick="window.location.reload();">
+    
 </div>
 
-<img src="{{ asset('/img/tuto/protip.webp')}}" alt="">
+<img id="protip" src="{{ asset('/img/tuto/protip.webp')}}" alt="">
 
 {% block javascripts %}
     <script src="{{ asset('/js/result.js')}}"></script>

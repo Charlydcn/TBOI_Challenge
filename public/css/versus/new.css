@@ -1,0 +1,79 @@
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    text-decoration: underline;
+    margin-bottom: 1rem;
+}
+
+form {
+    width: min(25rem, 90%);
+    margin: auto;
+    padding: 3rem;
+    position: relative;
+}
+
+form img {
+    position: absolute;
+    z-index: -1;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 100%;
+    height: 110%;
+    top: 0;
+}
+
+form button,
+form input {
+    box-shadow: 4px 3px 1.5px rgba(0, 0, 0, 0.26);
+    transition: box-shadow .3s;
+}
+
+form button:hover,
+form input:focus {
+    box-shadow:none;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .25rem;
+    margin-bottom: 1rem;
+}
+
+input {
+    padding: .5rem;
+    border: none;
+    border-radius: 2px;
+    width: 100%;
+    background-color: #f2eded;
+    height:2rem;
+}
+
+input:focus {
+    outline: none;
+}
+
+input::placeholder {
+    transition: opacity .3s;
+    font-size: 1rem;
+}
+
+input:focus::placeholder {
+    opacity: 0;
+}
+
+button {
+    padding: .5rem;
+    background-color: var(--brown);
+    color: #e7e7e7;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+    form {
+        padding: 5% 10%;
+    }
+}

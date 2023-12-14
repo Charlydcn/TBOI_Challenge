@@ -6,7 +6,7 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/versus/show.css')}}">
-    {% endblock stylesheets %}
+{% endblock stylesheets %}
 
 {% block body %}
 
@@ -14,80 +14,84 @@
 
     {% set c = v.challenge %}
 
-    {% if versus %}
-        <a href="{{ path('show_challenge', {'id': c.id})}}">&lt; Challenge</a>    
-    {% endif %}
+    <a class="back-link" href="{{ path('show_challenge', {'id': c.id})}}">&lt; Challenge</a>    
+    <a class="back-link" href="{{ path('show_challenge_versus', {'id': c.id})}}">&lt; Versus</a>    
+
+    <div>
+        <img src="{{ asset('/img/misc/page_blood_empty.webp')}}" alt="">
 
         {% if v.creator is same as(app.user) or is_granted('ROLE_ADMIN') %}
-            <a class="delete-btn" href="{{ path('delete_versus', {'id': v.id}) }}"><i class="fa-solid fa-trash-can"></i></a>
+            <a class="delete-btn fa-solid fa-trash-can" href="{{ path('delete_versus', {'id': v.id}) }}"></a>
         {% endif %}
 
-        <ul>
-            <h1>Versus #{{ v.id }} <a href="{{ path('show_user', {'id': v.creator.id}) }}">by {{ v.creator.username }}</a></h1>
-            <li>
-                Public : 
-                {% if v.public %}
-                    <i class="fa-solid fa-check"></i>
-                    {% else %}  
-                    <i class="fa-solid fa-xmark"></i>
-                {% endif %}
-            </li>
-
-            <li>
-                Closed : 
-                {% if v.closed %}
-                    <i class="fa-solid fa-check"></i>
-                    {% else %}  
-                    <i class="fa-solid fa-xmark"></i>
-                {% endif %}
-            </li>
-
-            <li>
-                Starting : {{ v.startDate|date('d:m:Y H:i:s') }}
-            </li>
-
-            {% if v.endDate %}
-                <li>
-                    Ending : {{ v.endDate|date('d:m:Y H:i:s') }}
-                </li>
-            {% endif %}
-
-            <li>Players : {{ v.players ? v.players|length : 0 ~ v.slots ? " / " ~ v.slots : "" }}</li>
-            <li>Current winner : <span>{{ v.winner ? v.winner : "No winner yet" }}</span></li>       
-        </ul>
-
+        <div id="title">
+            <h1>Versus #{{ v.id }}</h1>
+            <h2>By <a href="{{ path('show_user', {'id': v.creator.id}) }}">{{ v.creator.username }}</a></h2>
+        </div>
         {% if (v.players|length - v.slots) <= 0 %}    
-            <img 
-                src="{{ asset('/img/text/join.webp')}}"
-                class="href-element"
-                data-href="{{ path('play_challenge', {'challengeId': c.id, 'versusId': v.id})}}"
-                alt="Text saying JOIN">
+            <a href="{{ path('play_challenge', {'challengeId': c.id, 'versusId': v.id})}}">JOIN</a>
     
-            <h3>! You only get 1 try at the Versus' Challenge !</h3>
-            {% else %}
-            
+            <p>! You only get 1 try at the Versus' Challenge !</p>
+        {% endif %}
+    </div>
+
+    <ul>
+        <li class="start-date" data-date="{{ v.startDate|date() }}">
+            Starts in :
+            <div>
+                <span id="days"></span><span>j</span>
+                <span id="hours"></span><span>h</span>
+                <span id="minutes"></span><span>m</span>
+                <span id="seconds"></span><span>s</span>
+            </div>
+        </li>
+
+        {% if v.discordChannel %}
+            <li class="href-element" data-href="{{ v.discordChannel }}" data-target="_blank">
+                <img src="{{ asset('/img/misc/discord_logo.webp')}}" alt="Discord Logo">
+                Discord Channel
+            </li>
         {% endif %}
 
-
-        {% if v.players and v.players|length > 0%}
-            <h2>Players : </h2>
-
-            {% for player in v.players %}
-                <ul>
-                    <li>Player : {{ player.user }}</li>
-                    <li>Completed : {{ player.completed ? "Yes" : "No" }}</li>
-                    {% if player.completed %}
-                        <li>Completion time : <span>{{ player.completionTime ? player.completionTime|date('H:i:s') : "Unknown" }}</span></li>
-                    {% endif %}
-                    <li>Play date : {{ player.playDate|date('d/m/Y H:i') }}</li>
-                    <li>Comment : {{ player.comment ? player.comment : "None" }}</li>
-                </ul>
-            {% endfor %}
-
-            {% else %}
-
-            <h2>No players yet</h2>
-
+        {% if v.endDate %}
+            <li class="end-date">
+                {{ v.endDate|date() }}
+            </li>
         {% endif %}
+
+        <li>
+            Closed : 
+            {% if v.closed %}
+                <i class="fa-solid fa-check"></i>
+                {% else %}  
+                <i class="fa-solid fa-xmark"></i>
+            {% endif %}
+        </li>
+
+        <li>Players : {{ v.players ? v.players|length : 0 ~ v.slots ? " / " ~ v.slots : "" }}</li>
+        <li>Current winner : <span>{{ v.winner ? v.winner : "No winner yet" }}</span></li>       
+    </ul>
+
+    {% if v.players|length > 0 %}
+        <div id="leaderboard">
+            <h3>Leaderboard <i class="fa-solid fa-trophy"></i></h3>
+            <ul>
+                {% set nb = 1 %}
+
+                {% for run in bestRuns %}
+                    <li><span>{{ nb }}</span>
+                        {{ run.completionTime|date('H:i:s') }} : {{ run.username ? run.username : "Unknown"}}<br>
+                        Comment : {{ run.comment ? run.comment : 'None' }}
+                    </li>
+
+                    {% set nb = nb + 1 %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% block javascripts %}
+        <script src="{{ asset('/js/versus/show.js')}}"></script>
+    {% endblock javascripts %}
 
 {% endblock %}

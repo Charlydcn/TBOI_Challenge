@@ -7,14 +7,44 @@ h1 {
 
 h2 {
     text-align: center;
+    font-size: 2rem;
 }
 
+h2 a {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--red);
+    width: fit-content;
+    width: -moz-fit-content;
+    margin: auto;
+}
+
+h2 ~ img:first-of-type {
+    height: 5rem;
+    image-rendering: pixelated;
+    display: block;
+    margin: 1rem auto;
+}
+
+.new-versus {
+    display: flex;
+    margin: 1rem auto;
+    gap: .5rem;
+    text-decoration: none;
+    color: var(--red);
+    align-items: center;
+    width: fit-content;
+    width: -moz-fit-content;
+}
+
+#versus-container,
 .versus-container {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    gap: 1rem 3rem;
     justify-content: center;
+    max-width: 90%;
+    margin: 1.5rem auto;
+    gap: 2rem;
 }
 
 .versus {
@@ -25,10 +55,12 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border: 1px solid #a49895;
+    transition: box-shadow .3s;
 }
 
-.versus:not(:last-of-type) {
-    margin-bottom: 1rem;
+.versus:hover {
+    box-shadow:unset;
 }
 
 .versus ul {
